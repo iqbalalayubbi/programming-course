@@ -9,7 +9,7 @@
     "format": "prettier --write .",
     "prepare": "husky",
     "common": "pnpm --filter common",
-    "app": "pnpm --filter web-app"
+    "frontend": "pnpm --filter frontend"
   },
   "lint-staged": {
     "**/*.{js,ts,tsx}": [
