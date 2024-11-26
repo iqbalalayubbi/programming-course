@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client';
 import {
   formatResponse,
   generateAccessToken,
+  hashPassword,
   sendEmail,
   verifyToken,
 } from '@/utils';
@@ -13,7 +14,7 @@ const prisma = new PrismaClient();
 class AuthController {
   async register(req: Request, res: Response) {
     //! rules: user can create multiple role in one account
-    const { email, username, role } = req.body;
+    const { email, username, password, role } = req.body;
 
     const userEmail = await prisma.user.findFirst({ where: { email } });
     const hasUser = await prisma.user.findFirst({
@@ -25,6 +26,12 @@ class AuthController {
         res,
         statusCode: StatusCode.CONFLICT,
         message: 'Email already registered',
+        errors: [
+          {
+            field: 'email',
+            message: 'Email already registered',
+          },
+        ],
       });
     }
 
@@ -34,16 +41,26 @@ class AuthController {
         res,
         statusCode: StatusCode.CONFLICT,
         message: 'Username already registered',
+        errors: [
+          {
+            field: 'username',
+            message: 'Username already registered',
+          },
+        ],
       });
     }
 
-    await prisma.user.create({ data: req.body });
+    const user = {
+      ...req.body,
+      password: await hashPassword(password),
+    };
+
+    await prisma.user.create({ data: user });
 
     // generate access token
     const accessToken = generateAccessToken({ username, role });
 
     // TODO send verify email
-
     const callbackUrl = `http://localhost:8000/auth/verify-email/${accessToken}`;
     const subject = 'Verify your email';
     const html = `Click the link below to verify your email: <a href="${callbackUrl}">Click Here</a>`;
@@ -70,6 +87,12 @@ class AuthController {
         res,
         statusCode: StatusCode.UNAUTHORIZED,
         message: 'Invalid or expired token',
+        errors: [
+          {
+            field: 'token',
+            message: 'Invalid or expired token',
+          },
+        ],
       });
     }
 
@@ -83,6 +106,7 @@ class AuthController {
         res,
         statusCode: StatusCode.NOT_FOUND,
         message: 'User not found',
+        errors: [{ field: 'user', message: 'User not found' }],
       });
     }
 
