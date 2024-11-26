@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import {
+  checkPassword,
   formatResponse,
   generateAccessToken,
   hashPassword,
@@ -116,6 +117,53 @@ class AuthController {
       res,
       statusCode: StatusCode.OK,
       message: 'Email verified successfully',
+    });
+  }
+
+  async login(req: Request, res: Response) {
+    const { identifier, password } = req.body;
+
+    const user = await prisma.user.findFirst({
+      where: {
+        OR: [{ username: identifier }, { email: identifier }],
+      },
+    });
+
+    if (!user) {
+      return formatResponse({
+        res,
+        statusCode: StatusCode.NOT_FOUND,
+        message: 'User not found',
+        errors: [{ field: 'identifier', message: 'User not found' }],
+      });
+    }
+
+    const isPasswordValid = await checkPassword(password, user.password);
+
+    if (!isPasswordValid) {
+      return formatResponse({
+        res,
+        statusCode: StatusCode.UNAUTHORIZED,
+        message: 'Invalid credentials',
+        errors: [
+          {
+            field: 'password',
+            message: 'Invalid credentials',
+          },
+        ],
+      });
+    }
+
+    const accessToken = generateAccessToken({
+      username: user.username,
+      role: user.role,
+    });
+
+    return formatResponse({
+      res,
+      statusCode: StatusCode.OK,
+      message: 'Login successful',
+      data: { accessToken },
     });
   }
 }

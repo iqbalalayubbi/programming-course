@@ -10,11 +10,7 @@ router.post('/register', validate(registerSchema), authController.register);
 
 router.get('/verify-email/:token', authController.verifyEmail);
 
-router.post('/login', (req: Request, res: Response) => {
-  // data
-  // identifier (username or email), password
-  res.send('login path API');
-});
+router.post('/login', authController.login);
 
 router.post('forgot-password', (req: Request, res) => {
   // data
