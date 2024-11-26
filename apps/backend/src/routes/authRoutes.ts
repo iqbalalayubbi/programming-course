@@ -8,10 +8,7 @@ const authController = new AuthController();
 
 router.post('/register', validate(registerSchema), authController.register);
 
-router.get('/verify-email', (req: Request, res: Response) => {
-  // no data
-  res.send('verify email');
-});
+router.get('/verify-email/:token', authController.verifyEmail);
 
 router.post('/login', (req: Request, res: Response) => {
   // data
