@@ -12,11 +12,11 @@ model User {
   username String @unique
   password String
   email String
-  age Int
-  birthday DateTime
-  country String
-  image_url String
-  phone_number String
+  age Int?
+  birthday DateTime?
+  country String?
+  image_url String?
+  phone_number String?
   total_point Int @default(0)
   role  String @default("student")
   description String?

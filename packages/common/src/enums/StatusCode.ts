@@ -1,4 +1,4 @@
-const E = {
+const StatusCode = {
   OK: 200,
   CREATED: 201,
   NOT_FOUND: 404,
@@ -10,8 +10,7 @@ const E = {
   UNSUPPORTED_MEDIA_TYPE: 415,
   TOO_MANY_REQUESTS: 429,
   GONE: 410,
-  PRECONDITION_FAILED: 412
+  PRECONDITION_FAILED: 412,
 };
-export {
-  E as StatusCode
-};
+
+export { StatusCode };
