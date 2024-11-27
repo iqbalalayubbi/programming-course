@@ -255,6 +255,56 @@ class AuthController {
       message: 'Password reset successfully',
     });
   }
+
+  async verifyUser(req: Request, res: Response) {
+    const bearerToken = req.headers.authorization?.split(' ')[1];
+
+    if (!bearerToken) {
+      return formatResponse({
+        res,
+        statusCode: StatusCode.UNAUTHORIZED,
+        message: 'No token provided',
+        errors: [{ field: 'token', message: 'No token provided' }],
+      });
+    }
+
+    const token = bearerToken;
+    const decodedToken = verifyToken(token);
+
+    if (!decodedToken) {
+      return formatResponse({
+        res,
+        statusCode: StatusCode.UNAUTHORIZED,
+        message: 'Invalid or expired token',
+        errors: [{ field: 'token', message: 'Invalid or expired token' }],
+      });
+    }
+
+    const user = await prisma.user.findFirst({
+      where: { username: decodedToken.username },
+    });
+
+    if (!user) {
+      return formatResponse({
+        res,
+        statusCode: StatusCode.NOT_FOUND,
+        message: 'User not found',
+        errors: [{ field: 'user', message: 'User not found' }],
+      });
+    }
+
+    return formatResponse({
+      res,
+      statusCode: StatusCode.OK,
+      message: 'User verified successfully',
+      data: {
+        user: {
+          username: user.username,
+          role: user.role,
+        },
+      },
+    });
+  }
 }
 
 export { AuthController };
