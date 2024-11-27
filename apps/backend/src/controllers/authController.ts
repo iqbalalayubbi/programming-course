@@ -14,6 +14,12 @@ import dayjs from 'dayjs';
 
 const prisma = new PrismaClient();
 
+declare module 'express-session' {
+  export interface SessionData {
+    token: string | null;
+  }
+}
+
 class AuthController {
   async register(req: Request, res: Response) {
     //! rules: user can create multiple role in one account
@@ -70,8 +76,15 @@ class AuthController {
 
     try {
       await sendEmail({ recipient: email, subject, html });
-    } catch (error) {
-      console.log(error);
+    } catch {
+      return formatResponse({
+        res,
+        statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+        message: 'Failed to send email verification',
+        errors: [
+          { field: 'email', message: 'Failed to send email verification' },
+        ],
+      });
     }
 
     return formatResponse({
@@ -161,6 +174,8 @@ class AuthController {
       role: user.role,
     });
 
+    req.session.token = accessToken;
+
     return formatResponse({
       res,
       statusCode: StatusCode.OK,
@@ -203,8 +218,15 @@ class AuthController {
           expired_at: dayjs().add(5, 'minutes').toISOString(),
         },
       });
-    } catch (error) {
-      console.log(error);
+    } catch {
+      return formatResponse({
+        res,
+        statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+        message: 'Failed to send reset password email',
+        errors: [
+          { field: 'email', message: 'Failed to send reset password email' },
+        ],
+      });
     }
 
     return formatResponse({
@@ -303,6 +325,27 @@ class AuthController {
           role: user.role,
         },
       },
+    });
+  }
+
+  async logout(req: Request, res: Response) {
+    if (req.session.token) {
+      req.session.destroy((err) => {
+        if (err) {
+          return formatResponse({
+            res,
+            statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+            message: 'Error destroying session',
+            errors: [{ field: 'session', message: 'Error destroying session' }],
+          });
+        }
+      });
+    }
+
+    return formatResponse({
+      res,
+      statusCode: StatusCode.OK,
+      message: 'Logged out successfully',
     });
   }
 }

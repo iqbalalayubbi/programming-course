@@ -1,7 +1,7 @@
 import { AuthController } from '@/controllers';
 import { validate } from '@/middlewares';
 import { registerSchema } from '@/validations';
-import express, { Request, Response } from 'express';
+import express from 'express';
 
 const router = express.Router();
 
@@ -19,9 +19,6 @@ router.post('/reset-password', authController.resetPassword);
 
 router.get('/verify-user', authController.verifyUser);
 
-router.post('/logout', (req: Request, res: Response) => {
-  // no data
-  res.send('logout path API');
-});
+router.post('/logout', authController.logout);
 
 export { router };
