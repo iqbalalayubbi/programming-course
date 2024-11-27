@@ -4,11 +4,13 @@ import {
   checkPassword,
   formatResponse,
   generateAccessToken,
+  generateOTP,
   hashPassword,
   sendEmail,
   verifyToken,
 } from '@/utils';
 import { StatusCode } from 'common';
+import dayjs from 'dayjs';
 
 const prisma = new PrismaClient();
 
@@ -164,6 +166,93 @@ class AuthController {
       statusCode: StatusCode.OK,
       message: 'Login successful',
       data: { accessToken },
+    });
+  }
+
+  async forgotPassword(req: Request, res: Response) {
+    const { identifier } = req.body;
+    const user = await prisma.user.findFirst({
+      where: {
+        OR: [{ username: identifier }, { email: identifier }],
+      },
+    });
+
+    if (!user) {
+      return formatResponse({
+        res,
+        statusCode: StatusCode.NOT_FOUND,
+        message: 'User not found',
+        errors: [{ field: 'identifier', message: 'User not found' }],
+      });
+    }
+
+    const newOTP = generateOTP();
+
+    const subject = 'Reset Password';
+    const html = `This is your OTP. it can be expire in 5 minute. <br>
+                  <strong>${newOTP}</strong>
+                  `;
+
+    try {
+      await sendEmail({ recipient: user.email, subject, html });
+      // save current time in otp model
+      await prisma.oTP.create({
+        data: {
+          user_id: user.id,
+          otp_code: newOTP,
+          expired_at: dayjs().add(5, 'minutes').toISOString(),
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
+    return formatResponse({
+      res,
+      statusCode: StatusCode.OK,
+      message: 'Reset password email sent successfully',
+    });
+  }
+
+  async resetPassword(req: Request, res: Response) {
+    const { otp, password } = req.body;
+
+    const userOTP = await prisma.oTP.findFirst({
+      where: {
+        otp_code: otp,
+        expired_at: { gte: dayjs().toISOString() },
+      },
+    });
+
+    if (!userOTP) {
+      return formatResponse({
+        res,
+        statusCode: StatusCode.UNAUTHORIZED,
+        message: 'Invalid or expired OTP',
+        errors: [{ field: 'otp', message: 'Invalid or expired OTP' }],
+      });
+    }
+
+    const user = await prisma.user.findFirst({
+      where: { id: userOTP.user_id },
+    });
+
+    if (!user) {
+      return formatResponse({
+        res,
+        statusCode: StatusCode.NOT_FOUND,
+        message: 'User not found',
+        errors: [{ field: 'user', message: 'User not found' }],
+      });
+    }
+
+    user.password = await hashPassword(password);
+    await prisma.user.update({ where: { id: user.id }, data: user });
+    await prisma.oTP.delete({ where: { id: userOTP.id } });
+    return formatResponse({
+      res,
+      statusCode: StatusCode.OK,
+      message: 'Password reset successfully',
     });
   }
 }

@@ -3,7 +3,11 @@ import dotenv from 'dotenv';
 import { authRoutes } from '@/routes';
 
 // env
-dotenv.config();
+const envFile =
+  process.env.ENV_MODE === 'production'
+    ? '.env.production'
+    : '.env.development';
+dotenv.config({ path: envFile });
 
 const app: Application = express();
 

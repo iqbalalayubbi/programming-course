@@ -7,11 +7,13 @@ type Params = {
   html?: string;
 };
 
+const DEFAULT_PORT = 587;
+
 const sendEmail = async ({ recipient, subject, text, html }: Params) => {
   const transporter = nodemailer.createTransport({
     service: process.env.EMAIL_SERVICE,
     host: process.env.EMAIL_HOST,
-    port: 587,
+    port: DEFAULT_PORT,
     secure: false,
     auth: {
       user: process.env.EMAIL,

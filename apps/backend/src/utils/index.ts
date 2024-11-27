@@ -4,3 +4,4 @@ export { generateAccessToken } from './generateAccessToken';
 export { verifyToken } from './verifyToken';
 export { hashPassword } from './hashPassword';
 export { checkPassword } from './checkPassword';
+export { generateOTP } from './generateOTP';

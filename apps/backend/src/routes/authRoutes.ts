@@ -12,17 +12,9 @@ router.get('/verify-email/:token', authController.verifyEmail);
 
 router.post('/login', authController.login);
 
-router.post('forgot-password', (req: Request, res) => {
-  // data
-  // identifier (username or email)
-  res.send('forgot password path API');
-});
+router.post('/forgot-password', authController.forgotPassword);
 
-router.post('/reset-password', (req: Request, res: Response) => {
-  // data
-  // otp, password
-  res.send('reset password path API');
-});
+router.post('/reset-password', authController.resetPassword);
 
 router.get('verify-user', (req: Request, res: Response) => {
   // no data
