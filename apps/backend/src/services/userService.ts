@@ -6,7 +6,7 @@ type Constructor = {
 };
 
 type FindType = {
-  key: 'email' | 'username' | 'id';
+  key: 'id' | 'email' | 'username';
   value: string;
 };
 
@@ -23,6 +23,26 @@ class UserService {
       const user = await this.userModel.findFirst({
         where: {
           [key]: value,
+        },
+      });
+
+      if (!user) {
+        throw new Error('User not found');
+      }
+
+      return user;
+    } catch {
+      throw new Error('Could not find user');
+    }
+  }
+
+  async findOr(data: FindType[]): Promise<User | null> {
+    const fields = data.map((field) => ({ [field.key]: field.value }));
+
+    try {
+      const user = await this.userModel.findFirst({
+        where: {
+          OR: fields,
         },
       });
 

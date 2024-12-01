@@ -7,6 +7,7 @@ type AuthServiceType = {
   isDuplicateRole(email: string, role: string): Promise<boolean>;
   register(user: UserModel): Promise<ServiceResponse>;
   verifyEmail(token: string): Promise<ServiceResponse>;
+  login(identifier: string, password: string): Promise<ServiceResponse>;
 };
 
 export { type AuthServiceType };

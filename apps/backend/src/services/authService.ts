@@ -106,7 +106,7 @@ class AuthService implements AuthServiceType {
 
     return {
       isSuccess: true,
-      data: createdUser,
+      data: { user: createdUser },
     };
   }
 
@@ -143,7 +143,52 @@ class AuthService implements AuthServiceType {
 
     return {
       isSuccess: true,
-      data: user,
+      data: { user },
+    };
+  }
+
+  async login(identifier: string, password: string): Promise<ServiceResponse> {
+    const user = await this.userService.findOr([
+      { key: 'username', value: identifier },
+      { key: 'email', value: identifier },
+    ]);
+
+    if (!user) {
+      return {
+        isSuccess: false,
+        error: {
+          field: 'user',
+          message: 'User not found',
+        },
+      };
+    }
+
+    const isPasswordValid = await this.passwordService.verifyPassword(
+      password,
+      user.password,
+    );
+
+    if (!isPasswordValid) {
+      return {
+        isSuccess: false,
+        error: {
+          field: 'password',
+          message: 'Invalid credentials',
+        },
+      };
+    }
+
+    const accessToken = this.jwtService.generateAccessToken(
+      user.username,
+      user.role,
+    );
+
+    return {
+      isSuccess: true,
+      data: {
+        user,
+        token: accessToken,
+      },
     };
   }
 }

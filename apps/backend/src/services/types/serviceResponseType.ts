@@ -5,7 +5,7 @@ type FieldType = keyof UserModel | 'token' | 'user';
 type ServiceResponse = {
   isSuccess: boolean;
   error?: { field: FieldType; message: string };
-  data?: UserModel;
+  data?: { user?: UserModel; token?: string };
 };
 
 export { type ServiceResponse };

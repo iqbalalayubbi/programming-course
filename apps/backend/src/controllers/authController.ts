@@ -1,9 +1,7 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import {
-  checkPassword,
   formatResponse,
-  generateAccessToken,
   generateOTP,
   hashPassword,
   sendEmail,
@@ -97,50 +95,42 @@ class AuthController {
   async login(req: Request, res: Response) {
     const { identifier, password } = req.body;
 
-    const user = await prisma.user.findFirst({
-      where: {
-        OR: [{ username: identifier }, { email: identifier }],
-      },
-    });
+    const { isSuccess, error, data } = await this.authService.login(
+      identifier,
+      password,
+    );
 
-    if (!user) {
+    if (isSuccess && data) {
+      const { token } = data;
+      req.session.token = token;
+
       return formatResponse({
         res,
-        statusCode: StatusCode.NOT_FOUND,
-        message: 'User not found',
-        errors: [{ field: 'identifier', message: 'User not found' }],
+        statusCode: StatusCode.OK,
+        message: 'Login successful',
+        data: { accessToken: token },
       });
     }
 
-    const isPasswordValid = await checkPassword(password, user.password);
-
-    if (!isPasswordValid) {
+    if (error) {
       return formatResponse({
         res,
         statusCode: StatusCode.UNAUTHORIZED,
-        message: 'Invalid credentials',
+        message: error.message,
         errors: [
           {
-            field: 'password',
-            message: 'Invalid credentials',
+            field: error.field,
+            message: error.message,
           },
         ],
       });
     }
 
-    const accessToken = generateAccessToken({
-      username: user.username,
-      role: user.role,
-    });
-
-    req.session.token = accessToken;
-
-    return formatResponse({
+    return {
       res,
-      statusCode: StatusCode.OK,
-      message: 'Login successful',
-      data: { accessToken },
-    });
+      statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+      message: 'Failed to login',
+    };
   }
 
   async forgotPassword(req: Request, res: Response) {
