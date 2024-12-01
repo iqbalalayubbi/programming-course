@@ -6,6 +6,7 @@ import { AuthServiceType } from './types';
 import { MailerService } from './mailerService';
 import { PasswordService } from './passwordService';
 import { type ServiceResponse } from './types';
+import { OtpService } from './otpService';
 
 type Constructor = {
   prismaClient: PrismaClient;
@@ -13,6 +14,7 @@ type Constructor = {
   jwtService: JwtService;
   mailerService: MailerService;
   passwordService: PasswordService;
+  otpService: OtpService;
 };
 
 class AuthService implements AuthServiceType {
@@ -20,17 +22,20 @@ class AuthService implements AuthServiceType {
   private jwtService: JwtService;
   private mailerService: MailerService;
   private passwordService: PasswordService;
+  private otpService: OtpService;
 
   public constructor({
     userService,
     jwtService,
     mailerService,
     passwordService,
+    otpService,
   }: Constructor) {
     this.userService = userService;
     this.jwtService = jwtService;
     this.mailerService = mailerService;
     this.passwordService = passwordService;
+    this.otpService = otpService;
   }
 
   async isEmailExist(email: string): Promise<boolean> {
@@ -190,6 +195,51 @@ class AuthService implements AuthServiceType {
         token: accessToken,
       },
     };
+  }
+
+  async forgotPassword(identifier: string): Promise<ServiceResponse> {
+    const user = await this.userService.findOr([
+      { key: 'username', value: identifier },
+      { key: 'email', value: identifier },
+    ]);
+
+    if (!user) {
+      return {
+        isSuccess: false,
+        error: {
+          field: 'user',
+          message: 'User not found',
+        },
+      };
+    }
+
+    const { otp_code } = await this.otpService.create(user.id);
+
+    const subject = 'Reset Password';
+    const html = `This is your OTP. it can be expire in 5 minute. <br>
+                  <strong>${otp_code}</strong>
+                  `;
+
+    try {
+      await this.mailerService.sendEmail({
+        recipient: user.email,
+        subject,
+        html,
+      });
+
+      return {
+        isSuccess: true,
+        data: { user },
+      };
+    } catch {
+      return {
+        isSuccess: false,
+        error: {
+          field: 'email',
+          message: 'Failed to send reset password email',
+        },
+      };
+    }
   }
 }
 

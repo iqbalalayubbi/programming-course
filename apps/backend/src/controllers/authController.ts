@@ -1,12 +1,6 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
-import {
-  formatResponse,
-  generateOTP,
-  hashPassword,
-  sendEmail,
-  verifyToken,
-} from '@/utils';
+import { formatResponse, hashPassword, verifyToken } from '@/utils';
 import { StatusCode } from 'common';
 import dayjs from 'dayjs';
 import { AuthServiceType } from '@/services';
@@ -135,54 +129,36 @@ class AuthController {
 
   async forgotPassword(req: Request, res: Response) {
     const { identifier } = req.body;
-    const user = await prisma.user.findFirst({
-      where: {
-        OR: [{ username: identifier }, { email: identifier }],
-      },
-    });
+    const { isSuccess, error } =
+      await this.authService.forgotPassword(identifier);
 
-    if (!user) {
+    if (isSuccess) {
       return formatResponse({
         res,
-        statusCode: StatusCode.NOT_FOUND,
-        message: 'User not found',
-        errors: [{ field: 'identifier', message: 'User not found' }],
+        statusCode: StatusCode.OK,
+        message: 'Reset password email sent successfully',
       });
     }
 
-    const newOTP = generateOTP();
-
-    const subject = 'Reset Password';
-    const html = `This is your OTP. it can be expire in 5 minute. <br>
-                  <strong>${newOTP}</strong>
-                  `;
-
-    try {
-      await sendEmail({ recipient: user.email, subject, html });
-      // save current time in otp model
-      await prisma.oTP.create({
-        data: {
-          user_id: user.id,
-          otp_code: newOTP,
-          expired_at: dayjs().add(5, 'minutes').toISOString(),
-        },
-      });
-    } catch {
+    if (error) {
       return formatResponse({
         res,
-        statusCode: StatusCode.INTERNAL_SERVER_ERROR,
-        message: 'Failed to send reset password email',
+        statusCode: StatusCode.BAD_REQUEST,
+        message: error.message,
         errors: [
-          { field: 'email', message: 'Failed to send reset password email' },
+          {
+            field: error.field,
+            message: error.message,
+          },
         ],
       });
     }
 
-    return formatResponse({
+    return {
       res,
-      statusCode: StatusCode.OK,
-      message: 'Reset password email sent successfully',
-    });
+      statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+      message: 'Failed to send forgot password email',
+    };
   }
 
   async resetPassword(req: Request, res: Response) {
