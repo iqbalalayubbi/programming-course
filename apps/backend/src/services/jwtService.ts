@@ -5,6 +5,7 @@ type PayloadType = {
   role: string;
   iat: number;
   exp: number;
+  isValid: boolean;
 };
 
 class JwtService {
@@ -19,15 +20,21 @@ class JwtService {
     return accessToken;
   }
 
-  verifyToken(token: string): PayloadType | boolean {
+  verifyToken(token: string): PayloadType {
     try {
       const decoded = jwt.verify(
         token,
         process.env.SECRET_KEY || '',
       ) as PayloadType;
-      return decoded;
+      return { ...decoded, isValid: true };
     } catch {
-      return false;
+      return {
+        username: '',
+        role: '',
+        iat: 0,
+        exp: 0,
+        isValid: false,
+      };
     }
   }
 }

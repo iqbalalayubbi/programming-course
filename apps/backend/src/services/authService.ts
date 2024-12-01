@@ -5,6 +5,7 @@ import { JwtService } from './jwtService';
 import { AuthServiceType } from './types';
 import { MailerService } from './mailerService';
 import { PasswordService } from './passwordService';
+import { type ServiceResponse } from './types';
 
 type Constructor = {
   prismaClient: PrismaClient;
@@ -12,12 +13,6 @@ type Constructor = {
   jwtService: JwtService;
   mailerService: MailerService;
   passwordService: PasswordService;
-};
-
-type RegisterResponse = {
-  isSuccess: boolean;
-  error?: { field: 'email' | 'username'; message: string };
-  data?: UserModel;
 };
 
 class AuthService implements AuthServiceType {
@@ -69,7 +64,7 @@ class AuthService implements AuthServiceType {
     return false;
   }
 
-  async register(user: UserModel): Promise<RegisterResponse> {
+  async register(user: UserModel): Promise<ServiceResponse> {
     const { email, username, role, password } = user;
 
     const hasUsername = await this.isUsernameExist(username);
@@ -112,6 +107,43 @@ class AuthService implements AuthServiceType {
     return {
       isSuccess: true,
       data: createdUser,
+    };
+  }
+
+  async verifyEmail(token: string): Promise<ServiceResponse> {
+    const { isValid, username } = this.jwtService.verifyToken(token);
+
+    if (!isValid) {
+      return {
+        isSuccess: false,
+        error: {
+          field: 'token',
+          message: 'Invalid or expired token',
+        },
+      };
+    }
+
+    const user = await this.userService.find({
+      key: 'username',
+      value: username,
+    });
+
+    if (!user) {
+      return {
+        isSuccess: false,
+        error: {
+          field: 'user',
+          message: 'User not found',
+        },
+      };
+    }
+
+    user.is_verified = true;
+    await this.userService.update(user.id, user);
+
+    return {
+      isSuccess: true,
+      data: user,
     };
   }
 }

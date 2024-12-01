@@ -63,43 +63,35 @@ class AuthController {
 
   async verifyEmail(req: Request, res: Response) {
     const { token } = req.params;
-    const isTokenValid = verifyToken(token);
+    const { isSuccess, error } = await this.authService.verifyEmail(token);
 
-    if (!isTokenValid) {
+    if (isSuccess) {
+      return formatResponse({
+        res,
+        statusCode: StatusCode.OK,
+        message: 'Email verified successfully',
+      });
+    }
+
+    if (error) {
       return formatResponse({
         res,
         statusCode: StatusCode.UNAUTHORIZED,
-        message: 'Invalid or expired token',
+        message: error.message,
         errors: [
           {
-            field: 'token',
-            message: 'Invalid or expired token',
+            field: error.field,
+            message: error.message,
           },
         ],
       });
     }
 
-    const { username } = isTokenValid;
-    const user = await prisma.user.findFirst({
-      where: { username },
-    });
-
-    if (!user) {
-      return formatResponse({
-        res,
-        statusCode: StatusCode.NOT_FOUND,
-        message: 'User not found',
-        errors: [{ field: 'user', message: 'User not found' }],
-      });
-    }
-
-    user.is_verified = true;
-    await prisma.user.update({ where: { username }, data: user });
-    return formatResponse({
+    return {
       res,
-      statusCode: StatusCode.OK,
-      message: 'Email verified successfully',
-    });
+      statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+      message: 'Failed to verify email',
+    };
   }
 
   async login(req: Request, res: Response) {
