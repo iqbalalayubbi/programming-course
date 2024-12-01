@@ -11,6 +11,7 @@ import {
 } from '@/utils';
 import { StatusCode } from 'common';
 import dayjs from 'dayjs';
+import { AuthServiceType } from '@/services';
 
 const prisma = new PrismaClient();
 
@@ -21,77 +22,43 @@ declare module 'express-session' {
 }
 
 class AuthController {
+  private authService: AuthServiceType;
+
+  public constructor(authService: AuthServiceType) {
+    this.authService = authService;
+  }
+
   async register(req: Request, res: Response) {
     //! rules: user can create multiple role in one account
-    const { email, username, password, role } = req.body;
+    const { isSuccess, error } = await this.authService.register(req.body);
 
-    const userEmail = await prisma.user.findFirst({ where: { email } });
-    const hasUser = await prisma.user.findFirst({
-      where: { username },
-    });
-
-    if (userEmail && userEmail.role === role) {
+    if (isSuccess) {
       return formatResponse({
         res,
-        statusCode: StatusCode.CONFLICT,
-        message: 'Email already registered',
+        statusCode: StatusCode.CREATED,
+        message: 'Email verify already sent successfully',
+      });
+    }
+
+    if (error) {
+      return formatResponse({
+        res,
+        statusCode: StatusCode.BAD_REQUEST,
+        message: error.message,
         errors: [
           {
-            field: 'email',
-            message: 'Email already registered',
+            field: error.field,
+            message: error.message,
           },
         ],
       });
     }
 
-    if (hasUser) {
-      // TODO send verify email
-      return formatResponse({
-        res,
-        statusCode: StatusCode.CONFLICT,
-        message: 'Username already registered',
-        errors: [
-          {
-            field: 'username',
-            message: 'Username already registered',
-          },
-        ],
-      });
-    }
-
-    const user = {
-      ...req.body,
-      password: await hashPassword(password),
-    };
-
-    await prisma.user.create({ data: user });
-
-    // generate access token
-    const accessToken = generateAccessToken({ username, role });
-
-    // TODO send verify email
-    const callbackUrl = `http://localhost:8000/auth/verify-email/${accessToken}`;
-    const subject = 'Verify your email';
-    const html = `Click the link below to verify your email: <a href="${callbackUrl}">Click Here</a>`;
-
-    try {
-      await sendEmail({ recipient: email, subject, html });
-    } catch {
-      return formatResponse({
-        res,
-        statusCode: StatusCode.INTERNAL_SERVER_ERROR,
-        message: 'Failed to send email verification',
-        errors: [
-          { field: 'email', message: 'Failed to send email verification' },
-        ],
-      });
-    }
-
-    return formatResponse({
+    return {
       res,
-      statusCode: StatusCode.CREATED,
-      message: 'Email verify already sent successfully',
-    });
+      statusCode: StatusCode.UNAUTHORIZED,
+      message: 'Invalid credentials',
+    };
   }
 
   async verifyEmail(req: Request, res: Response) {
