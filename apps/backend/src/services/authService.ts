@@ -1,16 +1,14 @@
 import { UserModel } from '@/models';
-import { PrismaClient } from '@prisma/client';
 import { UserService } from './userService';
 import { JwtService } from './jwtService';
 import { AuthServiceType } from './types';
 import { MailerService } from './mailerService';
 import { PasswordService } from './passwordService';
-import { type ServiceResponse } from './types';
 import { OtpService } from './otpService';
+import { type ServiceResponse } from './types';
 import dayjs from 'dayjs';
 
 type Constructor = {
-  prismaClient: PrismaClient;
   userService: UserService;
   jwtService: JwtService;
   mailerService: MailerService;

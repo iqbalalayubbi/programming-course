@@ -14,10 +14,18 @@ class AuthController {
 
   public constructor(authService: AuthServiceType) {
     this.authService = authService;
+
+    // binding all function
+    this.login = this.login.bind(this);
+    this.register = this.register.bind(this);
+    this.verifyEmail = this.verifyEmail.bind(this);
+    this.forgotPassword = this.forgotPassword.bind(this);
+    this.resetPassword = this.resetPassword.bind(this);
+    this.verifyUser = this.verifyUser.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
-  async register(req: Request, res: Response) {
-    //! rules: user can create multiple role in one account
+  public async register(req: Request, res: Response) {
     const { isSuccess, error } = await this.authService.register(req.body);
 
     if (isSuccess) {
@@ -42,14 +50,14 @@ class AuthController {
       });
     }
 
-    return {
+    return formatResponse({
       res,
       statusCode: StatusCode.UNAUTHORIZED,
       message: 'Invalid credentials',
-    };
+    });
   }
 
-  async verifyEmail(req: Request, res: Response) {
+  public async verifyEmail(req: Request, res: Response) {
     const { token } = req.params;
     const { isSuccess, error } = await this.authService.verifyEmail(token);
 
@@ -75,14 +83,14 @@ class AuthController {
       });
     }
 
-    return {
+    return formatResponse({
       res,
       statusCode: StatusCode.INTERNAL_SERVER_ERROR,
       message: 'Failed to verify email',
-    };
+    });
   }
 
-  async login(req: Request, res: Response) {
+  public async login(req: Request, res: Response) {
     const { identifier, password } = req.body;
 
     const { isSuccess, error, data } = await this.authService.login(
@@ -116,14 +124,14 @@ class AuthController {
       });
     }
 
-    return {
+    return formatResponse({
       res,
       statusCode: StatusCode.INTERNAL_SERVER_ERROR,
       message: 'Failed to login',
-    };
+    });
   }
 
-  async forgotPassword(req: Request, res: Response) {
+  public async forgotPassword(req: Request, res: Response) {
     const { identifier } = req.body;
     const { isSuccess, error } =
       await this.authService.forgotPassword(identifier);
@@ -157,7 +165,7 @@ class AuthController {
     });
   }
 
-  async resetPassword(req: Request, res: Response) {
+  public async resetPassword(req: Request, res: Response) {
     const { otp, password } = req.body;
 
     const { isSuccess, error } = await this.authService.resetPassword(
@@ -189,7 +197,7 @@ class AuthController {
     });
   }
 
-  async verifyUser(req: Request, res: Response) {
+  public async verifyUser(req: Request, res: Response) {
     const bearerToken = req.headers.authorization?.split(' ')[1];
 
     const { isSuccess, error, data } =
@@ -220,7 +228,7 @@ class AuthController {
     });
   }
 
-  async logout(req: Request, res: Response) {
+  public async logout(req: Request, res: Response) {
     if (req.session.token) {
       req.session.destroy((err) => {
         if (err) {

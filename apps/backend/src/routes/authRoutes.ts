@@ -1,11 +1,9 @@
-import { AuthController } from '@/controllers';
+import { authController } from '@/controllers';
 import { validate } from '@/middlewares';
 import { registerSchema } from '@/validations';
 import express from 'express';
 
 const router = express.Router();
-
-const authController = new AuthController();
 
 router.post('/register', validate(registerSchema), authController.register);
 
