@@ -1,5 +1,6 @@
-import { PrismaClient, User } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { UserModel } from '@/models';
+import { ServiceResponse } from './types';
 
 type Constructor = {
   prismaClient: PrismaClient;
@@ -17,7 +18,7 @@ class UserService {
     this.userModel = prismaClient.user;
   }
 
-  async find(data: FindType): Promise<User | null> {
+  async find(data: FindType): Promise<ServiceResponse> {
     const { key, value } = data;
     try {
       const user = await this.userModel.findFirst({
@@ -27,16 +28,31 @@ class UserService {
       });
 
       if (!user) {
-        throw new Error('User not found');
+        return {
+          isSuccess: false,
+          error: {
+            field: key,
+            message: 'User not found',
+          },
+        };
       }
 
-      return user;
+      return {
+        isSuccess: true,
+        data: { user },
+      };
     } catch {
-      throw new Error('Could not find user');
+      return {
+        isSuccess: false,
+        error: {
+          field: key,
+          message: 'Error fetching user',
+        },
+      };
     }
   }
 
-  async findOr(data: FindType[]): Promise<User | null> {
+  async findOr(data: FindType[]): Promise<ServiceResponse> {
     const fields = data.map((field) => ({ [field.key]: field.value }));
 
     try {
@@ -47,28 +63,52 @@ class UserService {
       });
 
       if (!user) {
-        throw new Error('User not found');
+        return {
+          isSuccess: false,
+          error: {
+            field: data[0].key,
+            message: 'User not found',
+          },
+        };
       }
 
-      return user;
+      return {
+        isSuccess: true,
+        data: { user },
+      };
     } catch {
-      throw new Error('Could not find user');
+      return {
+        isSuccess: false,
+        error: {
+          field: data[0].key,
+          message: 'Error fetching user',
+        },
+      };
     }
   }
 
-  async create(data: UserModel): Promise<User> {
+  async create(data: UserModel): Promise<ServiceResponse> {
     try {
       const newUser = await this.userModel.create({
         data,
       });
 
-      return newUser;
+      return {
+        isSuccess: true,
+        data: { user: newUser },
+      };
     } catch {
-      throw new Error('Could not create user');
+      return {
+        isSuccess: false,
+        error: {
+          field: 'user',
+          message: 'Error creating user',
+        },
+      };
     }
   }
 
-  async update(id: number, data: UserModel): Promise<User> {
+  async update(id: number, data: UserModel): Promise<ServiceResponse> {
     try {
       const updatedUser = await this.userModel.update({
         where: { id },
@@ -76,12 +116,58 @@ class UserService {
       });
 
       if (!updatedUser) {
-        throw new Error('User not found');
+        return {
+          isSuccess: false,
+          error: {
+            field: 'user',
+            message: 'User not found',
+          },
+        };
       }
 
-      return updatedUser;
+      return {
+        isSuccess: true,
+        data: { user: updatedUser },
+      };
     } catch {
-      throw new Error('Could not update user');
+      return {
+        isSuccess: false,
+        error: {
+          field: 'user',
+          message: 'Error updating user',
+        },
+      };
+    }
+  }
+
+  async delete(id: number): Promise<ServiceResponse> {
+    try {
+      const deletedUser = await this.userModel.delete({
+        where: { id },
+      });
+
+      if (!deletedUser) {
+        return {
+          isSuccess: false,
+          error: {
+            field: 'user',
+            message: 'User not found',
+          },
+        };
+      }
+
+      return {
+        isSuccess: true,
+        data: { user: deletedUser },
+      };
+    } catch {
+      return {
+        isSuccess: false,
+        error: {
+          field: 'user',
+          message: 'Error deleting user',
+        },
+      };
     }
   }
 }

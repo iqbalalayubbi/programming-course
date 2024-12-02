@@ -38,31 +38,35 @@ class AuthService implements AuthServiceType {
   }
 
   async isEmailExist(email: string): Promise<boolean> {
-    const user = await this.userService.find({
+    const { isSuccess } = await this.userService.find({
       key: 'email',
       value: email,
     });
 
-    return !!user;
+    return isSuccess;
   }
 
   async isUsernameExist(username: string): Promise<boolean> {
-    const user = await this.userService.find({
+    const { isSuccess } = await this.userService.find({
       key: 'username',
       value: username,
     });
 
-    return !!user;
+    return isSuccess;
   }
 
   async isDuplicateRole(email: string, role: string): Promise<boolean> {
-    const user = await this.userService.find({
+    const { data } = await this.userService.find({
       key: 'email',
       value: email,
     });
 
-    if (user && user.role === role) {
-      return true;
+    if (data) {
+      const { user } = data;
+
+      if (user && user.role === role) {
+        return true;
+      }
     }
 
     return false;
@@ -99,18 +103,27 @@ class AuthService implements AuthServiceType {
     const hashPassword = await this.passwordService.hashPassword(password);
     const newUser: UserModel = { ...user, password: hashPassword };
 
-    const createdUser = await this.userService.create(newUser);
+    const { data } = await this.userService.create(newUser);
 
-    // send email verification
     const callbackUrl = `http://localhost:8000/auth/verify-email/${accessToken}`;
     const subject = 'Verify your email';
     const html = `Click the link below to verify your email: <a href="${callbackUrl}">Click Here</a>`;
 
     await this.mailerService.sendEmail({ recipient: email, subject, html });
 
+    if (data) {
+      return {
+        isSuccess: true,
+        data: { user: data.user },
+      };
+    }
+
     return {
-      isSuccess: true,
-      data: { user: createdUser },
+      isSuccess: false,
+      error: {
+        field: 'user',
+        message: 'Could not register user',
+      },
     };
   }
 
@@ -127,12 +140,12 @@ class AuthService implements AuthServiceType {
       };
     }
 
-    const user = await this.userService.find({
+    const { data } = await this.userService.find({
       key: 'username',
       value: username,
     });
 
-    if (!user) {
+    if (!data) {
       return {
         isSuccess: false,
         error: {
@@ -142,22 +155,34 @@ class AuthService implements AuthServiceType {
       };
     }
 
+    const user = data.user as UserModel;
     user.is_verified = true;
-    await this.userService.update(user.id, user);
+
+    const { isSuccess } = await this.userService.update(user.id, user);
+
+    if (isSuccess) {
+      return {
+        isSuccess: true,
+        data: { user },
+      };
+    }
 
     return {
-      isSuccess: true,
-      data: { user },
+      isSuccess: false,
+      error: {
+        field: 'user',
+        message: 'Failed to verify email',
+      },
     };
   }
 
   async login(identifier: string, password: string): Promise<ServiceResponse> {
-    const user = await this.userService.findOr([
+    const { data } = await this.userService.findOr([
       { key: 'username', value: identifier },
       { key: 'email', value: identifier },
     ]);
 
-    if (!user) {
+    if (!data) {
       return {
         isSuccess: false,
         error: {
@@ -166,6 +191,8 @@ class AuthService implements AuthServiceType {
         },
       };
     }
+
+    const user = data.user as UserModel;
 
     const isPasswordValid = await this.passwordService.verifyPassword(
       password,
@@ -197,12 +224,12 @@ class AuthService implements AuthServiceType {
   }
 
   async forgotPassword(identifier: string): Promise<ServiceResponse> {
-    const user = await this.userService.findOr([
+    const { data } = await this.userService.findOr([
       { key: 'username', value: identifier },
       { key: 'email', value: identifier },
     ]);
 
-    if (!user) {
+    if (!data) {
       return {
         isSuccess: false,
         error: {
@@ -211,6 +238,8 @@ class AuthService implements AuthServiceType {
         },
       };
     }
+
+    const user = data.user as UserModel;
 
     const { otp_code } = await this.otpService.create(user.id);
 
@@ -253,14 +282,16 @@ class AuthService implements AuthServiceType {
     }
 
     const userId = userOTP.user_id;
-    const user = await this.userService.find({ key: 'id', value: userId });
+    const { data } = await this.userService.find({ key: 'id', value: userId });
 
-    if (!user) {
+    if (!data) {
       return {
         isSuccess: false,
         error: { field: 'user', message: 'User not found' },
       };
     }
+
+    const user = data.user as UserModel;
 
     user.password = await this.passwordService.hashPassword(password);
     await this.userService.update(userId, user);
@@ -288,17 +319,19 @@ class AuthService implements AuthServiceType {
       };
     }
 
-    const user = await this.userService.find({
+    const { data } = await this.userService.find({
       key: 'username',
       value: decodedToken.username,
     });
 
-    if (!user) {
+    if (!data) {
       return {
         isSuccess: false,
         error: { field: 'user', message: 'User not found' },
       };
     }
+
+    const user = data.user as UserModel;
 
     return {
       isSuccess: true,
