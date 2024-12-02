@@ -9,6 +9,8 @@ type AuthServiceType = {
   verifyEmail(token: string): Promise<ServiceResponse>;
   login(identifier: string, password: string): Promise<ServiceResponse>;
   forgotPassword(identifier: string): Promise<ServiceResponse>;
+  resetPassword(otp: string, password: string): Promise<ServiceResponse>;
+  verifyUser(bearerToken: string | undefined): Promise<ServiceResponse>;
 };
 
 export { type AuthServiceType };

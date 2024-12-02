@@ -1,6 +1,6 @@
 import { UserModel } from '@/models';
 
-type FieldType = keyof UserModel | 'token' | 'user';
+type FieldType = keyof UserModel | 'token' | 'user' | 'otp';
 
 type ServiceResponse = {
   isSuccess: boolean;

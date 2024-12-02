@@ -7,7 +7,7 @@ type Constructor = {
 
 type FindType = {
   key: 'id' | 'email' | 'username';
-  value: string;
+  value: string | number;
 };
 
 class UserService {

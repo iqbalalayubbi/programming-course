@@ -1,11 +1,7 @@
 import { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
-import { formatResponse, hashPassword, verifyToken } from '@/utils';
+import { formatResponse } from '@/utils';
 import { StatusCode } from 'common';
-import dayjs from 'dayjs';
 import { AuthServiceType } from '@/services';
-
-const prisma = new PrismaClient();
 
 declare module 'express-session' {
   export interface SessionData {
@@ -154,102 +150,73 @@ class AuthController {
       });
     }
 
-    return {
+    return formatResponse({
       res,
       statusCode: StatusCode.INTERNAL_SERVER_ERROR,
       message: 'Failed to send forgot password email',
-    };
+    });
   }
 
   async resetPassword(req: Request, res: Response) {
     const { otp, password } = req.body;
 
-    const userOTP = await prisma.oTP.findFirst({
-      where: {
-        otp_code: otp,
-        expired_at: { gte: dayjs().toISOString() },
-      },
-    });
+    const { isSuccess, error } = await this.authService.resetPassword(
+      otp,
+      password,
+    );
 
-    if (!userOTP) {
+    if (isSuccess) {
+      return formatResponse({
+        res,
+        statusCode: StatusCode.OK,
+        message: 'Password reset successfully',
+      });
+    }
+
+    if (error) {
       return formatResponse({
         res,
         statusCode: StatusCode.UNAUTHORIZED,
-        message: 'Invalid or expired OTP',
-        errors: [{ field: 'otp', message: 'Invalid or expired OTP' }],
+        message: error.message,
+        errors: [{ field: error.field, message: error.message }],
       });
     }
 
-    const user = await prisma.user.findFirst({
-      where: { id: userOTP.user_id },
-    });
-
-    if (!user) {
-      return formatResponse({
-        res,
-        statusCode: StatusCode.NOT_FOUND,
-        message: 'User not found',
-        errors: [{ field: 'user', message: 'User not found' }],
-      });
-    }
-
-    user.password = await hashPassword(password);
-    await prisma.user.update({ where: { id: user.id }, data: user });
-    await prisma.oTP.delete({ where: { id: userOTP.id } });
     return formatResponse({
       res,
-      statusCode: StatusCode.OK,
-      message: 'Password reset successfully',
+      statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+      message: 'Failed to reset password',
     });
   }
 
   async verifyUser(req: Request, res: Response) {
     const bearerToken = req.headers.authorization?.split(' ')[1];
 
-    if (!bearerToken) {
+    const { isSuccess, error, data } =
+      await this.authService.verifyUser(bearerToken);
+
+    if (isSuccess) {
       return formatResponse({
         res,
-        statusCode: StatusCode.UNAUTHORIZED,
-        message: 'No token provided',
-        errors: [{ field: 'token', message: 'No token provided' }],
+        statusCode: StatusCode.OK,
+        message: 'User verified successfully',
+        data,
       });
     }
 
-    const token = bearerToken;
-    const decodedToken = verifyToken(token);
-
-    if (!decodedToken) {
+    if (error) {
       return formatResponse({
         res,
         statusCode: StatusCode.UNAUTHORIZED,
-        message: 'Invalid or expired token',
-        errors: [{ field: 'token', message: 'Invalid or expired token' }],
-      });
-    }
-
-    const user = await prisma.user.findFirst({
-      where: { username: decodedToken.username },
-    });
-
-    if (!user) {
-      return formatResponse({
-        res,
-        statusCode: StatusCode.NOT_FOUND,
-        message: 'User not found',
-        errors: [{ field: 'user', message: 'User not found' }],
+        message: error.message,
+        errors: [{ field: error.field, message: error.message }],
       });
     }
 
     return formatResponse({
       res,
-      statusCode: StatusCode.OK,
-      message: 'User verified successfully',
-      data: {
-        user: {
-          username: user.username,
-          role: user.role,
-        },
-      },
+      statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+      message: 'Failed to verify user',
     });
   }
 

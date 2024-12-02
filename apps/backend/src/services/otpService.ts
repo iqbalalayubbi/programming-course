@@ -37,6 +37,20 @@ class OtpService {
 
     return otp;
   }
+
+  async verifyOtp(
+    otpCode: string,
+    expiredAt: string,
+  ): Promise<OtpModel | null> {
+    const userOTP = await this.otpModel.findFirst({
+      where: {
+        otp_code: otpCode,
+        expired_at: { gte: expiredAt },
+      },
+    });
+
+    return userOTP;
+  }
 }
 
 export { OtpService };

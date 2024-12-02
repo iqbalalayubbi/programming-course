@@ -7,6 +7,7 @@ import { MailerService } from './mailerService';
 import { PasswordService } from './passwordService';
 import { type ServiceResponse } from './types';
 import { OtpService } from './otpService';
+import dayjs from 'dayjs';
 
 type Constructor = {
   prismaClient: PrismaClient;
@@ -240,6 +241,71 @@ class AuthService implements AuthServiceType {
         },
       };
     }
+  }
+
+  async resetPassword(otp: string, password: string): Promise<ServiceResponse> {
+    const currentTime = dayjs().toISOString();
+    const userOTP = await this.otpService.verifyOtp(otp, currentTime);
+
+    if (!userOTP) {
+      return {
+        isSuccess: false,
+        error: { field: 'otp', message: 'Invalid or expired OTP' },
+      };
+    }
+
+    const userId = userOTP.user_id;
+    const user = await this.userService.find({ key: 'id', value: userId });
+
+    if (!user) {
+      return {
+        isSuccess: false,
+        error: { field: 'user', message: 'User not found' },
+      };
+    }
+
+    user.password = await this.passwordService.hashPassword(password);
+    await this.userService.update(userId, user);
+
+    return {
+      isSuccess: true,
+      data: { user },
+    };
+  }
+
+  async verifyUser(bearerToken: string | undefined): Promise<ServiceResponse> {
+    if (!bearerToken) {
+      return {
+        isSuccess: false,
+        error: { field: 'token', message: 'No token provided' },
+      };
+    }
+
+    const decodedToken = this.jwtService.verifyToken(bearerToken);
+
+    if (!decodedToken) {
+      return {
+        isSuccess: false,
+        error: { field: 'token', message: 'Invalid or expired token' },
+      };
+    }
+
+    const user = await this.userService.find({
+      key: 'username',
+      value: decodedToken.username,
+    });
+
+    if (!user) {
+      return {
+        isSuccess: false,
+        error: { field: 'user', message: 'User not found' },
+      };
+    }
+
+    return {
+      isSuccess: true,
+      data: { user },
+    };
   }
 }
 
