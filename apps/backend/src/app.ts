@@ -1,14 +1,7 @@
+import '@/config';
 import express, { Application } from 'express';
-import dotenv from 'dotenv';
 import { authRoutes } from '@/routes';
 import session from 'express-session';
-
-// env
-const envFile =
-  process.env.ENV_MODE === 'production'
-    ? '.env.production'
-    : '.env.development';
-dotenv.config({ path: envFile });
 
 const app: Application = express();
 const sessionConfig = {
