@@ -1,4 +1,4 @@
-import { Auth } from './pages/auth/auth';
+import { Auth } from './pages/Auth/Auth';
 
 const App = () => {
   return (
