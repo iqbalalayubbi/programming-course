@@ -1,5 +1,11 @@
+import { Auth } from './pages/auth/auth';
+
 const App = () => {
-  return <h1 className="bg-red-500 font-bold">hello world</h1>;
+  return (
+    <>
+      <Auth />
+    </>
+  );
 };
 
 export default App;
