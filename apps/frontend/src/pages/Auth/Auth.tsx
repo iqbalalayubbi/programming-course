@@ -1,6 +1,10 @@
 import { Flex } from 'antd';
-import { loginIlustration, registerIlustration } from '@/assets';
-import { Login, Register } from './libs/components';
+import {
+  forgotPasswordIllustration,
+  loginIlustration,
+  registerIlustration,
+} from '@/assets';
+import { ForgotPassword, Login, Register } from './libs/components';
 import { useEffect, useState } from 'react';
 import { titleIllustration } from './libs/enums';
 
@@ -13,12 +17,34 @@ const Auth: React.FC<Properties> = ({ pageName }: Properties) => {
   const [textIllustration, setTextIllustration] = useState('');
 
   const renderIllustration = (form: string) => {
-    if (form === 'login') {
-      setIllustration(loginIlustration);
-      setTextIllustration(titleIllustration.LOGIN);
-    } else {
-      setIllustration(registerIlustration);
-      setTextIllustration(titleIllustration.REGISTER);
+    switch (form) {
+      case 'login':
+        setIllustration(loginIlustration);
+        setTextIllustration(titleIllustration.LOGIN);
+        break;
+      case 'register':
+        setIllustration(registerIlustration);
+        setTextIllustration(titleIllustration.REGISTER);
+        break;
+      case 'forgot-password':
+        setIllustration(forgotPasswordIllustration);
+        setTextIllustration(titleIllustration.FORGOT_PASSWORD);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const renderForm = (form: string) => {
+    switch (form) {
+      case 'register':
+        return <Register />;
+      case 'login':
+        return <Login />;
+      case 'forgot-password':
+        return <ForgotPassword />;
+      default:
+        return null;
     }
   };
 
@@ -34,9 +60,9 @@ const Auth: React.FC<Properties> = ({ pageName }: Properties) => {
         align="center"
         vertical
         flex={1}
-        className={`${pageName === 'login' ? 'order-1' : 'order-2'}`}
+        className={`${pageName === 'register' ? 'order-2' : 'order-1'}`}
       >
-        {pageName === 'login' ? <Login /> : <Register />}
+        {renderForm(pageName)}
       </Flex>
 
       {/* right */}
@@ -46,7 +72,7 @@ const Auth: React.FC<Properties> = ({ pageName }: Properties) => {
         vertical
         gap={16}
         flex={1}
-        className={`${pageName === 'login' ? 'order-1' : 'order-2'} bg-yellow-50 order-1`}
+        className={`${pageName === 'register' ? 'order-1' : 'order-2'} bg-yellow-50`}
       >
         <h1 className="text-secondary text-6xl font-bold">
           {textIllustration}

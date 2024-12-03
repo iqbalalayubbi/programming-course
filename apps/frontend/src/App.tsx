@@ -6,6 +6,10 @@ const App = () => {
     <Routes>
       <Route path="/login" element={<Auth pageName="login" />} />
       <Route path="/register" element={<Auth pageName="register" />} />
+      <Route
+        path="/forgot-password"
+        element={<Auth pageName="forgot-password" />}
+      />
     </Routes>
   );
 };
