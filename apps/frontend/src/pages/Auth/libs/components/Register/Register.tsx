@@ -17,20 +17,20 @@ const Register = () => {
         <Form.Item label="Password" name="password">
           <Input.Password placeholder="Enter your password" />
         </Form.Item>
+        <Flex gap={16} vertical>
+          <Button type="primary" htmlType="submit">
+            Create Account
+          </Button>
+          <Text type="secondary" className="text-center">
+            Already have an account?{' '}
+            <Link to="/login">
+              <TextLink type="success" underline>
+                Login
+              </TextLink>
+            </Link>
+          </Text>
+        </Flex>
       </Form>
-      <Flex gap={16} vertical>
-        <Button type="primary" htmlType="submit">
-          Create Account
-        </Button>
-        <Text type="secondary" className="text-center">
-          Already have an account?{' '}
-          <Link to="/login">
-            <TextLink type="success" underline>
-              Login
-            </TextLink>
-          </Link>
-        </Text>
-      </Flex>
     </Flex>
   );
 };

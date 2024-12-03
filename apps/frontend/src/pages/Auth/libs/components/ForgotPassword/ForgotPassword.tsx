@@ -14,20 +14,20 @@ const ForgotPassword = () => {
         <Form.Item label="Email or username" name="identifier">
           <Input placeholder="Enter your email or username" />
         </Form.Item>
+        <Flex gap={16} vertical className="w-full">
+          <Button type="primary" htmlType="submit">
+            Reset Password
+          </Button>
+          <Text type="secondary" className="text-center">
+            Back to{' '}
+            <Link to="/login">
+              <TextLink type="success" underline>
+                Login
+              </TextLink>
+            </Link>
+          </Text>
+        </Flex>
       </Form>
-      <Flex gap={16} vertical className="w-full">
-        <Button type="primary" htmlType="submit">
-          Reset Password
-        </Button>
-        <Text type="secondary" className="text-center">
-          Back to{' '}
-          <Link to="/login">
-            <TextLink type="success" underline>
-              Login
-            </TextLink>
-          </Link>
-        </Text>
-      </Flex>
     </Flex>
   );
 };
