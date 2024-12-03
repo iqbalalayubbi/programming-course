@@ -25,7 +25,7 @@ const Register = () => {
         <Text type="secondary" className="text-center">
           Already have an account?{' '}
           <Link to="/login">
-            <TextLink type="secondary" underline>
+            <TextLink type="success" underline>
               Login
             </TextLink>
           </Link>

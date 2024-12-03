@@ -13,6 +13,7 @@ const CustomTheme: React.FC<Properties> = ({ children }: Properties) => {
         token: {
           colorPrimary: colorPalette.PRIMARY,
           colorLinkHover: colorPalette.SECONDARY,
+          colorSuccessText: colorPalette.PRIMARY,
         },
       }}
     >

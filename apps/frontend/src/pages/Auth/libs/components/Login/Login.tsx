@@ -17,7 +17,7 @@ const Login = () => {
       </Form>
       <Flex gap={16} vertical>
         <Link to="/forgot-password" className="text-end">
-          <TextLink underline type="secondary">
+          <TextLink underline type="success">
             Forgot password?
           </TextLink>
         </Link>
@@ -27,7 +27,7 @@ const Login = () => {
         <Text type="secondary" className="text-center">
           Don’t have an account?{' '}
           <Link to="/register">
-            <TextLink type="secondary" underline>
+            <TextLink type="success" underline>
               Register
             </TextLink>
           </Link>
