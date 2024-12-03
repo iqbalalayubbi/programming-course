@@ -1,11 +1,11 @@
-import { Flex } from 'antd';
+import { Flex } from '@/components';
 import {
   forgotPasswordIllustration,
   loginIlustration,
   registerIlustration,
 } from '@/assets';
 import { ForgotPassword, Login, Register } from './libs/components';
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from '@/hooks';
 import { titleIllustration } from './libs/enums';
 
 type Properties = {

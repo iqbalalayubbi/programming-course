@@ -1,5 +1,5 @@
 import { verifyOtpIllustration } from '@/assets';
-import { Button, Flex, Form, Input, Typography } from 'antd';
+import { Button, Flex, Form, Input, Typography } from '@/components';
 
 const { Title, Text, Link } = Typography;
 

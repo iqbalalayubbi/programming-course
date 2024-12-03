@@ -1,5 +1,4 @@
-import { Button, Flex, Form, Input, Typography } from 'antd';
-import { Link } from 'react-router';
+import { Button, Flex, Form, Input, Typography, Link } from '@/components';
 
 const { Title, Text, Link: TextLink } = Typography;
 

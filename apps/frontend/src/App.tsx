@@ -1,5 +1,5 @@
 import { Auth, ResetPassword, VerifyOTP } from '@/pages';
-import { Routes, Route } from 'react-router';
+import { Routes, Route } from '@/components';
 
 const App = () => {
   return (
