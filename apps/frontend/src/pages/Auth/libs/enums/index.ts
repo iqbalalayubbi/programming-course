@@ -1,0 +1,1 @@
+export { titleIllustration } from './tittleIllustration';
