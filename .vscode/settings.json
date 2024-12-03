@@ -5,5 +5,51 @@
     "titleBar.activeForeground": "#FDFBE1"
   },
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "restoreTerminals.terminals": [
+    {
+      "splitTerminals": [
+        {
+          "name": "backend-server",
+          "commands": ["pnpm backend dev"]
+        },
+        {
+          "name": "prisma-studio",
+          "commands": ["pnpm backend prisma:studio"]
+        }
+      ]
+    },
+    {
+      "splitTerminals": [
+        {
+          "name": "frontend-client",
+          "commands": ["pnpm frontend dev"]
+        }
+      ]
+    },
+    {
+      "splitTerminals": [
+        {
+          "name": "frontend-repo",
+          "commands": ["cd apps/frontend"]
+        }
+      ]
+    },
+    {
+      "splitTerminals": [
+        {
+          "name": "backend-repo",
+          "commands": ["cd apps/backend"]
+        }
+      ]
+    },
+    {
+      "splitTerminals": [
+        {
+          "name": "git repo",
+          "commands": ["sudo /opt/lampp/lampp start"]
+        }
+      ]
+    }
+  ]
 }
