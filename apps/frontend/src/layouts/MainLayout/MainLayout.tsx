@@ -2,17 +2,17 @@ import { Layout } from 'antd';
 import { Sidebar } from '@/components/Sidebar/Sidebar';
 import { Outlet } from 'react-router';
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 
 const MainLayout = () => {
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout className="min-h-screen">
       <Sidebar />
       <Layout>
-        <Content style={{ margin: '16px' }}>
+        <Content className="mx-10">
           <Outlet />
         </Content>
-        <Footer style={{ textAlign: 'center' }}>Footer</Footer>
+        {/* <Footer style={{ textAlign: 'center' }}>Footer</Footer> */}
       </Layout>
     </Layout>
   );
