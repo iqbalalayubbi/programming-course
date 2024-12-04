@@ -5,13 +5,13 @@ import {
   Button,
   Flex,
   Link,
-  UserOutlined,
   LeftOutlined,
   RightOutlined,
   Iconify,
 } from '@/components';
 import { type MenuProps } from '@/types';
 import { useState } from '@/hooks';
+import { sidebarAvatar } from '@/assets';
 
 const { Sider } = Layout;
 
@@ -106,17 +106,17 @@ const Sidebar = () => {
           className="absolute -right-5 z-20"
         />
         <Flex align="center" vertical gap={16}>
-          <Avatar size={40} icon={<UserOutlined />} />
+          <Avatar size={40} icon={<img src={sidebarAvatar} />} />
           <Flex
             align="center"
             gap={8}
             vertical
             className={`${isCollapsed ? 'hidden' : 'flex'}`}
           >
-            <p className="text-xl">Steve Smith</p>
-            <span className="bg-secondary text-light-text rounded-md px-3">
+            <h1 className="text-xl font-medium">Steve Smith</h1>
+            <p className="bg-secondary text-light-text text-sm rounded-md px-3">
               STUDENT
-            </span>
+            </p>
           </Flex>
         </Flex>
       </div>
