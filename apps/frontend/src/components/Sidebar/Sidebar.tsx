@@ -11,6 +11,7 @@ import {
   RightOutlined,
 } from '@ant-design/icons';
 import { useState } from 'react';
+import { Link } from 'react-router';
 
 const { Sider } = Layout;
 
@@ -27,47 +28,55 @@ const Sidebar = () => {
         label: 'Dashboard',
         icon: <DashboardOutlined style={{ fontSize: 16 }} />,
         key: '1',
+        path: '/',
       },
       {
         label: 'Courses',
         icon: <BookOutlined style={{ fontSize: 16 }} />,
         key: '2',
+        path: '/courses',
       },
       {
         label: 'Forum Discuss',
         icon: <FileTextOutlined style={{ fontSize: 16 }} />,
         key: '3',
+        path: '/forum',
       },
       {
         label: 'Notes',
         icon: <TeamOutlined style={{ fontSize: 16 }} />,
         key: '4',
+        path: '/notes',
       },
       {
         label: 'Friends',
         icon: <SettingOutlined style={{ fontSize: 16 }} />,
         key: '5',
+        path: '/friends',
       },
       {
         label: 'Challenges',
         icon: <SettingOutlined style={{ fontSize: 16 }} />,
         key: '6',
+        path: '/challenges',
       },
       {
         label: 'Settings',
         icon: <SettingOutlined style={{ fontSize: 16 }} />,
         key: '7',
+        path: '/settings',
       },
       {
         label: 'Logout',
         icon: <LogoutOutlined style={{ fontSize: 16 }} />,
         key: '8',
+        path: '/login',
       },
     ];
 
     return allMenus.map((menu) => (
       <Menu.Item key={menu.key} icon={menu.icon}>
-        {menu.label}
+        <Link to={menu.path}>{menu.label}</Link>
       </Menu.Item>
     ));
   };
