@@ -5,15 +5,10 @@ import {
   Button,
   Flex,
   Link,
-  DashboardOutlined,
-  BookOutlined,
-  FileTextOutlined,
   UserOutlined,
-  TeamOutlined,
-  SettingOutlined,
-  LogoutOutlined,
   LeftOutlined,
   RightOutlined,
+  Iconify,
 } from '@/components';
 import { type MenuProps } from '@/types';
 import { useState } from '@/hooks';
@@ -24,51 +19,74 @@ type MenuItem = Required<MenuProps>['items'][number];
 
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const iconSize = 20;
 
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
   };
 
-  const items: MenuItem[] = [
+  const mainItems: MenuItem[] = [
     {
-      label: <Link to="/">Dashboard</Link>,
-      icon: <DashboardOutlined style={{ fontSize: 16 }} />,
+      label: <Link to="/"> Dashboard</Link>,
+      icon: (
+        <Iconify
+          icon="cuida:dashboard-outline"
+          style={{ fontSize: iconSize }}
+        />
+      ),
       key: '1',
     },
     {
       label: <Link to="/courses">Courses</Link>,
-      icon: <BookOutlined style={{ fontSize: 16 }} />,
+      icon: <Iconify icon="tdesign:course" style={{ fontSize: iconSize }} />,
       key: '2',
     },
     {
       label: <Link to="/forum">Forum</Link>,
-      icon: <FileTextOutlined style={{ fontSize: 16 }} />,
+      icon: <Iconify icon="stash:article" style={{ fontSize: iconSize }} />,
       key: '3',
     },
     {
       label: <Link to="/notes">Notes</Link>,
-      icon: <TeamOutlined style={{ fontSize: 16 }} />,
+      icon: <Iconify icon="hugeicons:note" style={{ fontSize: iconSize }} />,
       key: '4',
     },
     {
       label: <Link to="/friends">Friends</Link>,
-      icon: <SettingOutlined style={{ fontSize: 16 }} />,
+      icon: <Iconify icon="f7:person-2" style={{ fontSize: iconSize }} />,
       key: '5',
     },
     {
       label: <Link to="/challenges">Challenges</Link>,
-      icon: <SettingOutlined style={{ fontSize: 16 }} />,
+      icon: (
+        <Iconify icon="solar:ranking-broken" style={{ fontSize: iconSize }} />
+      ),
       key: '6',
     },
+  ];
+
+  const settingItems: MenuItem[] = [
     {
       label: <Link to="/settings">Settings</Link>,
-      icon: <SettingOutlined style={{ fontSize: 16 }} />,
-      key: '7',
+      icon: <Iconify icon="uil:setting" style={{ fontSize: iconSize }} />,
+      key: '1',
     },
     {
-      label: <Link to="/logout">Logout</Link>,
-      icon: <LogoutOutlined style={{ fontSize: 16 }} />,
-      key: '8',
+      title: 'Logout',
+      label: (
+        <Link to="/logout">
+          <span className="text-red-500">Logout</span>
+        </Link>
+      ),
+      icon: (
+        <Iconify
+          icon="humbleicons:logout"
+          style={{ fontSize: iconSize }}
+          color="red"
+          className="rotate-180"
+        />
+      ),
+      key: '2',
     },
   ];
 
@@ -96,18 +114,40 @@ const Sidebar = () => {
             className={`${isCollapsed ? 'hidden' : 'flex'}`}
           >
             <p className="text-xl">Steve Smith</p>
-            <span className="bg-primary text-light-text rounded-md px-3">
+            <span className="bg-secondary text-light-text rounded-md px-3">
               STUDENT
             </span>
           </Flex>
         </Flex>
       </div>
-      <Menu
-        theme="light"
-        mode="inline"
-        defaultSelectedKeys={['1']}
-        items={items}
-      />
+      <Flex gap={20} vertical>
+        <Flex gap={8} vertical>
+          {!isCollapsed && (
+            <h1 className="text-sm font-semibold text-gray-third px-8">Main</h1>
+          )}
+
+          <Menu
+            theme="light"
+            mode="inline"
+            defaultSelectedKeys={['1']}
+            items={mainItems}
+          />
+        </Flex>
+        <Flex gap={8} vertical>
+          {!isCollapsed && (
+            <h1 className="text-sm font-semibold text-gray-third px-8">
+              Settings
+            </h1>
+          )}
+
+          <Menu
+            theme="light"
+            mode="inline"
+            defaultSelectedKeys={[]}
+            items={settingItems}
+          />
+        </Flex>
+      </Flex>
     </Sider>
   );
 };
