@@ -1,1 +1,10 @@
-export { Button, Flex, Form, Input, Typography } from 'antd';
+export {
+  Layout,
+  Menu,
+  Avatar,
+  Button,
+  Flex,
+  Form,
+  Input,
+  Typography,
+} from 'antd';

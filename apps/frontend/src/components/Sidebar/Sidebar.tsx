@@ -1,5 +1,10 @@
-import { Layout, Menu, Avatar, Button, Flex } from 'antd';
 import {
+  Layout,
+  Menu,
+  Avatar,
+  Button,
+  Flex,
+  Link,
   DashboardOutlined,
   BookOutlined,
   FileTextOutlined,
@@ -9,11 +14,13 @@ import {
   LogoutOutlined,
   LeftOutlined,
   RightOutlined,
-} from '@ant-design/icons';
-import { useState } from 'react';
-import { Link } from 'react-router';
+} from '@/components';
+import { type MenuProps } from '@/types';
+import { useState } from '@/hooks';
 
 const { Sider } = Layout;
+
+type MenuItem = Required<MenuProps>['items'][number];
 
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -22,64 +29,48 @@ const Sidebar = () => {
     setIsCollapsed(!isCollapsed);
   };
 
-  const renderMenu = () => {
-    const allMenus = [
-      {
-        label: 'Dashboard',
-        icon: <DashboardOutlined style={{ fontSize: 16 }} />,
-        key: '1',
-        path: '/',
-      },
-      {
-        label: 'Courses',
-        icon: <BookOutlined style={{ fontSize: 16 }} />,
-        key: '2',
-        path: '/courses',
-      },
-      {
-        label: 'Forum Discuss',
-        icon: <FileTextOutlined style={{ fontSize: 16 }} />,
-        key: '3',
-        path: '/forum',
-      },
-      {
-        label: 'Notes',
-        icon: <TeamOutlined style={{ fontSize: 16 }} />,
-        key: '4',
-        path: '/notes',
-      },
-      {
-        label: 'Friends',
-        icon: <SettingOutlined style={{ fontSize: 16 }} />,
-        key: '5',
-        path: '/friends',
-      },
-      {
-        label: 'Challenges',
-        icon: <SettingOutlined style={{ fontSize: 16 }} />,
-        key: '6',
-        path: '/challenges',
-      },
-      {
-        label: 'Settings',
-        icon: <SettingOutlined style={{ fontSize: 16 }} />,
-        key: '7',
-        path: '/settings',
-      },
-      {
-        label: 'Logout',
-        icon: <LogoutOutlined style={{ fontSize: 16 }} />,
-        key: '8',
-        path: '/login',
-      },
-    ];
-
-    return allMenus.map((menu) => (
-      <Menu.Item key={menu.key} icon={menu.icon}>
-        <Link to={menu.path}>{menu.label}</Link>
-      </Menu.Item>
-    ));
-  };
+  const items: MenuItem[] = [
+    {
+      label: <Link to="/">Dashboard</Link>,
+      icon: <DashboardOutlined style={{ fontSize: 16 }} />,
+      key: '1',
+    },
+    {
+      label: <Link to="/courses">Courses</Link>,
+      icon: <BookOutlined style={{ fontSize: 16 }} />,
+      key: '2',
+    },
+    {
+      label: <Link to="/forum">Forum</Link>,
+      icon: <FileTextOutlined style={{ fontSize: 16 }} />,
+      key: '3',
+    },
+    {
+      label: <Link to="/notes">Notes</Link>,
+      icon: <TeamOutlined style={{ fontSize: 16 }} />,
+      key: '4',
+    },
+    {
+      label: <Link to="/friends">Friends</Link>,
+      icon: <SettingOutlined style={{ fontSize: 16 }} />,
+      key: '5',
+    },
+    {
+      label: <Link to="/challenges">Challenges</Link>,
+      icon: <SettingOutlined style={{ fontSize: 16 }} />,
+      key: '6',
+    },
+    {
+      label: <Link to="/settings">Settings</Link>,
+      icon: <SettingOutlined style={{ fontSize: 16 }} />,
+      key: '7',
+    },
+    {
+      label: <Link to="/logout">Logout</Link>,
+      icon: <LogoutOutlined style={{ fontSize: 16 }} />,
+      key: '8',
+    },
+  ];
 
   return (
     <Sider
@@ -88,10 +79,7 @@ const Sidebar = () => {
       collapsed={isCollapsed}
       onCollapse={toggleSidebar}
     >
-      <div
-        style={{ padding: '20px 0', backgroundColor: '#fff' }}
-        className="relative"
-      >
+      <div className="relative py-5 px-0 bg-light-bg">
         <Button
           type="primary"
           icon={isCollapsed ? <RightOutlined /> : <LeftOutlined />}
@@ -118,10 +106,8 @@ const Sidebar = () => {
         theme="light"
         mode="inline"
         defaultSelectedKeys={['1']}
-        // className="mt-10"
-      >
-        {renderMenu()}
-      </Menu>
+        items={items}
+      />
     </Sider>
   );
 };
