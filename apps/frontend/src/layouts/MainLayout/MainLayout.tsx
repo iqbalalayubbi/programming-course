@@ -8,7 +8,7 @@ const MainLayout = () => {
   return (
     <Layout className="min-h-screen">
       <Sidebar />
-      <Layout className="bg-gray-200">
+      <Layout className="bg-gray-100">
         <Content>
           <Outlet />
         </Content>
