@@ -106,7 +106,10 @@ const Sidebar = () => {
           className="absolute -right-5 z-20"
         />
         <Flex align="center" vertical gap={16}>
-          <Avatar size={40} icon={<img src={sidebarAvatar} />} />
+          <Avatar
+            size={isCollapsed ? 40 : 80}
+            icon={<img src={sidebarAvatar} />}
+          />
           <Flex
             align="center"
             gap={8}
@@ -114,7 +117,7 @@ const Sidebar = () => {
             className={`${isCollapsed ? 'hidden' : 'flex'}`}
           >
             <h1 className="text-xl font-medium">Steve Smith</h1>
-            <p className="bg-secondary text-light-text text-sm rounded-md px-3">
+            <p className="bg-secondary text-light-text text-sm rounded-full px-3">
               STUDENT
             </p>
           </Flex>
