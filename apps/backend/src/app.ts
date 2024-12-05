@@ -1,6 +1,6 @@
 import '@/config';
 import express, { Application } from 'express';
-import { authRoutes } from '@/routes';
+import { authRoutes, skillRoutes } from '@/routes';
 import session from 'express-session';
 
 const app: Application = express();
@@ -21,5 +21,6 @@ app.use(session(sessionConfig));
 
 // routes
 app.use('/auth', authRoutes);
+app.use('/skills', skillRoutes);
 
 export { app };
