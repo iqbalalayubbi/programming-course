@@ -1,5 +1,13 @@
+import { Flex } from 'antd';
+import { AsideContent, MainContent } from './libs/components';
+
 const Dashboard = () => {
-  return <h1>Dashboard Page</h1>;
+  return (
+    <Flex className="h-screen">
+      <MainContent />
+      <AsideContent />
+    </Flex>
+  );
 };
 
 export { Dashboard };

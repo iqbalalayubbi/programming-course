@@ -8,11 +8,10 @@ const MainLayout = () => {
   return (
     <Layout className="min-h-screen">
       <Sidebar />
-      <Layout>
-        <Content className="mx-10">
+      <Layout className="bg-gray-200">
+        <Content>
           <Outlet />
         </Content>
-        {/* <Footer style={{ textAlign: 'center' }}>Footer</Footer> */}
       </Layout>
     </Layout>
   );
