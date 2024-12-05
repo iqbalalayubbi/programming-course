@@ -11,7 +11,13 @@ type FieldType =
 type ServiceResponse = {
   isSuccess: boolean;
   error?: { field: FieldType; message: string };
-  data?: { user?: UserModel; token?: string; skill?: SkillModel };
+  data?: {
+    user?: UserModel;
+    token?: string;
+    skill?: SkillModel;
+    skills?: SkillModel[];
+    users?: UserModel[];
+  };
 };
 
 export { type ServiceResponse };

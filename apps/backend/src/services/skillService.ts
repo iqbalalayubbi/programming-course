@@ -36,6 +36,42 @@ class SkillService {
       };
     }
   }
+
+  async getSkills(): Promise<ServiceResponse> {
+    try {
+      const skills = await this.skillModel.findMany();
+      return {
+        isSuccess: true,
+        data: { skills },
+      };
+    } catch {
+      return {
+        isSuccess: false,
+        error: { field: 'skill', message: 'Failed to get skills' },
+      };
+    }
+  }
+
+  async getById(id: number): Promise<ServiceResponse> {
+    try {
+      const skill = await this.skillModel.findUnique({ where: { id } });
+      if (!skill) {
+        return {
+          isSuccess: false,
+          error: { field: 'skill', message: 'Skill not found' },
+        };
+      }
+      return {
+        isSuccess: true,
+        data: { skill },
+      };
+    } catch {
+      return {
+        isSuccess: false,
+        error: { field: 'skill', message: 'Failed to get skill' },
+      };
+    }
+  }
 }
 
 export { SkillService };
