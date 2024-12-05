@@ -1,5 +1,5 @@
 import { Flex, Layout } from 'antd';
-import { FriendCard } from './components';
+import { FriendCard, TaskCard } from './components';
 
 const { Content } = Layout;
 
@@ -10,6 +10,12 @@ const AsideContent = () => {
       <Flex align="center" gap={16} vertical>
         <FriendCard />
         <FriendCard />
+      </Flex>
+      <h1>Calendar Component Here</h1>
+      <h1 className="text-2xl font-semibold mx-3 mb-3">Tasks</h1>
+      <Flex align="center" gap={16} vertical>
+        <TaskCard />
+        <TaskCard />
       </Flex>
     </Content>
   );
