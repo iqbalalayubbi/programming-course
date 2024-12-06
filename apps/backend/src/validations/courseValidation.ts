@@ -9,4 +9,12 @@ const createCourseSchema: ObjectSchema = Joi.object({
   thumbnail_url: Joi.string().uri().required(),
 });
 
-export { createCourseSchema };
+const updateCourseSchema: ObjectSchema = Joi.object({
+  title: Joi.string(),
+  description: Joi.string(),
+  star_total: Joi.number().integer(),
+  is_certificate_exist: Joi.boolean(),
+  thumbnail_url: Joi.string().uri(),
+});
+
+export { createCourseSchema, updateCourseSchema };

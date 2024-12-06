@@ -30,6 +30,27 @@ class CourseService {
       };
     }
   }
+
+  async update(id: number, data: CourseModel): Promise<ServiceResponse> {
+    try {
+      const course = await this.courseModel.update({
+        where: { id },
+        data,
+      });
+      return {
+        isSuccess: true,
+        data: { course },
+      };
+    } catch {
+      return {
+        isSuccess: false,
+        error: {
+          field: 'course',
+          message: 'Failed to update course',
+        },
+      };
+    }
+  }
 }
 
 export { CourseService };
