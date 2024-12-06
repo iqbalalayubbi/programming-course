@@ -7,6 +7,7 @@ import { MailerService } from './mailerService';
 import { OtpService } from './otpService';
 import { SkillService } from './skillService';
 import { UserSkillService } from './userSkillService';
+import { CourseService } from './courseService';
 
 const prismaClient = new PrismaClient();
 const jwtService = new JwtService();
@@ -14,6 +15,7 @@ const userService = new UserService({ prismaClient });
 const passwordService = new PasswordService();
 const mailerService = new MailerService();
 const otpService = new OtpService({ prismaClient });
+const courseService = new CourseService({ prismaClient });
 
 const skillService = new SkillService({ prismaClient });
 const userSkillService = new UserSkillService({ prismaClient });
@@ -25,5 +27,11 @@ const authService = new AuthService({
   otpService,
 });
 
-export { authService, skillService, userSkillService };
+export {
+  authService,
+  skillService,
+  userSkillService,
+  courseService,
+  jwtService,
+};
 export * from './types';

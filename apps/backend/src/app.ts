@@ -1,6 +1,11 @@
 import '@/config';
 import express, { Application } from 'express';
-import { authRoutes, skillRoutes, userSkillRoutes } from '@/routes';
+import {
+  authRoutes,
+  courseRoutes,
+  skillRoutes,
+  userSkillRoutes,
+} from '@/routes';
 import session from 'express-session';
 
 const app: Application = express();
@@ -23,5 +28,6 @@ app.use(session(sessionConfig));
 app.use('/auth', authRoutes);
 app.use('/skills', skillRoutes);
 app.use('/user-skills', userSkillRoutes);
+app.use('/courses', courseRoutes);
 
 export { app };

@@ -1,12 +1,14 @@
-import { UserModel, SkillModel, UserSkillModel } from '@/models';
+import { UserModel, SkillModel, UserSkillModel, CourseModel } from '@/models';
 
 type FieldType =
   | keyof UserModel
   | keyof SkillModel
+  | keyof CourseModel
   | 'token'
   | 'user'
   | 'otp'
-  | 'skill';
+  | 'skill'
+  | 'course';
 
 type ServiceResponse = {
   isSuccess: boolean;
@@ -18,6 +20,8 @@ type ServiceResponse = {
     users?: UserModel[];
     userSkill?: UserSkillModel;
     userSkills?: UserSkillModel[];
+    course?: CourseModel;
+    courses?: CourseModel;
     token?: string;
   };
 };
