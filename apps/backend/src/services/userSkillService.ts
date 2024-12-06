@@ -14,13 +14,7 @@ class UserSkillService {
 
   async create(userId: number, skillId: number): Promise<ServiceResponse> {
     try {
-      const parseUserId = Number(userId);
-      const parseSkillId = Number(skillId);
-
-      const hasDuplicateSkill = await this.isSkillDuplicate(
-        parseUserId,
-        parseSkillId,
-      );
+      const hasDuplicateSkill = await this.isSkillDuplicate(userId, skillId);
       if (hasDuplicateSkill) {
         return {
           isSuccess: false,
@@ -30,8 +24,8 @@ class UserSkillService {
 
       const userSkill = await this.userSkillModel.create({
         data: {
-          user_id: parseUserId,
-          skill_id: parseSkillId,
+          user_id: userId,
+          skill_id: skillId,
         },
       });
 
