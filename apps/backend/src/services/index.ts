@@ -16,7 +16,7 @@ const mailerService = new MailerService();
 const otpService = new OtpService({ prismaClient });
 
 const skillService = new SkillService({ prismaClient });
-const userSkillService = new UserSkillService({ prismaClient });
+const userSkillService = new UserSkillService({ prismaClient, skillService });
 const authService = new AuthService({
   userService,
   jwtService,

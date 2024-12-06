@@ -17,6 +17,7 @@ type ServiceResponse = {
     user?: UserModel;
     users?: UserModel[];
     userSkill?: UserSkillModel;
+    userSkills?: UserSkillModel[];
     token?: string;
   };
 };

@@ -11,4 +11,6 @@ router.post(
   userSkillController.createUserSkill,
 );
 
+router.get('/', userSkillController.getUserSkills);
+
 export { router };

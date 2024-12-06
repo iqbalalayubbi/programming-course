@@ -1,15 +1,19 @@
 import { PrismaClient } from '@prisma/client';
 import { ServiceResponse } from './types';
+import { SkillService } from './skillService';
 
 type Constructor = {
   prismaClient: PrismaClient;
+  skillService: SkillService;
 };
 
 class UserSkillService {
+  private skillService: SkillService;
   private userSkillModel: PrismaClient['userSkill'];
 
-  public constructor({ prismaClient }: Constructor) {
+  public constructor({ prismaClient, skillService }: Constructor) {
     this.userSkillModel = prismaClient.userSkill;
+    this.skillService = skillService;
   }
 
   async create(userId: number, skillId: number): Promise<ServiceResponse> {
@@ -53,6 +57,23 @@ class UserSkillService {
     } catch {
       return false;
     }
+  }
+
+  async findUserSkill(username: string): Promise<ServiceResponse> {
+    const { isSuccess, data, error } =
+      await this.skillService.getByUsername(username);
+
+    if (isSuccess && data) {
+      return {
+        isSuccess: true,
+        data: { skills: data.skills },
+      };
+    }
+
+    return {
+      isSuccess: false,
+      error,
+    };
   }
 }
 

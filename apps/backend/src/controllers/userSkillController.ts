@@ -36,6 +36,38 @@ class UserSkillController {
       message: 'Error creating user skill',
     });
   }
+
+  async getUserSkills(req: Request, res: Response) {
+    const { username } = req.query;
+
+    const { isSuccess, data, error } = await userSkillService.findUserSkill(
+      username as string,
+    );
+
+    if (isSuccess && data) {
+      return formatResponse({
+        res,
+        statusCode: StatusCode.OK,
+        message: 'User skills retrieved successfully',
+        data: { skills: data.skills },
+      });
+    }
+
+    if (error) {
+      return formatResponse({
+        res,
+        statusCode: StatusCode.NOT_FOUND,
+        message: error.message,
+        errors: [error],
+      });
+    }
+
+    return formatResponse({
+      res,
+      statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+      message: 'error get user skills',
+    });
+  }
 }
 
 export { UserSkillController };
