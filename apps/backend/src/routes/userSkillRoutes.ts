@@ -1,6 +1,10 @@
 import { userSkillController } from '@/controllers';
 import { validate } from '@/middlewares';
-import { createUserSkillSchema } from '@/validations';
+import {
+  createUserSkillSchema,
+  deleteUserSkillsSchema,
+  getUserSkillSchema,
+} from '@/validations';
 import express from 'express';
 
 const router = express.Router();
@@ -11,7 +15,16 @@ router.post(
   userSkillController.createUserSkill,
 );
 
-router.get('/', userSkillController.getUserSkills);
-router.delete('/', userSkillController.deleteUserSkills);
+router.get(
+  '/',
+  validate(getUserSkillSchema),
+  userSkillController.getUserSkills,
+);
+
+router.delete(
+  '/',
+  validate(deleteUserSkillsSchema),
+  userSkillController.deleteUserSkills,
+);
 
 export { router };

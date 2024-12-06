@@ -5,4 +5,12 @@ const createUserSkillSchema: ObjectSchema = Joi.object({
   skill: Joi.string().required(),
 });
 
-export { createUserSkillSchema };
+const getUserSkillSchema: ObjectSchema = Joi.object({
+  username: Joi.string().required(),
+});
+
+const deleteUserSkillsSchema: ObjectSchema = Joi.object({
+  ids: Joi.array().items(Joi.number().strict()).required(),
+});
+
+export { createUserSkillSchema, getUserSkillSchema, deleteUserSkillsSchema };
