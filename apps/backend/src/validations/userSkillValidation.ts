@@ -1,8 +1,8 @@
 import Joi, { ObjectSchema } from 'joi';
 
 const createUserSkillSchema: ObjectSchema = Joi.object({
-  skillId: Joi.number().integer().strict().required(),
-  userId: Joi.number().integer().strict().required(),
+  username: Joi.string().required(),
+  skill: Joi.string().required(),
 });
 
 export { createUserSkillSchema };

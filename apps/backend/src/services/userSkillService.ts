@@ -1,24 +1,20 @@
 import { PrismaClient } from '@prisma/client';
 import { ServiceResponse } from './types';
-import { SkillService } from './skillService';
 
 type Constructor = {
   prismaClient: PrismaClient;
-  skillService: SkillService;
 };
 
 class UserSkillService {
-  private skillService: SkillService;
   private userSkillModel: PrismaClient['userSkill'];
 
-  public constructor({ prismaClient, skillService }: Constructor) {
+  public constructor({ prismaClient }: Constructor) {
     this.userSkillModel = prismaClient.userSkill;
-    this.skillService = skillService;
   }
 
-  async create(userId: number, skillId: number): Promise<ServiceResponse> {
+  async create(username: string, skill: string): Promise<ServiceResponse> {
     try {
-      const hasDuplicateSkill = await this.isSkillDuplicate(userId, skillId);
+      const hasDuplicateSkill = await this.isSkillDuplicate(username, skill);
       if (hasDuplicateSkill) {
         return {
           isSuccess: false,
@@ -28,8 +24,8 @@ class UserSkillService {
 
       const userSkill = await this.userSkillModel.create({
         data: {
-          user_id: userId,
-          skill_id: skillId,
+          user_username: username,
+          skill_name: skill,
         },
       });
 
@@ -45,12 +41,12 @@ class UserSkillService {
     }
   }
 
-  async isSkillDuplicate(userId: number, skillId: number): Promise<boolean> {
+  async isSkillDuplicate(username: string, skill: string): Promise<boolean> {
     try {
       const count = await this.userSkillModel.count({
         where: {
-          user_id: userId,
-          skill_id: skillId,
+          user_username: username,
+          skill_name: skill,
         },
       });
       return count > 0;
@@ -59,21 +55,29 @@ class UserSkillService {
     }
   }
 
-  async findUserSkill(username: string): Promise<ServiceResponse> {
-    const { isSuccess, data, error } =
-      await this.skillService.getByUsername(username);
+  async findUserSkills(username: string): Promise<ServiceResponse> {
+    try {
+      const userSkills = await this.userSkillModel.findMany({
+        where: { user_username: username },
+      });
 
-    if (isSuccess && data) {
+      if (userSkills.length === 0) {
+        return {
+          isSuccess: false,
+          error: { field: 'skill', message: 'User has no skills' },
+        };
+      }
+
       return {
         isSuccess: true,
-        data: { skills: data.skills },
+        data: { userSkills },
+      };
+    } catch {
+      return {
+        isSuccess: false,
+        error: { field: 'user', message: 'User not found' },
       };
     }
-
-    return {
-      isSuccess: false,
-      error,
-    };
   }
 }
 

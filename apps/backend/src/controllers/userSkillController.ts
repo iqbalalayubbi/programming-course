@@ -5,11 +5,11 @@ import { StatusCode } from 'common';
 
 class UserSkillController {
   async createUserSkill(req: Request, res: Response) {
-    const { userId, skillId } = req.body;
+    const { username, skill } = req.body;
 
     const { isSuccess, data, error } = await userSkillService.create(
-      userId,
-      skillId,
+      username,
+      skill,
     );
 
     if (isSuccess && data) {
@@ -40,7 +40,7 @@ class UserSkillController {
   async getUserSkills(req: Request, res: Response) {
     const { username } = req.query;
 
-    const { isSuccess, data, error } = await userSkillService.findUserSkill(
+    const { isSuccess, data, error } = await userSkillService.findUserSkills(
       username as string,
     );
 
@@ -49,7 +49,7 @@ class UserSkillController {
         res,
         statusCode: StatusCode.OK,
         message: 'User skills retrieved successfully',
-        data: { skills: data.skills },
+        data: { userSkills: data.userSkills },
       });
     }
 

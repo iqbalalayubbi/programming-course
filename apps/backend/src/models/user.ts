@@ -1,3 +1,5 @@
+import { Skill } from './skill';
+
 type User = {
   id: number;
   username: string;
@@ -14,6 +16,7 @@ type User = {
   is_verified: boolean;
   createdAt: Date;
   updatedAt: Date;
+  skills?: Skill[];
 };
 
 export { User };

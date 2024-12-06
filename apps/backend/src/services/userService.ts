@@ -11,6 +11,8 @@ type FindType = {
   value: string | number;
 };
 
+type UserWithoutSkills = Omit<UserModel, 'skills'>;
+
 class UserService {
   private userModel: PrismaClient['user'];
 
@@ -87,7 +89,7 @@ class UserService {
     }
   }
 
-  async create(data: UserModel): Promise<ServiceResponse> {
+  async create(data: UserWithoutSkills): Promise<ServiceResponse> {
     try {
       const newUser = await this.userModel.create({
         data,
@@ -108,7 +110,7 @@ class UserService {
     }
   }
 
-  async update(id: number, data: UserModel): Promise<ServiceResponse> {
+  async update(id: number, data: UserWithoutSkills): Promise<ServiceResponse> {
     try {
       const updatedUser = await this.userModel.update({
         where: { id },

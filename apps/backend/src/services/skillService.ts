@@ -72,39 +72,6 @@ class SkillService {
       };
     }
   }
-
-  async getByUsername(username: string): Promise<ServiceResponse> {
-    try {
-      const skills = await this.skillModel.findMany({
-        where: {
-          users: {
-            some: {
-              user: {
-                username,
-              },
-            },
-          },
-        },
-      });
-
-      if (skills.length === 0) {
-        return {
-          isSuccess: false,
-          error: { field: 'skill', message: 'User does not have any skills' },
-        };
-      }
-
-      return {
-        isSuccess: true,
-        data: { skills },
-      };
-    } catch {
-      return {
-        isSuccess: false,
-        error: { field: 'user', message: 'Failed to get skills by username' },
-      };
-    }
-  }
 }
 
 export { SkillService };
