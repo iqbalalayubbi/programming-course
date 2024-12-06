@@ -16,5 +16,6 @@ router.patch(
   validate(updateCourseSchema),
   courseController.updateCourse,
 );
+router.get('/', courseController.getAllCourses);
 
 export { router };

@@ -51,6 +51,24 @@ class CourseService {
       };
     }
   }
+
+  async getAll(): Promise<ServiceResponse> {
+    try {
+      const courses = await this.courseModel.findMany();
+      return {
+        isSuccess: true,
+        data: { courses },
+      };
+    } catch {
+      return {
+        isSuccess: false,
+        error: {
+          field: 'course',
+          message: 'Failed to get courses',
+        },
+      };
+    }
+  }
 }
 
 export { CourseService };

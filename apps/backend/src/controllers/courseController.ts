@@ -15,6 +15,7 @@ class CourseController {
 
     this.createCourse = this.createCourse.bind(this);
     this.updateCourse = this.updateCourse.bind(this);
+    this.getAllCourses = this.getAllCourses.bind(this);
   }
 
   async createCourse(req: Request, res: Response) {
@@ -83,6 +84,37 @@ class CourseController {
       res,
       statusCode: StatusCode.INTERNAL_SERVER_ERROR,
       message: 'Failed to update course',
+    });
+  }
+
+  async getAllCourses(req: Request, res: Response) {
+    const {
+      isSuccess,
+      error,
+      data: courses,
+    } = await this.courseService.getAll();
+
+    if (isSuccess && courses) {
+      return formatResponse({
+        res,
+        statusCode: StatusCode.OK,
+        message: 'Courses retrieved successfully',
+        data: courses,
+      });
+    }
+
+    if (error) {
+      return formatResponse({
+        res,
+        statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+        message: error.message,
+      });
+    }
+
+    return formatResponse({
+      res,
+      statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+      message: 'Failed to retrieve courses',
     });
   }
 }

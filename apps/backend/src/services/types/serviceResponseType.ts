@@ -21,7 +21,7 @@ type ServiceResponse = {
     userSkill?: UserSkillModel;
     userSkills?: UserSkillModel[];
     course?: CourseModel;
-    courses?: CourseModel;
+    courses?: CourseModel[];
     token?: string;
   };
 };
