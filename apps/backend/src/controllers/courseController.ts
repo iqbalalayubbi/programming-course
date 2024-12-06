@@ -16,6 +16,7 @@ class CourseController {
     this.createCourse = this.createCourse.bind(this);
     this.updateCourse = this.updateCourse.bind(this);
     this.getAllCourses = this.getAllCourses.bind(this);
+    this.getCourseById = this.getCourseById.bind(this);
   }
 
   async createCourse(req: Request, res: Response) {
@@ -115,6 +116,40 @@ class CourseController {
       res,
       statusCode: StatusCode.INTERNAL_SERVER_ERROR,
       message: 'Failed to retrieve courses',
+    });
+  }
+
+  async getCourseById(req: Request, res: Response) {
+    const { id } = req.params;
+
+    const {
+      isSuccess,
+      error,
+      data: course,
+    } = await this.courseService.getById(Number(id));
+
+    if (isSuccess && course) {
+      return formatResponse({
+        res,
+        statusCode: StatusCode.OK,
+        message: 'Course retrieved successfully',
+        data: { course },
+      });
+    }
+
+    if (error) {
+      return formatResponse({
+        res,
+        statusCode: StatusCode.NOT_FOUND,
+        message: error.message,
+        errors: [{ field: error.field, message: error.message }],
+      });
+    }
+
+    return formatResponse({
+      res,
+      statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+      message: 'Failed to retrieve course',
     });
   }
 }

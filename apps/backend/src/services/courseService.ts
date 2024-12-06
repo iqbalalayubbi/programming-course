@@ -69,6 +69,30 @@ class CourseService {
       };
     }
   }
+
+  async getById(id: number): Promise<ServiceResponse> {
+    try {
+      const course = await this.courseModel.findUnique({ where: { id } });
+      if (!course) {
+        return {
+          isSuccess: false,
+          error: { field: 'course', message: 'Course not found' },
+        };
+      }
+      return {
+        isSuccess: true,
+        data: { course },
+      };
+    } catch {
+      return {
+        isSuccess: false,
+        error: {
+          field: 'course',
+          message: 'Failed to get course by ID',
+        },
+      };
+    }
+  }
 }
 
 export { CourseService };

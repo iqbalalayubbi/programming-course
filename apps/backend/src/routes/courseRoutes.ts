@@ -17,5 +17,6 @@ router.patch(
   courseController.updateCourse,
 );
 router.get('/', courseController.getAllCourses);
+router.get('/:id', courseController.getCourseById);
 
 export { router };
