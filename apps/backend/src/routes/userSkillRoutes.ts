@@ -12,5 +12,6 @@ router.post(
 );
 
 router.get('/', userSkillController.getUserSkills);
+router.delete('/', userSkillController.deleteUserSkills);
 
 export { router };

@@ -79,6 +79,30 @@ class UserSkillService {
       };
     }
   }
+
+  async deleteUserSkills(ids: number[]): Promise<ServiceResponse> {
+    try {
+      const deletedUserSkills = await this.userSkillModel.deleteMany({
+        where: { id: { in: ids } },
+      });
+
+      if (!deletedUserSkills) {
+        return {
+          isSuccess: false,
+          error: { field: 'skill', message: 'User skill not found' },
+        };
+      }
+
+      return {
+        isSuccess: true,
+      };
+    } catch {
+      return {
+        isSuccess: false,
+        error: { field: 'skill', message: 'Failed to delete user skill' },
+      };
+    }
+  }
 }
 
 export { UserSkillService };

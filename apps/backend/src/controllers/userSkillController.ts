@@ -68,6 +68,35 @@ class UserSkillController {
       message: 'error get user skills',
     });
   }
+
+  async deleteUserSkills(req: Request, res: Response) {
+    const { ids } = req.body;
+
+    const { isSuccess, error } = await userSkillService.deleteUserSkills(ids);
+
+    if (isSuccess) {
+      return formatResponse({
+        res,
+        statusCode: StatusCode.OK,
+        message: 'User skills deleted successfully',
+      });
+    }
+
+    if (error) {
+      return formatResponse({
+        res,
+        statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+        message: error.message,
+        errors: [{ field: error.field, message: error.message }],
+      });
+    }
+
+    return formatResponse({
+      res,
+      statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+      message: 'Error deleting user skills',
+    });
+  }
 }
 
 export { UserSkillController };
