@@ -42,7 +42,6 @@ class CourseContentService {
     data: CourseContentModel,
   ): Promise<ServiceResponse> {
     try {
-      console.log(courseContentId);
       const updatedCourseContent = await this.courseContentModel.update({
         where: { id: courseContentId },
         data,

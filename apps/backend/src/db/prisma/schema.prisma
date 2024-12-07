@@ -62,7 +62,7 @@ model Course{
 model CourseContent{
   id Int @id @default(autoincrement())
   course_id Int
-  page_id Int
+  page Int
   content String @db.LongText
   video_url String
   createdAt DateTime @default(now())
