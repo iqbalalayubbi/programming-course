@@ -1,0 +1,55 @@
+import { CourseContentServiceType } from '@/services';
+import { formatResponse } from '@/utils';
+import { StatusCode } from 'common';
+import { Request, Response } from 'express';
+
+type Constructor = {
+  courseContentService: CourseContentServiceType;
+};
+
+class CourseContentController {
+  private courseContentService: CourseContentServiceType;
+
+  public constructor({ courseContentService }: Constructor) {
+    this.courseContentService = courseContentService;
+
+    this.createCourseContent = this.createCourseContent.bind(this);
+  }
+
+  async createCourseContent(req: Request, res: Response) {
+    const data = req.body;
+    const { courseId } = req.params;
+
+    const {
+      isSuccess,
+      data: courseContent,
+      error,
+    } = await this.courseContentService.create(Number(courseId), data);
+
+    if (isSuccess && data) {
+      return formatResponse({
+        res,
+        statusCode: StatusCode.CREATED,
+        message: 'Course content created successfully',
+        data: courseContent,
+      });
+    }
+
+    if (error) {
+      return formatResponse({
+        res,
+        statusCode: StatusCode.BAD_REQUEST,
+        message: error.message,
+        errors: [{ field: error.field, message: error.message }],
+      });
+    }
+
+    return formatResponse({
+      res,
+      statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+      message: 'Failed to create course content',
+    });
+  }
+}
+
+export { CourseContentController };

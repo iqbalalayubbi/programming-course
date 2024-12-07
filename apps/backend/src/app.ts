@@ -2,6 +2,7 @@ import '@/config';
 import express, { Application } from 'express';
 import {
   authRoutes,
+  courseContentRoutes,
   courseRoutes,
   skillRoutes,
   userSkillRoutes,
@@ -29,5 +30,7 @@ app.use('/auth', authRoutes);
 app.use('/skills', skillRoutes);
 app.use('/user-skills', userSkillRoutes);
 app.use('/courses', courseRoutes);
+app.use('/courses', courseRoutes);
+app.use('/course-contents', courseContentRoutes);
 
 export { app };
