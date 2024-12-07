@@ -36,6 +36,32 @@ class CourseContentService {
       };
     }
   }
+
+  async update(
+    courseContentId: number,
+    data: CourseContentModel,
+  ): Promise<ServiceResponse> {
+    try {
+      console.log(courseContentId);
+      const updatedCourseContent = await this.courseContentModel.update({
+        where: { id: courseContentId },
+        data,
+      });
+      return {
+        isSuccess: true,
+        data: { courseContent: updatedCourseContent },
+      };
+    } catch (err) {
+      console.log(err);
+      return {
+        isSuccess: false,
+        error: {
+          field: 'content',
+          message: 'Failed to update course content',
+        },
+      };
+    }
+  }
 }
 
 export { CourseContentService };

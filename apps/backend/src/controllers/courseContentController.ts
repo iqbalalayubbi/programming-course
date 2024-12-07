@@ -14,6 +14,7 @@ class CourseContentController {
     this.courseContentService = courseContentService;
 
     this.createCourseContent = this.createCourseContent.bind(this);
+    this.updateCourseContent = this.updateCourseContent.bind(this);
   }
 
   async createCourseContent(req: Request, res: Response) {
@@ -48,6 +49,41 @@ class CourseContentController {
       res,
       statusCode: StatusCode.INTERNAL_SERVER_ERROR,
       message: 'Failed to create course content',
+    });
+  }
+
+  async updateCourseContent(req: Request, res: Response) {
+    const { courseContentId } = req.params;
+    const data = req.body;
+
+    const {
+      isSuccess,
+      data: updatedCourseContent,
+      error,
+    } = await this.courseContentService.update(Number(courseContentId), data);
+
+    if (isSuccess && updatedCourseContent) {
+      return formatResponse({
+        res,
+        statusCode: StatusCode.OK,
+        message: 'Course content updated successfully',
+        data: updatedCourseContent,
+      });
+    }
+
+    if (error) {
+      return formatResponse({
+        res,
+        statusCode: StatusCode.BAD_REQUEST,
+        message: error.message,
+        errors: [{ field: error.field, message: error.message }],
+      });
+    }
+
+    return formatResponse({
+      res,
+      statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+      message: 'Failed to update course content',
     });
   }
 }

@@ -7,4 +7,9 @@ const createCourseContentSchema: ObjectSchema = Joi.object({
   video_url: Joi.string().uri().required(),
 });
 
-export { createCourseContentSchema };
+const updateCourseContentSchema: ObjectSchema = Joi.object({
+  content: Joi.string(),
+  video_url: Joi.string().uri(),
+});
+
+export { createCourseContentSchema, updateCourseContentSchema };
