@@ -33,6 +33,27 @@ class StudentCourseService {
       };
     }
   }
+
+  async getAll(username: string): Promise<ServiceResponse> {
+    try {
+      const studentCourses = await this.studentCourseModel.findMany({
+        where: { user_username: username },
+      });
+
+      return {
+        isSuccess: true,
+        data: { studentCourses },
+      };
+    } catch {
+      return {
+        isSuccess: false,
+        error: {
+          field: 'course',
+          message: 'Failed to get student courses',
+        },
+      };
+    }
+  }
 }
 
 export { StudentCourseService };
