@@ -5,6 +5,7 @@ import {
   courseContentRoutes,
   courseRoutes,
   skillRoutes,
+  studentCourseRoutes,
   userSkillRoutes,
 } from '@/routes';
 import session from 'express-session';
@@ -30,7 +31,7 @@ app.use('/auth', authRoutes);
 app.use('/skills', skillRoutes);
 app.use('/user-skills', userSkillRoutes);
 app.use('/courses', courseRoutes);
-app.use('/courses', courseRoutes);
 app.use('/course-contents', courseContentRoutes);
+app.use('/student-courses', studentCourseRoutes);
 
 export { app };

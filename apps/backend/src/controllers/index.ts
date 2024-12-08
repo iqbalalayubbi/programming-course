@@ -4,6 +4,7 @@ import { SkillController } from './skillController';
 import { UserSkillController } from './userSkillController';
 import { CourseController } from './courseController';
 import { CourseContentController } from './courseContentController';
+import { StudentCourseController } from './studentCourseController';
 
 const skillController = new SkillController();
 const userSkillController = new UserSkillController();
@@ -12,6 +13,7 @@ const courseController = new CourseController({ courseService });
 const courseContentController = new CourseContentController({
   courseContentService,
 });
+const studentCourseController = new StudentCourseController();
 
 export {
   authController,
@@ -19,4 +21,5 @@ export {
   userSkillController,
   courseController,
   courseContentController,
+  studentCourseController,
 };

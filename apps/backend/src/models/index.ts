@@ -4,3 +4,4 @@ export { Skill as SkillModel } from './skill';
 export { UserSkill as UserSkillModel } from './userSkill';
 export { Course as CourseModel } from './course';
 export { CourseContent as CourseContentModel } from './courseContent';
+export { StudentCourse as StudentCourseModel } from './studentCourse';

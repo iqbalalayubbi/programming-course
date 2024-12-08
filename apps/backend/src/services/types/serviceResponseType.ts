@@ -4,6 +4,7 @@ import {
   UserSkillModel,
   CourseModel,
   CourseContentModel,
+  StudentCourseModel,
 } from '@/models';
 
 type FieldType =
@@ -11,6 +12,7 @@ type FieldType =
   | keyof SkillModel
   | keyof CourseModel
   | keyof CourseContentModel
+  | keyof StudentCourseModel
   | 'token'
   | 'user'
   | 'otp'
@@ -32,6 +34,8 @@ type ServiceResponse = {
     courses?: CourseModel[];
     courseContent?: CourseContentModel;
     contentContents?: CourseContentModel[];
+    studentCourse?: StudentCourseModel;
+    studentCourses?: StudentCourseModel[];
     token?: string;
   };
 };
