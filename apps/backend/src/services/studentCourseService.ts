@@ -6,6 +6,12 @@ type Constructor = {
   prismaClient: PrismaClient;
 };
 
+type UpdateType = {
+  id: number;
+  is_finished?: boolean;
+  certificate_url?: string;
+};
+
 class StudentCourseService {
   private studentCourseModel: PrismaClient['studentCourse'];
 
@@ -50,6 +56,28 @@ class StudentCourseService {
         error: {
           field: 'course',
           message: 'Failed to get student courses',
+        },
+      };
+    }
+  }
+
+  async update(data: UpdateType): Promise<ServiceResponse> {
+    try {
+      const updatedStudentCourse = await this.studentCourseModel.update({
+        where: { id: data.id },
+        data,
+      });
+
+      return {
+        isSuccess: true,
+        data: { studentCourse: updatedStudentCourse },
+      };
+    } catch {
+      return {
+        isSuccess: false,
+        error: {
+          field: 'course',
+          message: 'Failed to update student course',
         },
       };
     }

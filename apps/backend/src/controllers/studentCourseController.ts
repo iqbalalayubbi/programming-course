@@ -69,6 +69,41 @@ class StudentCourseController {
       message: 'Error retrieving student courses',
     });
   }
+
+  async updateStudentCourse(req: Request, res: Response) {
+    const { id } = req.params;
+    const data = { ...req.body, id: Number(id) };
+
+    const {
+      isSuccess,
+      error,
+      data: updatedStudentCourse,
+    } = await studentCourseService.update(data);
+
+    if (isSuccess) {
+      return formatResponse({
+        res,
+        statusCode: StatusCode.OK,
+        message: 'Student course updated successfully',
+        data: updatedStudentCourse,
+      });
+    }
+
+    if (error) {
+      return formatResponse({
+        res,
+        statusCode: StatusCode.BAD_REQUEST,
+        message: error.message,
+        errors: [{ field: error.field, message: error.message }],
+      });
+    }
+
+    return formatResponse({
+      res,
+      statusCode: 500,
+      message: 'Error updating student course',
+    });
+  }
 }
 
 export { StudentCourseController };
