@@ -32,7 +32,7 @@ const MainContent = () => {
           bordered={false}
           dataSource={data}
           renderItem={(item) => (
-            <List.Item className="hover:text-secondary hover:cursor-pointer">
+            <List.Item className="hover:px-3 hover:text-light-text hover:bg-primary hover:cursor-pointer">
               {item}
             </List.Item>
           )}
