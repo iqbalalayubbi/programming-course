@@ -1,4 +1,4 @@
-import { Auth, Dashboard, ResetPassword, VerifyOTP } from '@/pages';
+import { Auth, Courses, Dashboard, ResetPassword, VerifyOTP } from '@/pages';
 import { Routes, Route } from '@/components';
 import { MainLayout } from '@/layouts';
 
@@ -15,6 +15,7 @@ const App = () => {
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Dashboard />} />
+        <Route path="/courses" element={<Courses />} />
       </Route>
     </Routes>
   );
