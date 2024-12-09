@@ -1,4 +1,11 @@
-import { Auth, Courses, Dashboard, ResetPassword, VerifyOTP } from '@/pages';
+import {
+  Auth,
+  Courses,
+  Dashboard,
+  DetailCourse,
+  ResetPassword,
+  VerifyOTP,
+} from '@/pages';
 import { Routes, Route } from '@/components';
 import { MainLayout } from '@/layouts';
 
@@ -16,6 +23,7 @@ const App = () => {
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Dashboard />} />
         <Route path="/courses" element={<Courses />} />
+        <Route path="/courses/:id" element={<DetailCourse />} />
       </Route>
     </Routes>
   );
