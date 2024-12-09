@@ -1,4 +1,5 @@
 import { thumbnailExample } from '@/assets';
+import { SkillLabel } from '@/components';
 import { ArrowLeftOutlined, CaretRightOutlined } from '@ant-design/icons';
 import { Button, Collapse, CollapseProps, Flex, List } from 'antd';
 
@@ -56,33 +57,17 @@ const MainContent = () => {
       <Flex vertical>
         <h3 className="font-semibold text-xl my-3">Tech</h3>
         <Flex gap={16}>
-          <span className="bg-gray-500 text-white px-3 py-1 rounded-full">
-            Tailwind
-          </span>
-          <span className="bg-gray-500 text-white px-3 py-1 rounded-full">
-            Expresss
-          </span>
-          <span className="bg-gray-500 text-white px-3 py-1 rounded-full">
-            React
-          </span>
-          <span className="bg-gray-500 text-white px-3 py-1 rounded-full">
-            Node JS
-          </span>
+          <SkillLabel skillName="Tailwind" />
+          <SkillLabel skillName="Express" />
+          <SkillLabel skillName="React" />
+          <SkillLabel skillName="Node" />
         </Flex>
         <h3 className="font-semibold text-xl my-3">Prerequisite</h3>
         <Flex gap={16}>
-          <span className="bg-yellow-500 text-white px-3 py-1 rounded-full">
-            Javascript Fundamental
-          </span>
-          <span className="bg-yellow-500 text-white px-3 py-1 rounded-full">
-            Basic Algorithm
-          </span>
-          <span className="bg-yellow-500 text-white px-3 py-1 rounded-full">
-            HTML
-          </span>
-          <span className="bg-yellow-500 text-white px-3 py-1 rounded-full">
-            CSS
-          </span>
+          <SkillLabel skillName="Javascript Fundamental" />
+          <SkillLabel skillName="Basic Algorithm" />
+          <SkillLabel skillName="HTML" />
+          <SkillLabel skillName="CSS" />
         </Flex>
         <Collapse
           bordered={false}
