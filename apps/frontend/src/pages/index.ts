@@ -5,3 +5,4 @@ export { Dashboard } from './Dashboard/Dashboard';
 export { Courses } from './Courses/Courses';
 export { DetailCourse } from './DetailCourse/DetailCourse';
 export { StudyRoom } from './StudyRoom/StudyRoom';
+export { Profile } from './Profile/Profile';

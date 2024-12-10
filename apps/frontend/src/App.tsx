@@ -3,6 +3,7 @@ import {
   Courses,
   Dashboard,
   DetailCourse,
+  Profile,
   ResetPassword,
   StudyRoom,
   VerifyOTP,
@@ -26,6 +27,7 @@ const App = () => {
         <Route path="/courses" element={<Courses />} />
         <Route path="/courses/:id" element={<DetailCourse />} />
         <Route path="/courses/:id/study" element={<StudyRoom />} />
+        <Route path="profile" element={<Profile />} />
       </Route>
     </Routes>
   );
