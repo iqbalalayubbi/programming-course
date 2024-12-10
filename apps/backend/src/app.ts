@@ -9,6 +9,7 @@ import {
   userSkillRoutes,
 } from '@/routes';
 import session from 'express-session';
+import cors from 'cors';
 
 const app: Application = express();
 const sessionConfig = {
@@ -25,6 +26,7 @@ const sessionConfig = {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session(sessionConfig));
+app.use(cors({ origin: process.env.CLIENT_ENDPOINT }));
 
 // routes
 app.use('/auth', authRoutes);
