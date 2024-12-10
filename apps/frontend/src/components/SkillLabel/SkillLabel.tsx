@@ -1,5 +1,5 @@
-import { variant } from './enums';
-import { type variantType } from './types';
+import { variant } from './libs/enums';
+import { type variantType } from './libs/types';
 
 type Properties = {
   skillName: string;
