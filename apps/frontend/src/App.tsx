@@ -4,6 +4,7 @@ import {
   Dashboard,
   DetailCourse,
   ResetPassword,
+  StudyRoom,
   VerifyOTP,
 } from '@/pages';
 import { Routes, Route } from '@/components';
@@ -24,6 +25,7 @@ const App = () => {
         <Route index element={<Dashboard />} />
         <Route path="/courses" element={<Courses />} />
         <Route path="/courses/:id" element={<DetailCourse />} />
+        <Route path="/courses/:id/study" element={<StudyRoom />} />
       </Route>
     </Routes>
   );
