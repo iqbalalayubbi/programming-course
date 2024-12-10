@@ -14,6 +14,7 @@ const CustomTheme: React.FC<Properties> = ({ children }: Properties) => {
           colorPrimary: colorPalette.PRIMARY,
           colorLinkHover: colorPalette.SECONDARY,
           colorSuccessText: colorPalette.PRIMARY,
+          colorLink: colorPalette.ACCENT,
         },
       }}
     >
