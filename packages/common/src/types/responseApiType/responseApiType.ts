@@ -37,7 +37,7 @@ type ResponseApiType = {
     contentContents?: CourseContentModel[];
     studentCourse?: StudentCourseModel;
     studentCourses?: StudentCourseModel[];
-    token?: string;
+    accessToken?: string;
   };
 };
 
