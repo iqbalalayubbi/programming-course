@@ -6,6 +6,7 @@ import {
   Profile,
   ResetPassword,
   StudyRoom,
+  VerifyEmail,
   VerifyOTP,
 } from '@/pages';
 import { Routes, Route } from '@/components';
@@ -22,6 +23,7 @@ const App = () => {
         element={<Auth pageName="forgot-password" />}
       />
       <Route path={appRoute.VERIFY_OTP} element={<VerifyOTP />} />
+      <Route path={appRoute.VERIFY_EMAIL} element={<VerifyEmail />} />
       <Route path={appRoute.RESET_PASSWORD} element={<ResetPassword />} />
       <Route path={appRoute.MAIN} element={<MainLayout />}>
         <Route index element={<Dashboard />} />

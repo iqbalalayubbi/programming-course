@@ -3,6 +3,7 @@ const appRoute = {
   REGISTER: '/register',
   FORGOT_PASSWORD: '/forgot-password',
   VERIFY_OTP: '/verify-otp',
+  VERIFY_EMAIL: '/verify-email',
   RESET_PASSWORD: '/reset-password',
   MAIN: '/',
   COURSES: '/courses',
