@@ -1,4 +1,4 @@
-const StatusCode = {
+const statusCode = {
   OK: 200,
   CREATED: 201,
   NOT_FOUND: 404,
@@ -13,4 +13,4 @@ const StatusCode = {
   PRECONDITION_FAILED: 412,
 };
 
-export { StatusCode };
+export { statusCode };

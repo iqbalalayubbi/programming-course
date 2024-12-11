@@ -10,6 +10,7 @@ import {
 } from '@/routes';
 import session from 'express-session';
 import cors from 'cors';
+import morgan from 'morgan';
 
 const app: Application = express();
 const sessionConfig = {
@@ -21,6 +22,9 @@ const sessionConfig = {
     secure: false,
   },
 };
+
+// logger
+app.use(morgan('tiny'));
 
 // middlewares
 app.use(express.json());

@@ -13,5 +13,5 @@ const E = {
   PRECONDITION_FAILED: 412
 };
 export {
-  E as StatusCode
+  E as statusCode
 };

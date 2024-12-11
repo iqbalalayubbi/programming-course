@@ -1,7 +1,7 @@
 import { skillService } from '@/services';
 import { Request, Response } from 'express';
 import { formatResponse } from '@/utils';
-import { StatusCode } from 'common';
+import { statusCode } from 'common';
 
 class SkillController {
   async createSkill(req: Request, res: Response) {
@@ -11,7 +11,7 @@ class SkillController {
     if (isSuccess && data) {
       return formatResponse({
         res,
-        statusCode: StatusCode.CREATED,
+        statusCode: statusCode.CREATED,
         message: 'Skill created successfully',
         data: { skill: data.skill },
       });
@@ -20,7 +20,7 @@ class SkillController {
     if (error) {
       return formatResponse({
         res,
-        statusCode: StatusCode.BAD_REQUEST,
+        statusCode: statusCode.BAD_REQUEST,
         message: error.message,
         errors: [{ field: error.field, message: error.message }],
       });
@@ -28,7 +28,7 @@ class SkillController {
 
     return formatResponse({
       res,
-      statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+      statusCode: statusCode.INTERNAL_SERVER_ERROR,
       message: 'Error creating skill',
     });
   }
@@ -39,7 +39,7 @@ class SkillController {
     if (isSuccess && data) {
       return formatResponse({
         res,
-        statusCode: StatusCode.OK,
+        statusCode: statusCode.OK,
         message: 'Skills retrieved successfully',
         data: { skills: data.skills },
       });
@@ -48,14 +48,14 @@ class SkillController {
     if (error) {
       return formatResponse({
         res,
-        statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+        statusCode: statusCode.INTERNAL_SERVER_ERROR,
         message: error.message,
       });
     }
 
     return formatResponse({
       res,
-      statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+      statusCode: statusCode.INTERNAL_SERVER_ERROR,
       message: 'Error retrieving skills',
     });
   }
@@ -68,7 +68,7 @@ class SkillController {
     if (isSuccess && data) {
       return formatResponse({
         res,
-        statusCode: StatusCode.OK,
+        statusCode: statusCode.OK,
         message: 'Skill retrieved successfully',
         data: { skill: data.skill },
       });
@@ -77,7 +77,7 @@ class SkillController {
     if (error) {
       return formatResponse({
         res,
-        statusCode: StatusCode.NOT_FOUND,
+        statusCode: statusCode.NOT_FOUND,
         message: error.message,
         errors: [{ field: error.field, message: error.message }],
       });
@@ -85,7 +85,7 @@ class SkillController {
 
     return formatResponse({
       res,
-      statusCode: StatusCode.NOT_FOUND,
+      statusCode: statusCode.NOT_FOUND,
       message: 'Skill not found',
     });
   }

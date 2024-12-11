@@ -1,1 +1,1 @@
-export { StatusCode } from './StatusCode';
+export { statusCode } from './statusCode';

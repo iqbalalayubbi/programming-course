@@ -1,4 +1,5 @@
 import axios, {
+  AxiosError,
   AxiosInstance,
   AxiosRequestConfig,
   AxiosResponse,
@@ -54,8 +55,12 @@ class ApiService {
     data: object,
     config?: AxiosRequestConfig,
   ): Promise<AxiosResponse> {
-    const response = await this.axiosInstance.post(url, data, config);
-    return response; // Mengembalikan data dari respons
+    try {
+      const response = await this.axiosInstance.post(url, data, config);
+      return response;
+    } catch (error) {
+      throw error as AxiosError;
+    }
   }
 
   public async put(

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { formatResponse } from '@/utils';
-import { StatusCode } from 'common';
+import { statusCode } from 'common';
 import { AuthServiceType } from '@/services';
 
 declare module 'express-session' {
@@ -31,7 +31,7 @@ class AuthController {
     if (isSuccess) {
       return formatResponse({
         res,
-        statusCode: StatusCode.CREATED,
+        statusCode: statusCode.CREATED,
         message: 'Email verify already sent successfully',
       });
     }
@@ -39,7 +39,7 @@ class AuthController {
     if (error) {
       return formatResponse({
         res,
-        statusCode: StatusCode.BAD_REQUEST,
+        statusCode: statusCode.BAD_REQUEST,
         message: error.message,
         errors: [
           {
@@ -52,7 +52,7 @@ class AuthController {
 
     return formatResponse({
       res,
-      statusCode: StatusCode.UNAUTHORIZED,
+      statusCode: statusCode.UNAUTHORIZED,
       message: 'Invalid credentials',
     });
   }
@@ -64,7 +64,7 @@ class AuthController {
     if (isSuccess) {
       return formatResponse({
         res,
-        statusCode: StatusCode.OK,
+        statusCode: statusCode.OK,
         message: 'Email verified successfully',
       });
     }
@@ -72,7 +72,7 @@ class AuthController {
     if (error) {
       return formatResponse({
         res,
-        statusCode: StatusCode.UNAUTHORIZED,
+        statusCode: statusCode.UNAUTHORIZED,
         message: error.message,
         errors: [
           {
@@ -85,7 +85,7 @@ class AuthController {
 
     return formatResponse({
       res,
-      statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+      statusCode: statusCode.INTERNAL_SERVER_ERROR,
       message: 'Failed to verify email',
     });
   }
@@ -104,7 +104,7 @@ class AuthController {
 
       return formatResponse({
         res,
-        statusCode: StatusCode.OK,
+        statusCode: statusCode.OK,
         message: 'Login successful',
         data: { accessToken: token },
       });
@@ -113,7 +113,7 @@ class AuthController {
     if (error) {
       return formatResponse({
         res,
-        statusCode: StatusCode.UNAUTHORIZED,
+        statusCode: statusCode.UNAUTHORIZED,
         message: error.message,
         errors: [
           {
@@ -126,7 +126,7 @@ class AuthController {
 
     return formatResponse({
       res,
-      statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+      statusCode: statusCode.INTERNAL_SERVER_ERROR,
       message: 'Failed to login',
     });
   }
@@ -139,7 +139,7 @@ class AuthController {
     if (isSuccess) {
       return formatResponse({
         res,
-        statusCode: StatusCode.OK,
+        statusCode: statusCode.OK,
         message: 'Reset password email sent successfully',
       });
     }
@@ -147,7 +147,7 @@ class AuthController {
     if (error) {
       return formatResponse({
         res,
-        statusCode: StatusCode.BAD_REQUEST,
+        statusCode: statusCode.BAD_REQUEST,
         message: error.message,
         errors: [
           {
@@ -160,7 +160,7 @@ class AuthController {
 
     return formatResponse({
       res,
-      statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+      statusCode: statusCode.INTERNAL_SERVER_ERROR,
       message: 'Failed to send forgot password email',
     });
   }
@@ -176,7 +176,7 @@ class AuthController {
     if (isSuccess) {
       return formatResponse({
         res,
-        statusCode: StatusCode.OK,
+        statusCode: statusCode.OK,
         message: 'Password reset successfully',
       });
     }
@@ -184,7 +184,7 @@ class AuthController {
     if (error) {
       return formatResponse({
         res,
-        statusCode: StatusCode.UNAUTHORIZED,
+        statusCode: statusCode.UNAUTHORIZED,
         message: error.message,
         errors: [{ field: error.field, message: error.message }],
       });
@@ -192,7 +192,7 @@ class AuthController {
 
     return formatResponse({
       res,
-      statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+      statusCode: statusCode.INTERNAL_SERVER_ERROR,
       message: 'Failed to reset password',
     });
   }
@@ -206,7 +206,7 @@ class AuthController {
     if (isSuccess) {
       return formatResponse({
         res,
-        statusCode: StatusCode.OK,
+        statusCode: statusCode.OK,
         message: 'User verified successfully',
         data,
       });
@@ -215,7 +215,7 @@ class AuthController {
     if (error) {
       return formatResponse({
         res,
-        statusCode: StatusCode.UNAUTHORIZED,
+        statusCode: statusCode.UNAUTHORIZED,
         message: error.message,
         errors: [{ field: error.field, message: error.message }],
       });
@@ -223,7 +223,7 @@ class AuthController {
 
     return formatResponse({
       res,
-      statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+      statusCode: statusCode.INTERNAL_SERVER_ERROR,
       message: 'Failed to verify user',
     });
   }
@@ -234,7 +234,7 @@ class AuthController {
         if (err) {
           return formatResponse({
             res,
-            statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+            statusCode: statusCode.INTERNAL_SERVER_ERROR,
             message: 'Error destroying session',
             errors: [{ field: 'session', message: 'Error destroying session' }],
           });
@@ -244,7 +244,7 @@ class AuthController {
 
     return formatResponse({
       res,
-      statusCode: StatusCode.OK,
+      statusCode: statusCode.OK,
       message: 'Logged out successfully',
     });
   }

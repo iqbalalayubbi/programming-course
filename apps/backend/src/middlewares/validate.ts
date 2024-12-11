@@ -1,3 +1,5 @@
+import { formatResponse } from '@/utils';
+import { statusCode } from 'common';
 import { Request, Response, NextFunction } from 'express';
 import { ObjectSchema } from 'joi';
 
@@ -7,11 +9,16 @@ const validate = (
   return (req: Request, res: Response, next: NextFunction) => {
     const { error } = schema.validate(req.body);
     if (error) {
-      return res.status(400).json({
-        error: error.details.map((detail) => ({
-          field: detail.path[0],
-          message: detail.message,
-        })),
+      const errors = error.details.map((detail) => ({
+        field: detail.path[0] as string,
+        message: detail.message,
+      }));
+
+      return formatResponse({
+        res,
+        message: 'validation error',
+        statusCode: statusCode.BAD_REQUEST,
+        errors,
       });
     }
     next();

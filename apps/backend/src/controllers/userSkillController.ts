@@ -1,7 +1,7 @@
 import { userSkillService } from '@/services';
 import { Request, Response } from 'express';
 import { formatResponse } from '@/utils';
-import { StatusCode } from 'common';
+import { statusCode } from 'common';
 
 class UserSkillController {
   async createUserSkill(req: Request, res: Response) {
@@ -15,7 +15,7 @@ class UserSkillController {
     if (isSuccess && data) {
       return formatResponse({
         res,
-        statusCode: StatusCode.CREATED,
+        statusCode: statusCode.CREATED,
         message: 'User skill created successfully',
         data: { userSkill: data.userSkill },
       });
@@ -24,7 +24,7 @@ class UserSkillController {
     if (error) {
       return formatResponse({
         res,
-        statusCode: StatusCode.BAD_REQUEST,
+        statusCode: statusCode.BAD_REQUEST,
         message: error.message,
         errors: [{ field: error.field, message: error.message }],
       });
@@ -32,7 +32,7 @@ class UserSkillController {
 
     return formatResponse({
       res,
-      statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+      statusCode: statusCode.INTERNAL_SERVER_ERROR,
       message: 'Error creating user skill',
     });
   }
@@ -47,7 +47,7 @@ class UserSkillController {
     if (isSuccess && data) {
       return formatResponse({
         res,
-        statusCode: StatusCode.OK,
+        statusCode: statusCode.OK,
         message: 'User skills retrieved successfully',
         data: { userSkills: data.userSkills },
       });
@@ -56,7 +56,7 @@ class UserSkillController {
     if (error) {
       return formatResponse({
         res,
-        statusCode: StatusCode.NOT_FOUND,
+        statusCode: statusCode.NOT_FOUND,
         message: error.message,
         errors: [error],
       });
@@ -64,7 +64,7 @@ class UserSkillController {
 
     return formatResponse({
       res,
-      statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+      statusCode: statusCode.INTERNAL_SERVER_ERROR,
       message: 'error get user skills',
     });
   }
@@ -77,7 +77,7 @@ class UserSkillController {
     if (isSuccess) {
       return formatResponse({
         res,
-        statusCode: StatusCode.OK,
+        statusCode: statusCode.OK,
         message: 'User skills deleted successfully',
       });
     }
@@ -85,7 +85,7 @@ class UserSkillController {
     if (error) {
       return formatResponse({
         res,
-        statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+        statusCode: statusCode.INTERNAL_SERVER_ERROR,
         message: error.message,
         errors: [{ field: error.field, message: error.message }],
       });
@@ -93,7 +93,7 @@ class UserSkillController {
 
     return formatResponse({
       res,
-      statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+      statusCode: statusCode.INTERNAL_SERVER_ERROR,
       message: 'Error deleting user skills',
     });
   }

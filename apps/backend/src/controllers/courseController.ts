@@ -1,6 +1,6 @@
 import { CourseServiceType } from '@/services';
 import { formatResponse } from '@/utils';
-import { StatusCode } from 'common';
+import { statusCode } from 'common';
 import { Request, Response } from 'express';
 
 type Constructor = {
@@ -31,7 +31,7 @@ class CourseController {
     if (isSuccess && data) {
       return formatResponse({
         res,
-        statusCode: StatusCode.CREATED,
+        statusCode: statusCode.CREATED,
         message: 'Course created successfully',
         data: { course },
       });
@@ -40,7 +40,7 @@ class CourseController {
     if (error) {
       return formatResponse({
         res,
-        statusCode: StatusCode.BAD_REQUEST,
+        statusCode: statusCode.BAD_REQUEST,
         message: error.message,
         errors: [{ field: error.field, message: error.message }],
       });
@@ -48,7 +48,7 @@ class CourseController {
 
     return formatResponse({
       res,
-      statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+      statusCode: statusCode.INTERNAL_SERVER_ERROR,
       message: 'Failed to create course',
     });
   }
@@ -66,7 +66,7 @@ class CourseController {
     if (isSuccess && updatedCourse) {
       return formatResponse({
         res,
-        statusCode: StatusCode.OK,
+        statusCode: statusCode.OK,
         message: 'Course updated successfully',
         data: { course: updatedCourse },
       });
@@ -75,7 +75,7 @@ class CourseController {
     if (error) {
       return formatResponse({
         res,
-        statusCode: StatusCode.BAD_REQUEST,
+        statusCode: statusCode.BAD_REQUEST,
         message: error.message,
         errors: [{ field: error.field, message: error.message }],
       });
@@ -83,7 +83,7 @@ class CourseController {
 
     return formatResponse({
       res,
-      statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+      statusCode: statusCode.INTERNAL_SERVER_ERROR,
       message: 'Failed to update course',
     });
   }
@@ -98,7 +98,7 @@ class CourseController {
     if (isSuccess && courses) {
       return formatResponse({
         res,
-        statusCode: StatusCode.OK,
+        statusCode: statusCode.OK,
         message: 'Courses retrieved successfully',
         data: courses,
       });
@@ -107,14 +107,14 @@ class CourseController {
     if (error) {
       return formatResponse({
         res,
-        statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+        statusCode: statusCode.INTERNAL_SERVER_ERROR,
         message: error.message,
       });
     }
 
     return formatResponse({
       res,
-      statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+      statusCode: statusCode.INTERNAL_SERVER_ERROR,
       message: 'Failed to retrieve courses',
     });
   }
@@ -131,7 +131,7 @@ class CourseController {
     if (isSuccess && course) {
       return formatResponse({
         res,
-        statusCode: StatusCode.OK,
+        statusCode: statusCode.OK,
         message: 'Course retrieved successfully',
         data: { course },
       });
@@ -140,7 +140,7 @@ class CourseController {
     if (error) {
       return formatResponse({
         res,
-        statusCode: StatusCode.NOT_FOUND,
+        statusCode: statusCode.NOT_FOUND,
         message: error.message,
         errors: [{ field: error.field, message: error.message }],
       });
@@ -148,7 +148,7 @@ class CourseController {
 
     return formatResponse({
       res,
-      statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+      statusCode: statusCode.INTERNAL_SERVER_ERROR,
       message: 'Failed to retrieve course',
     });
   }

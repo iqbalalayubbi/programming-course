@@ -10,6 +10,7 @@
     "prepare": "husky",
     "common": "pnpm --filter common",
     "common:build": "pnpm --filter common build",
+    "common:watch": "pnpm --filter common build --watch",
     "frontend": "pnpm --filter frontend",
     "backend": "pnpm --filter backend"
   },

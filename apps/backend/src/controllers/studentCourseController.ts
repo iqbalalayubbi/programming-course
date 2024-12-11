@@ -1,6 +1,6 @@
 import { studentCourseService } from '@/services';
 import { formatResponse } from '@/utils';
-import { StatusCode } from 'common';
+import { statusCode } from 'common';
 import { Request, Response } from 'express';
 
 class StudentCourseController {
@@ -48,7 +48,7 @@ class StudentCourseController {
     if (isSuccess) {
       return formatResponse({
         res,
-        statusCode: StatusCode.OK,
+        statusCode: statusCode.OK,
         message: 'Student courses retrieved successfully',
         data: studentCourses,
       });
@@ -57,7 +57,7 @@ class StudentCourseController {
     if (error) {
       return formatResponse({
         res,
-        statusCode: StatusCode.BAD_REQUEST,
+        statusCode: statusCode.BAD_REQUEST,
         message: error.message,
         errors: [{ field: error.field, message: error.message }],
       });
@@ -83,7 +83,7 @@ class StudentCourseController {
     if (isSuccess) {
       return formatResponse({
         res,
-        statusCode: StatusCode.OK,
+        statusCode: statusCode.OK,
         message: 'Student course updated successfully',
         data: updatedStudentCourse,
       });
@@ -92,7 +92,7 @@ class StudentCourseController {
     if (error) {
       return formatResponse({
         res,
-        statusCode: StatusCode.BAD_REQUEST,
+        statusCode: statusCode.BAD_REQUEST,
         message: error.message,
         errors: [{ field: error.field, message: error.message }],
       });

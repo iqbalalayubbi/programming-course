@@ -22,8 +22,8 @@
     {
       "splitTerminals": [
         {
-          "name": "frontend-client",
-          "commands": ["pnpm frontend dev"]
+          "name": "backend-repo",
+          "commands": ["cd apps/backend"]
         }
       ]
     },
@@ -32,14 +32,18 @@
         {
           "name": "frontend-repo",
           "commands": ["cd apps/frontend"]
+        },
+        {
+          "name": "frontend-client",
+          "commands": ["pnpm frontend dev"]
         }
       ]
     },
     {
       "splitTerminals": [
         {
-          "name": "backend-repo",
-          "commands": ["cd apps/backend"]
+          "name": "common packages",
+          "commands": ["pnpm common:watch"]
         }
       ]
     },

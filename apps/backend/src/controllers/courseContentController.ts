@@ -1,6 +1,6 @@
 import { CourseContentServiceType } from '@/services';
 import { formatResponse } from '@/utils';
-import { StatusCode } from 'common';
+import { statusCode } from 'common';
 import { Request, Response } from 'express';
 
 type Constructor = {
@@ -30,7 +30,7 @@ class CourseContentController {
     if (isSuccess && data) {
       return formatResponse({
         res,
-        statusCode: StatusCode.CREATED,
+        statusCode: statusCode.CREATED,
         message: 'Course content created successfully',
         data: courseContent,
       });
@@ -39,7 +39,7 @@ class CourseContentController {
     if (error) {
       return formatResponse({
         res,
-        statusCode: StatusCode.BAD_REQUEST,
+        statusCode: statusCode.BAD_REQUEST,
         message: error.message,
         errors: [{ field: error.field, message: error.message }],
       });
@@ -47,7 +47,7 @@ class CourseContentController {
 
     return formatResponse({
       res,
-      statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+      statusCode: statusCode.INTERNAL_SERVER_ERROR,
       message: 'Failed to create course content',
     });
   }
@@ -65,7 +65,7 @@ class CourseContentController {
     if (isSuccess && updatedCourseContent) {
       return formatResponse({
         res,
-        statusCode: StatusCode.OK,
+        statusCode: statusCode.OK,
         message: 'Course content updated successfully',
         data: updatedCourseContent,
       });
@@ -74,7 +74,7 @@ class CourseContentController {
     if (error) {
       return formatResponse({
         res,
-        statusCode: StatusCode.BAD_REQUEST,
+        statusCode: statusCode.BAD_REQUEST,
         message: error.message,
         errors: [{ field: error.field, message: error.message }],
       });
@@ -82,7 +82,7 @@ class CourseContentController {
 
     return formatResponse({
       res,
-      statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+      statusCode: statusCode.INTERNAL_SERVER_ERROR,
       message: 'Failed to update course content',
     });
   }

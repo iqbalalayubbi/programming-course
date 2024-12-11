@@ -14,7 +14,7 @@ type ResponseType = {
 };
 
 type ResponseJsonType = {
-  success: boolean;
+  isSuccess: boolean;
   message: string;
   data?: object;
   errors?: Error[];
@@ -28,7 +28,7 @@ const formatResponse = ({
   errors,
 }: ResponseType) => {
   const isSuccess = statusCode === 200 || statusCode === 201;
-  const jsonResponse: ResponseJsonType = { success: isSuccess, message };
+  const jsonResponse: ResponseJsonType = { isSuccess: isSuccess, message };
 
   if (data) {
     jsonResponse.data = data;
