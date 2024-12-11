@@ -38,5 +38,6 @@ export {
   jwtService,
   courseContentService,
   studentCourseService,
+  userService,
 };
 export * from './types';

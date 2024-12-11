@@ -1,10 +1,16 @@
-import { authService, courseContentService, courseService } from '@/services';
+import {
+  authService,
+  courseContentService,
+  courseService,
+  userService,
+} from '@/services';
 import { AuthController } from './authController';
 import { SkillController } from './skillController';
 import { UserSkillController } from './userSkillController';
 import { CourseController } from './courseController';
 import { CourseContentController } from './courseContentController';
 import { StudentCourseController } from './studentCourseController';
+import { ProfileController } from './profileController';
 
 const skillController = new SkillController();
 const userSkillController = new UserSkillController();
@@ -14,6 +20,7 @@ const courseContentController = new CourseContentController({
   courseContentService,
 });
 const studentCourseController = new StudentCourseController();
+const profileController = new ProfileController({ userService });
 
 export {
   authController,
@@ -22,4 +29,5 @@ export {
   courseController,
   courseContentController,
   studentCourseController,
+  profileController,
 };
