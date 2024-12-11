@@ -7,4 +7,5 @@ export {
   Form,
   Input,
   Typography,
+  Modal,
 } from 'antd';

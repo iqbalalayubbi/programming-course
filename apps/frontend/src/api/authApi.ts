@@ -1,5 +1,7 @@
 import { apiPath } from '@/enums';
 import { ApiService } from './apiService';
+import { formatResponse } from '@/utils';
+import { type FormatResponseType } from '@/types';
 import { AxiosError, AxiosResponse } from 'axios';
 
 type RegisterPayload = {
@@ -12,13 +14,12 @@ type RegisterPayload = {
 class AuthApi extends ApiService {
   public async register(
     data: RegisterPayload,
-  ): Promise<AxiosResponse | AxiosError> {
+  ): Promise<FormatResponseType | AxiosError> {
     try {
       const response = await this.post(apiPath.AUTH.REGISTER, data);
-      return response;
+      return formatResponse(response as AxiosResponse);
     } catch (error) {
-      const axiosError = error as AxiosError;
-      throw axiosError.response?.data;
+      throw error as AxiosError;
     }
   }
 }

@@ -33,7 +33,7 @@ class ApiService {
 
     this.axiosInstance.interceptors.response.use(
       (response: AxiosResponse) => {
-        return response.data; // Mengembalikan data langsung
+        return response;
       },
       (error) => {
         // Tangani kesalahan di sini
@@ -54,7 +54,7 @@ class ApiService {
     url: string,
     data: object,
     config?: AxiosRequestConfig,
-  ): Promise<AxiosResponse> {
+  ): Promise<AxiosResponse | AxiosError> {
     try {
       const response = await this.axiosInstance.post(url, data, config);
       return response;

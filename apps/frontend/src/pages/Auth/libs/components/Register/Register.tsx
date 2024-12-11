@@ -1,12 +1,23 @@
 import { authApi } from '@/api';
-import { Button, Flex, Form, Input, Typography, Link } from '@/components';
-import { useMutation } from '@tanstack/react-query';
-import { Modal } from 'antd';
-import { RegisterPayload } from 'common';
+import {
+  Button,
+  Flex,
+  Form,
+  Input,
+  Typography,
+  Link,
+  Modal,
+} from '@/components';
+import { appRoute } from '@/enums';
+import { FormatResponseType, AxiosError } from '@/types';
+import { useMutation, useNavigate } from '@/hooks';
+import { RegisterPayload, ResponseApiType } from 'common';
+
 const { Title, Text, Link: TextLink } = Typography;
 
 const Register = () => {
   const [form] = Form.useForm();
+  const navigate = useNavigate();
 
   const registerMutation = useMutation({
     mutationKey: ['register'],
@@ -14,17 +25,26 @@ const Register = () => {
       const result = await authApi.register(data);
       return result;
     },
-    onSuccess: (data) => {
-      console.log(data);
+    onSuccess: (response) => {
+      const formatResponse = response as FormatResponseType;
+      const { message } = formatResponse.data;
+      Modal.success({
+        title: 'Register successfully',
+        content: message,
+        centered: true,
+        onOk: () => navigate(appRoute.VERIFY_OTP),
+        width: 500,
+      });
     },
     onError: (error) => {
+      const formatError = error as AxiosError;
+      const errorData = formatError.response?.data as ResponseApiType;
       Modal.error({
         title: 'Register Failed',
-        content: error.message,
+        content: errorData.message,
         centered: true,
         width: 500,
       });
-      console.log(error);
     },
   });
 

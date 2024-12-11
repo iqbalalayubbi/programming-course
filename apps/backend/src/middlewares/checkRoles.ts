@@ -1,5 +1,5 @@
 import { jwtService } from '@/services';
-import { StatusCode } from 'common';
+import { statusCode } from 'common';
 import { NextFunction, Request, Response } from 'express';
 
 const checkRoles = (
@@ -11,7 +11,7 @@ const checkRoles = (
 
     if (!bearerToken) {
       return res
-        .status(StatusCode.UNAUTHORIZED)
+        .status(statusCode.UNAUTHORIZED)
         .json({ message: `Unauthorized` });
     }
 
@@ -19,7 +19,7 @@ const checkRoles = (
 
     if (userRole !== role) {
       return res
-        .status(StatusCode.UNAUTHORIZED)
+        .status(statusCode.UNAUTHORIZED)
         .json({ message: `Your should be a ${role}` });
     }
 

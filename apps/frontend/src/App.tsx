@@ -10,24 +10,25 @@ import {
 } from '@/pages';
 import { Routes, Route } from '@/components';
 import { MainLayout } from '@/layouts';
+import { appRoute } from '@/enums';
 
 const App = () => {
   return (
     <Routes>
-      <Route path="/login" element={<Auth pageName="login" />} />
-      <Route path="/register" element={<Auth pageName="register" />} />
+      <Route path={appRoute.LOGIN} element={<Auth pageName="login" />} />
+      <Route path={appRoute.REGISTER} element={<Auth pageName="register" />} />
       <Route
-        path="/forgot-password"
+        path={appRoute.FORGOT_PASSWORD}
         element={<Auth pageName="forgot-password" />}
       />
-      <Route path="/verify-otp" element={<VerifyOTP />} />
-      <Route path="/reset-password" element={<ResetPassword />} />
-      <Route path="/" element={<MainLayout />}>
+      <Route path={appRoute.VERIFY_OTP} element={<VerifyOTP />} />
+      <Route path={appRoute.RESET_PASSWORD} element={<ResetPassword />} />
+      <Route path={appRoute.MAIN} element={<MainLayout />}>
         <Route index element={<Dashboard />} />
-        <Route path="/courses" element={<Courses />} />
-        <Route path="/courses/:id" element={<DetailCourse />} />
-        <Route path="/courses/:id/study" element={<StudyRoom />} />
-        <Route path="profile" element={<Profile />} />
+        <Route path={appRoute.COURSES} element={<Courses />} />
+        <Route path={appRoute.COURSE_DETAIL} element={<DetailCourse />} />
+        <Route path={appRoute.STUDY_ROOM} element={<StudyRoom />} />
+        <Route path={appRoute.PROFILE} element={<Profile />} />
       </Route>
     </Routes>
   );

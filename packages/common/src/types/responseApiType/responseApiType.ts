@@ -22,7 +22,8 @@ type FieldType =
 
 type ResponseApiType = {
   isSuccess: boolean;
-  error?: { field: FieldType; message: string };
+  message: string;
+  errors?: { field: FieldType; message: string };
   data?: {
     skill?: SkillModel;
     skills?: SkillModel[];
