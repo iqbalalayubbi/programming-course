@@ -32,7 +32,7 @@ const Register = () => {
         title: 'Register successfully',
         content: message,
         centered: true,
-        onOk: () => navigate(appRoute.VERIFY_OTP),
+        onOk: () => navigate(appRoute.VERIFY_EMAIL),
         width: 500,
       });
     },

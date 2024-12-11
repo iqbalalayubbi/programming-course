@@ -1,5 +1,6 @@
 const appRoute = {
   LOGIN: '/login',
+  LOGIN_VERIFY_TOKEN: '/login/:token',
   REGISTER: '/register',
   FORGOT_PASSWORD: '/forgot-password',
   VERIFY_OTP: '/verify-otp',

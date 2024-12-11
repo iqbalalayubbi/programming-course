@@ -1,10 +1,38 @@
-import { Button, Flex, Form, Input, Typography, Link } from '@/components';
+import { authApi } from '@/api';
+import {
+  Button,
+  Flex,
+  Form,
+  Input,
+  Typography,
+  Link,
+  CustomLoading,
+  ToastContainer,
+  toast,
+} from '@/components';
+import { useParams, useQuery } from '@/hooks';
 
 const { Title, Text, Link: TextLink } = Typography;
 
 const Login = () => {
+  const { token } = useParams();
+  const verifyPopup = () => toast.success('Your account already activated');
+
+  const { isLoading } = useQuery({
+    queryKey: ['verifyEmail'],
+    queryFn: async () => {
+      if (token) {
+        const response = await authApi.verifyEmail(token);
+        verifyPopup();
+        return response;
+      }
+    },
+  });
+
   return (
     <Flex vertical className="w-2/3 p-10 rounded-md">
+      <ToastContainer position="top-center" />
+      <CustomLoading isLoading={isLoading} />
       <Title className="text-center">Login</Title>
       <Form layout="vertical">
         <Form.Item label="Email" name="email">

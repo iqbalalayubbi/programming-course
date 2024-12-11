@@ -17,6 +17,10 @@ const App = () => {
   return (
     <Routes>
       <Route path={appRoute.LOGIN} element={<Auth pageName="login" />} />
+      <Route
+        path={appRoute.LOGIN_VERIFY_TOKEN}
+        element={<Auth pageName="login" />}
+      />
       <Route path={appRoute.REGISTER} element={<Auth pageName="register" />} />
       <Route
         path={appRoute.FORGOT_PASSWORD}

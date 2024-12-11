@@ -105,7 +105,7 @@ class AuthService implements AuthServiceType {
 
     const { data } = await this.userService.create(newUser);
 
-    const callbackUrl = `http://localhost:8000/auth/verify-email/${accessToken}`;
+    const callbackUrl = `${process.env.CALLBACK_VERIFY_EMAIL}/${accessToken}`;
     const subject = 'Verify your email';
     const html = `Click the link below to verify your email: <a href="${callbackUrl}">Click Here</a>`;
 

@@ -22,6 +22,17 @@ class AuthApi extends ApiService {
       throw error as AxiosError;
     }
   }
+
+  public async verifyEmail(
+    token: string,
+  ): Promise<FormatResponseType | AxiosError> {
+    try {
+      const response = await this.get(`${apiPath.AUTH.VERIFY_EMAIL}/${token}`);
+      return formatResponse(response as AxiosResponse);
+    } catch (error) {
+      throw error as AxiosError;
+    }
+  }
 }
 
 export { AuthApi };
