@@ -13,6 +13,7 @@ import { type MenuProps } from '@/types';
 import { useState } from '@/hooks';
 import { sidebarAvatar } from '@/assets';
 import { useUser } from '@/stores';
+import { appRoute } from '@/enums';
 
 const { Sider } = Layout;
 
@@ -109,10 +110,13 @@ const Sidebar = () => {
           className="absolute -right-5 z-20"
         />
         <Flex align="center" vertical gap={16}>
-          <Avatar
-            size={isCollapsed ? 40 : 80}
-            icon={<img src={sidebarAvatar} />}
-          />
+          <Link to={appRoute.PROFILE}>
+            <Avatar
+              size={isCollapsed ? 40 : 80}
+              icon={<img src={sidebarAvatar} />}
+              className="hover:cursor-pointer hover:shadow-md transition-all duration-300 hover:opacity-50 hover"
+            />
+          </Link>
           <Flex
             align="center"
             gap={8}
