@@ -1,6 +1,7 @@
 class BaseStorage {
-  public get(key: string) {
-    localStorage.getItem(key);
+  public get(key: string): object | null {
+    const userData = localStorage.getItem(key);
+    return userData ? JSON.parse(userData) : null;
   }
 
   public set(key: string, value: object) {

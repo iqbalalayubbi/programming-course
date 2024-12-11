@@ -13,7 +13,9 @@ import {
 import { appRoute } from '@/enums';
 import { useMutation, useNavigate, useParams, useQuery } from '@/hooks';
 import { userDataStorage } from '@/services';
+import { useUser } from '@/stores';
 import { AxiosError, FormatResponseType } from '@/types';
+import { decodeToken } from '@/utils';
 import { LoginPayload, ResponseApiType } from 'common';
 
 const { Title, Text, Link: TextLink } = Typography;
@@ -23,6 +25,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const [form] = Form.useForm();
+  const { setUserData } = useUser();
 
   const verifyPopup = () => toast.success('Your account already activated');
 
@@ -48,7 +51,9 @@ const Login = () => {
       const result = formatResponse.data;
       const accessToken = result.data?.accessToken as string;
       userDataStorage.saveUserData({ accessToken });
+      const { username, role } = decodeToken(accessToken);
       navigate(appRoute.MAIN);
+      setUserData({ username, role });
     },
     onError: (error) => {
       const formatError = error as AxiosError;

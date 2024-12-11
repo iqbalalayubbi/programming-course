@@ -7,8 +7,12 @@ class UserDataStorage extends BaseStorage {
     super();
     this.key = key;
   }
-  async saveUserData(userData: object) {
+  saveUserData(userData: object) {
     this.set(this.key, userData);
+  }
+
+  getUserData() {
+    return this.get(this.key);
   }
 }
 

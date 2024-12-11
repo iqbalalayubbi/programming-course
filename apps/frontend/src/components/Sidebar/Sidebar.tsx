@@ -12,6 +12,7 @@ import {
 import { type MenuProps } from '@/types';
 import { useState } from '@/hooks';
 import { sidebarAvatar } from '@/assets';
+import { useUser } from '@/stores';
 
 const { Sider } = Layout;
 
@@ -19,6 +20,8 @@ type MenuItem = Required<MenuProps>['items'][number];
 
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const { username, role } = useUser();
+
   const iconSize = 20;
 
   const toggleSidebar = () => {
@@ -116,9 +119,11 @@ const Sidebar = () => {
             vertical
             className={`${isCollapsed ? 'hidden' : 'flex'}`}
           >
-            <h1 className="text-xl font-medium">Steve Smith</h1>
+            <h1 className="text-sm font-semibold italic text-gray-third">
+              @{username}
+            </h1>
             <p className="bg-secondary text-light-text text-sm rounded-full px-3">
-              STUDENT
+              {role.toUpperCase()}
             </p>
           </Flex>
         </Flex>
