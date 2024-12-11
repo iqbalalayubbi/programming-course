@@ -6,10 +6,11 @@ import {
   Input,
   Typography,
   Link,
-  Modal,
+  ToastContainer,
+  toast,
 } from '@/components';
 import { appRoute } from '@/enums';
-import { FormatResponseType, AxiosError } from '@/types';
+import { AxiosError } from '@/types';
 import { useMutation, useNavigate } from '@/hooks';
 import { RegisterPayload, ResponseApiType } from 'common';
 
@@ -25,26 +26,13 @@ const Register = () => {
       const result = await authApi.register(data);
       return result;
     },
-    onSuccess: (response) => {
-      const formatResponse = response as FormatResponseType;
-      const { message } = formatResponse.data;
-      Modal.success({
-        title: 'Register successfully',
-        content: message,
-        centered: true,
-        onOk: () => navigate(appRoute.VERIFY_EMAIL),
-        width: 500,
-      });
+    onSuccess: () => {
+      navigate(appRoute.VERIFY_EMAIL);
     },
     onError: (error) => {
       const formatError = error as AxiosError;
       const errorData = formatError.response?.data as ResponseApiType;
-      Modal.error({
-        title: 'Register Failed',
-        content: errorData.message,
-        centered: true,
-        width: 500,
-      });
+      toast.error(errorData.message);
     },
   });
 
@@ -55,6 +43,7 @@ const Register = () => {
 
   return (
     <Flex vertical className="w-2/3 p-10 rounded-md">
+      <ToastContainer position="top-center" />
       <Title className="text-center">Register</Title>
       <Form form={form} onFinish={handleSubmit} layout="vertical">
         <Form.Item
