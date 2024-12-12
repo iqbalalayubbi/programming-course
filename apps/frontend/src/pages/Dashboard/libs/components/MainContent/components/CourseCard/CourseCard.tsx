@@ -1,14 +1,18 @@
-import { Button, Flex, Progress } from 'antd';
+import { Button, Flex, Progress } from '@/components';
 import { thumbnailCourse } from '@/assets';
 import { colorPalette } from '@/enums';
 
-const CourseCard = () => {
+type Properties = {
+  title: string;
+};
+
+const CourseCard = ({ title }: Properties) => {
   return (
     <Flex gap={32} align="center" className="bg-light-bg p-5 w-full rounded-md">
       <img src={thumbnailCourse} alt="thumbnail course" />
       <Flex align="end" justify="space-between" gap={32} className="w-full">
         <Flex gap={16} vertical>
-          <h1>Build your first own portofolio</h1>
+          <h1>{title}</h1>
           <Flex gap={8}>
             <span className="bg-yellow-500 px-5 rounded-full text-white">
               JS

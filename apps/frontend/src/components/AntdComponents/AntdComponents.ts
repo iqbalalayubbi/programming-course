@@ -13,4 +13,5 @@ export {
   DatePicker,
   Card,
   Rate,
+  Progress,
 } from 'antd';

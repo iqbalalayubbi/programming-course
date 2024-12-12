@@ -1,43 +1,9 @@
 import { Flex, Select } from '@/components';
 import { CourseCard, HeaderCourse } from './components';
-import { useCallback, useEffect, useQuery } from '@/hooks';
-import { courseApi } from '@/api';
-import { AxiosError, AxiosResponse } from 'axios';
-import { FormatResponseType } from '@/types';
-import { ResponseApiType } from 'common';
-import { CourseStore, useCourse } from '@/stores';
+import { useCourseData } from '@/hooks';
 
 const Courses = () => {
-  const { setCoursesData, courses } = useCourse();
-
-  const getCourses = useCallback(
-    (result: FormatResponseType | AxiosError) => {
-      if (result instanceof AxiosError) {
-        return null;
-      }
-
-      const response = result as unknown as AxiosResponse;
-      const responseData = response.data as ResponseApiType;
-      const courses = responseData.data?.courses as unknown as CourseStore[];
-      setCoursesData(courses);
-    },
-    [setCoursesData],
-  );
-
-  const { data: listCoursesResponse } = useQuery({
-    queryKey: ['list-courses'],
-    queryFn: async () => {
-      const response = await courseApi.getAllCourses();
-      return response;
-    },
-  });
-
-  // list courses
-  useEffect(() => {
-    if (listCoursesResponse) {
-      getCourses(listCoursesResponse);
-    }
-  }, [listCoursesResponse, getCourses]);
+  const { courses } = useCourseData();
 
   return (
     <Flex className="mx-10 my-5" gap={16} vertical>
