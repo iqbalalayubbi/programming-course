@@ -4,6 +4,7 @@ import {
   authRoutes,
   courseContentRoutes,
   courseRoutes,
+  dashboardRoutes,
   profileRoutes,
   skillRoutes,
   studentCourseRoutes,
@@ -41,5 +42,6 @@ app.use('/courses', courseRoutes);
 app.use('/course-contents', courseContentRoutes);
 app.use('/student-courses', studentCourseRoutes);
 app.use('/profile', profileRoutes);
+app.use('/dashboard', dashboardRoutes);
 
 export { app };

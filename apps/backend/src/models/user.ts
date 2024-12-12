@@ -5,7 +5,6 @@ type User = {
   username: string;
   password: string;
   email: string;
-  age: number | null;
   birthday: Date | null;
   country: string | null;
   image_url: string | null;

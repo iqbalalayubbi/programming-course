@@ -10,6 +10,7 @@ import { UserSkillService } from './userSkillService';
 import { CourseService } from './courseService';
 import { CourseContentService } from './courseContentService';
 import { StudentCourseService } from './studentCourseService';
+import { DashboardService } from './dashboardService';
 
 const prismaClient = new PrismaClient();
 const jwtService = new JwtService();
@@ -22,6 +23,10 @@ const courseContentService = new CourseContentService({ prismaClient });
 const skillService = new SkillService({ prismaClient });
 const userSkillService = new UserSkillService({ prismaClient });
 const studentCourseService = new StudentCourseService({ prismaClient });
+const dashboardService = new DashboardService({
+  prismaClient,
+  studentCourseService,
+});
 const authService = new AuthService({
   userService,
   jwtService,
@@ -39,5 +44,6 @@ export {
   courseContentService,
   studentCourseService,
   userService,
+  dashboardService,
 };
 export * from './types';
