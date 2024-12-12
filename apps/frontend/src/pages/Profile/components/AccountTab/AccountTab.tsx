@@ -1,19 +1,34 @@
-import { Input, Button, Flex, Form } from 'antd';
+import { useUser } from '@/stores';
+import { Input, Button, Flex, Form } from '@/components';
+import { useEffect } from '@/hooks';
 
 const AccountTab = () => {
+  const { user } = useUser();
+  const [form] = Form.useForm();
+
+  useEffect(() => {
+    if (user) {
+      form.setFieldsValue({
+        username: user.username,
+        email: user.email,
+        role: user.role,
+      });
+    }
+  }, [user, form]);
+
   return (
-    <Form layout="vertical" className="w-full space-y-4">
+    <Form form={form} layout="vertical" className="w-full space-y-4">
       <Form.Item label="Username" name="username">
-        <Input placeholder="username" />
+        <Input placeholder="username" disabled />
       </Form.Item>
       <Form.Item label="Email" name="email">
         <Input placeholder="email" />
       </Form.Item>
       <Form.Item label="Role" name="role">
-        <Input placeholder="role" />
+        <Input placeholder="role" disabled />
       </Form.Item>
       <Form.Item label="Password" name="password">
-        <Input.Password placeholder="password" />
+        <Input.Password placeholder="password" disabled />
       </Form.Item>
       <Form.Item className="w-full">
         <Flex gap={16} vertical>

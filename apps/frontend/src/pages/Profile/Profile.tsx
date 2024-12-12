@@ -1,9 +1,49 @@
 import { sidebarAvatar } from '@/assets';
-import { Tabs, Flex, Avatar } from 'antd';
-import type { TabsProps } from 'antd';
+import { Tabs, Flex, Avatar, CustomLoading } from '@/components';
+import { FormatResponseType, type TabsProps } from '@/types';
 import { AccountTab, PersonalTab } from './components';
+import { useQuery } from '@/hooks';
+import { profileApi } from '@/api';
+import { useUser } from '@/stores';
+import { AxiosError, AxiosResponse } from 'axios';
+import { ResponseApiType } from 'common';
+
+type UserDataType = {
+  username: string;
+  role: string;
+  email?: string;
+  surename?: string;
+  birthdate?: string;
+  country?: string;
+  image_id?: number;
+  phone_number?: string;
+  total_points?: number;
+  description?: string;
+};
 
 const Profile = () => {
+  const userStore = useUser();
+
+  const getUserData = (result: FormatResponseType | AxiosError) => {
+    if (result instanceof AxiosError) {
+      return null;
+    }
+
+    const response = result as unknown as AxiosResponse;
+    const responseData = response.data as ResponseApiType;
+    const user = responseData.data?.user as UserDataType;
+    userStore.setUserData(user);
+  };
+
+  const { isLoading } = useQuery({
+    queryKey: ['profile'],
+    queryFn: async () => {
+      const response = await profileApi.getUser();
+      return response;
+    },
+    select: (response) => getUserData(response),
+  });
+
   const items: TabsProps['items'] = [
     {
       key: '1',
@@ -19,6 +59,7 @@ const Profile = () => {
 
   return (
     <Flex align="center" justify="center" className="w-full h-full">
+      <CustomLoading isLoading={isLoading} />
       <Flex
         align="center"
         justify="center"
@@ -28,16 +69,18 @@ const Profile = () => {
         <Flex vertical align="center">
           <Avatar size={200} icon={<img src={sidebarAvatar} />} />
           <p className="text-center my-3 w-60 italic text-gray-400">
-            “Not matter who you are, you just not someone else”
+            {userStore.user.description}
           </p>
           <Flex gap={8} vertical>
-            <p className="text-gray-third font-semibold">@steve_smith</p>
-            <span className="bg-yellow-500 text-light-text px-3 py-1 rounded-full">
-              STUDENT
+            <p className="text-gray-third font-semibold">
+              @{userStore.user.username}
+            </p>
+            <span className="bg-yellow-500 text-light-text px-3 py-1 rounded-full uppercase text-center">
+              {userStore.user.role}
             </span>
           </Flex>
         </Flex>
-        <Tabs defaultActiveKey="1" items={items} className="w-1/3" />
+        <Tabs defaultActiveKey="2" items={items} className="w-1/3" />
       </Flex>
     </Flex>
   );

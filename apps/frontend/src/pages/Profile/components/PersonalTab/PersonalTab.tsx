@@ -1,8 +1,25 @@
-import { Input, Button, Form, Select, DatePicker } from 'antd';
+import { Input, Button, Form, Select, DatePicker } from '@/components';
+import { useUser } from '@/stores';
+import { useEffect } from '@/hooks';
+import { dayjs } from '@/utils';
 
 const PersonalTab = () => {
+  const { user } = useUser();
+  const [form] = Form.useForm();
+
+  useEffect(() => {
+    if (user) {
+      form.setFieldsValue({
+        name: user.surename,
+        birthDate: dayjs('2024-12-11T17:00:00.000Z'),
+        country: 'Indonesiassa',
+        phoneNumber: user.phone_number,
+      });
+    }
+  }, [user, form]);
+
   return (
-    <Form layout="vertical" className="w-full space-y-4">
+    <Form form={form} layout="vertical" className="w-full space-y-4">
       <Form.Item label="Name" name="name">
         <Input placeholder="name" />
       </Form.Item>

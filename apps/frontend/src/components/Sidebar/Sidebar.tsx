@@ -21,7 +21,7 @@ type MenuItem = Required<MenuProps>['items'][number];
 
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const { username, role } = useUser();
+  const { user } = useUser();
 
   const iconSize = 20;
 
@@ -124,10 +124,10 @@ const Sidebar = () => {
             className={`${isCollapsed ? 'hidden' : 'flex'}`}
           >
             <h1 className="text-sm font-semibold italic text-gray-third">
-              @{username}
+              @{user.username}
             </h1>
-            <p className="bg-secondary text-light-text text-sm rounded-full px-3">
-              {role.toUpperCase()}
+            <p className="bg-secondary text-light-text text-sm rounded-full px-3 uppercase">
+              {user.role}
             </p>
           </Flex>
         </Flex>

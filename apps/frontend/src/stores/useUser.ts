@@ -1,19 +1,33 @@
 import { create } from 'zustand';
+import { DEFAULT_USER_DATA } from './constants';
 
-interface StoreState {
+type UserDataType = {
   username: string;
   role: string;
-  setUserData: (data: { username: string; role: string }) => void;
-  setUsername: (username: string) => void;
-  setRole: (role: string) => void;
+  email?: string;
+  surename?: string;
+  birthdate?: string;
+  country?: string;
+  image_id?: number;
+  phone_number?: string;
+  total_points?: number;
+  description?: string;
+};
+
+interface StoreState {
+  user: UserDataType;
+  setUserData: (data: UserDataType) => void;
 }
 
 const useUser = create<StoreState>((set) => ({
-  username: '',
-  role: '',
-  setUserData: ({ username, role }) => set({ username, role }),
-  setUsername: (username: string) => set({ username }),
-  setRole: (role: string) => set({ role }),
+  user: DEFAULT_USER_DATA,
+  setUserData: (newUser: UserDataType) =>
+    set((state) => {
+      if (state.user !== newUser) {
+        return { user: newUser };
+      }
+      return state;
+    }),
 }));
 
 export { useUser };

@@ -8,4 +8,7 @@ export {
   Input,
   Typography,
   Modal,
+  Tabs,
+  Select,
+  DatePicker,
 } from 'antd';

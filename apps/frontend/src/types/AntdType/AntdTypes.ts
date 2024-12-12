@@ -1,1 +1,1 @@
-export { type MenuProps } from 'antd';
+export { type MenuProps, type TabsProps } from 'antd';

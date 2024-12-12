@@ -50,7 +50,7 @@ const Login = () => {
       const formatResponse = response as FormatResponseType;
       const result = formatResponse.data;
       const accessToken = result.data?.accessToken as string;
-      userDataStorage.saveUserData({ accessToken });
+      userDataStorage.saveAccessToken(accessToken);
       const { username, role } = decodeToken(accessToken);
       navigate(appRoute.MAIN);
       setUserData({ username, role });

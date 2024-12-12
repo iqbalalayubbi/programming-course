@@ -1,3 +1,4 @@
+import { userDataStorage } from '@/services';
 import axios, {
   AxiosError,
   AxiosInstance,
@@ -19,11 +20,10 @@ class ApiService {
 
     this.axiosInstance.interceptors.request.use(
       (config: InternalAxiosRequestConfig) => {
-        // Tambahkan token atau konfigurasi lain jika diperlukan
-        // const token = localStorage.getItem('token');
-        // if (token) {
-        //   config.headers['Authorization'] = `Bearer ${token}`;
-        // }
+        const accessToken = userDataStorage.getAccessToken();
+        if (accessToken) {
+          config.headers['Authorization'] = `Bearer ${accessToken}`;
+        }
         return config;
       },
       (error) => {
@@ -36,7 +36,6 @@ class ApiService {
         return response;
       },
       (error) => {
-        // Tangani kesalahan di sini
         return Promise.reject(error);
       },
     );
