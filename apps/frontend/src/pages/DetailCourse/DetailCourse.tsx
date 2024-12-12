@@ -1,44 +1,46 @@
 import { Flex } from '@/components';
 import { AsideContent, MainContent } from './components';
-import { useParams, useCallback, useQuery, useEffect } from '@/hooks';
 import {
-  CourseStore,
-  useCourse,
-  useStudentCourse,
-  StudentCourseStore,
-  useUser,
-} from '@/stores';
-import { courseApi, studentCourseApi } from '@/api';
+  useParams,
+  useCallback,
+  useQuery,
+  useEffect,
+  useDetailCourseData,
+} from '@/hooks';
+import { useStudentCourse, StudentCourseStore, useUser } from '@/stores';
+import { studentCourseApi } from '@/api';
 import { AxiosError, FormatResponseType } from '@/types';
 import { AxiosResponse } from 'axios';
 import { ResponseApiType } from 'common';
 
 const DetailCourse = () => {
   const { id } = useParams();
-  const courseStore = useCourse();
+  useDetailCourseData(Number(id));
+
+  // const courseStore = useCourse();
   // const { studentCourses } = useStudentCourse();
   const { setStudentCourses } = useStudentCourse();
   const { user } = useUser();
 
-  const getCourseData = (result: FormatResponseType | AxiosError | null) => {
-    if (result instanceof AxiosError || null) {
-      return null;
-    }
+  // const getCourseData = (result: FormatResponseType | AxiosError | null) => {
+  //   if (result instanceof AxiosError || null) {
+  //     return null;
+  //   }
 
-    const response = result?.data as unknown as AxiosResponse;
-    const responseData = response.data;
-    const course = responseData.course as CourseStore;
-    courseStore.course = course;
-  };
+  //   const response = result?.data as unknown as AxiosResponse;
+  //   const responseData = response.data;
+  //   const course = responseData.course as CourseStore;
+  //   courseStore.course = course;
+  // };
 
-  const getDetailCourse = useCallback(
-    (courses: CourseStore[]) => {
-      const course = courses.find((crs) => crs.id === parseInt(id as string));
-      if (!course) return null;
-      courseStore.course = course;
-    },
-    [courseStore, id],
-  );
+  // const getDetailCourse = useCallback(
+  //   (courses: CourseStore[]) => {
+  //     const course = courses.find((crs) => crs.id === parseInt(id as string));
+  //     if (!course) return null;
+  //     courseStore.course = course;
+  //   },
+  //   [courseStore, id],
+  // );
 
   const getStudentCourses = useCallback(
     (result: FormatResponseType | AxiosError) => {
@@ -55,20 +57,20 @@ const DetailCourse = () => {
     [setStudentCourses],
   );
 
-  useQuery({
-    queryKey: ['detail-course'],
-    queryFn: async () => {
-      if (courseStore.courses.length === 0) {
-        const courseId = parseInt(id as string);
-        const response = await courseApi.getCourseDetail(courseId);
-        return response;
-      } else {
-        getDetailCourse(courseStore.courses);
-        return null;
-      }
-    },
-    select: (response) => getCourseData(response),
-  });
+  // useQuery({
+  //   queryKey: ['detail-course'],
+  //   queryFn: async () => {
+  //     if (courseStore.courses.length === 0) {
+  //       const courseId = parseInt(id as string);
+  //       const response = await courseApi.getCourseDetail(courseId);
+  //       return response;
+  //     } else {
+  //       getDetailCourse(courseStore.courses);
+  //       return null;
+  //     }
+  //   },
+  //   select: (response) => getCourseData(response),
+  // });
 
   const { data: studentCoursesResponse } = useQuery({
     queryKey: ['student-courses'],
