@@ -6,6 +6,7 @@ import axios, {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from 'axios';
+import { statusCode } from 'common';
 
 class ApiService {
   private axiosInstance: AxiosInstance;
@@ -36,6 +37,11 @@ class ApiService {
         return response;
       },
       (error) => {
+        if (error.response.status === statusCode.UNAUTHORIZED) {
+          userDataStorage.removeAccessToken();
+          window.location.href = '/login';
+        }
+
         return Promise.reject(error);
       },
     );

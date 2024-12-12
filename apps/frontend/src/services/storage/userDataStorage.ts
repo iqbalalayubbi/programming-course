@@ -16,6 +16,10 @@ class UserDataStorage extends BaseStorage {
     const accessToken = this.get(this.key);
     return accessToken;
   }
+
+  removeAccessToken() {
+    return this.delete(this.key);
+  }
 }
 
 export { UserDataStorage };

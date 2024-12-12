@@ -1,7 +1,32 @@
-import { Flex, Select } from 'antd';
+import { Flex, Select } from '@/components';
 import { CourseCard, HeaderCourse } from './components';
+import { useQuery } from '@/hooks';
+import { courseApi } from '@/api';
+import { AxiosError, AxiosResponse } from 'axios';
+import { FormatResponseType } from '@/types';
+import { ResponseApiType } from 'common';
 
 const Courses = () => {
+  const getCourses = (result: FormatResponseType | AxiosError) => {
+    if (result instanceof AxiosError) {
+      return null;
+    }
+
+    const response = result as unknown as AxiosResponse;
+    const responseData = response.data as ResponseApiType;
+    const courses = responseData.data?.courses;
+    return courses;
+  };
+
+  useQuery({
+    queryKey: ['list-courses'],
+    queryFn: async () => {
+      const response = await courseApi.getAllCourses();
+      return response;
+    },
+    select: (response) => getCourses(response),
+  });
+
   return (
     <Flex className="mx-10 my-5" gap={16} vertical>
       <HeaderCourse />
