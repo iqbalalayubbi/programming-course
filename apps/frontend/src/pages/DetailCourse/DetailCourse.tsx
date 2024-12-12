@@ -1,14 +1,24 @@
 import { Flex } from '@/components';
 import { AsideContent, MainContent } from './components';
-import { useParams, useCallback, useQuery } from '@/hooks';
-import { CourseStore, useCourse } from '@/stores';
-import { courseApi } from '@/api';
+import { useParams, useCallback, useQuery, useEffect } from '@/hooks';
+import {
+  CourseStore,
+  useCourse,
+  useStudentCourse,
+  StudentCourseStore,
+  useUser,
+} from '@/stores';
+import { courseApi, studentCourseApi } from '@/api';
 import { AxiosError, FormatResponseType } from '@/types';
 import { AxiosResponse } from 'axios';
+import { ResponseApiType } from 'common';
 
 const DetailCourse = () => {
   const { id } = useParams();
   const courseStore = useCourse();
+  // const { studentCourses } = useStudentCourse();
+  const { setStudentCourses } = useStudentCourse();
+  const { user } = useUser();
 
   const getCourseData = (result: FormatResponseType | AxiosError | null) => {
     if (result instanceof AxiosError || null) {
@@ -30,6 +40,21 @@ const DetailCourse = () => {
     [courseStore, id],
   );
 
+  const getStudentCourses = useCallback(
+    (result: FormatResponseType | AxiosError) => {
+      if (result instanceof AxiosError) {
+        return null;
+      }
+
+      const response = result as unknown as AxiosResponse;
+      const responseData = response.data as ResponseApiType;
+      const studentCourses = responseData.data
+        ?.studentCourses as unknown as StudentCourseStore[];
+      setStudentCourses(studentCourses);
+    },
+    [setStudentCourses],
+  );
+
   useQuery({
     queryKey: ['detail-course'],
     queryFn: async () => {
@@ -44,6 +69,21 @@ const DetailCourse = () => {
     },
     select: (response) => getCourseData(response),
   });
+
+  const { data: studentCoursesResponse } = useQuery({
+    queryKey: ['student-courses'],
+    queryFn: async () => {
+      const response = await studentCourseApi.getStudentCourses(user.username);
+      return response;
+    },
+  });
+
+  // student courses
+  useEffect(() => {
+    if (studentCoursesResponse) {
+      getStudentCourses(studentCoursesResponse);
+    }
+  }, [studentCoursesResponse, getStudentCourses]);
 
   return (
     <Flex className="h-full">
