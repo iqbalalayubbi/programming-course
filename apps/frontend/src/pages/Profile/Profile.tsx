@@ -4,22 +4,9 @@ import { FormatResponseType, type TabsProps } from '@/types';
 import { AccountTab, PersonalTab } from './components';
 import { useQuery } from '@/hooks';
 import { profileApi } from '@/api';
-import { useUser } from '@/stores';
+import { UserStore, useUser } from '@/stores';
 import { AxiosError, AxiosResponse } from 'axios';
 import { ResponseApiType } from 'common';
-
-type UserDataType = {
-  username: string;
-  role: string;
-  email?: string;
-  surename?: string;
-  birthdate?: string;
-  country?: string;
-  image_id?: number;
-  phone_number?: string;
-  total_points?: number;
-  description?: string;
-};
 
 const Profile = () => {
   const userStore = useUser();
@@ -31,7 +18,7 @@ const Profile = () => {
 
     const response = result as unknown as AxiosResponse;
     const responseData = response.data as ResponseApiType;
-    const user = responseData.data?.user as UserDataType;
+    const user = responseData.data?.user as UserStore;
     userStore.setUserData(user);
   };
 

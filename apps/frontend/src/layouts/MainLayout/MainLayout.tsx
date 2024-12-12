@@ -1,7 +1,7 @@
 import { Layout } from 'antd';
 import { Sidebar } from '@/components/Sidebar/Sidebar';
 import { Outlet } from 'react-router';
-import { useUser } from '@/stores';
+import { UserStore, useUser } from '@/stores';
 import { AxiosError, AxiosResponse } from 'axios';
 import { FormatResponseType } from '@/types';
 import { ResponseApiType } from 'common';
@@ -9,19 +9,6 @@ import { useQuery } from '@tanstack/react-query';
 import { profileApi } from '@/api';
 
 const { Content } = Layout;
-
-type UserDataType = {
-  username: string;
-  role: string;
-  email?: string;
-  surename?: string;
-  birthdate?: string;
-  country?: string;
-  image_id?: number;
-  phone_number?: string;
-  total_points?: number;
-  description?: string;
-};
 
 const MainLayout = () => {
   const userStore = useUser();
@@ -33,7 +20,7 @@ const MainLayout = () => {
 
     const response = result as unknown as AxiosResponse;
     const responseData = response.data as ResponseApiType;
-    const user = responseData.data?.user as UserDataType;
+    const user = responseData.data?.user as UserStore;
     userStore.setUserData(user);
   };
 
