@@ -5,8 +5,10 @@ import { courseApi } from '@/api';
 import { AxiosError, AxiosResponse } from 'axios';
 import { FormatResponseType } from '@/types';
 import { ResponseApiType } from 'common';
+import { CourseStore, useCourse } from '@/stores';
 
 const Courses = () => {
+  const courseStore = useCourse();
   const getCourses = (result: FormatResponseType | AxiosError) => {
     if (result instanceof AxiosError) {
       return null;
@@ -14,8 +16,8 @@ const Courses = () => {
 
     const response = result as unknown as AxiosResponse;
     const responseData = response.data as ResponseApiType;
-    const courses = responseData.data?.courses;
-    return courses;
+    const courses = responseData.data?.courses as unknown as CourseStore[];
+    courseStore.courses = courses;
   };
 
   useQuery({
@@ -51,13 +53,16 @@ const Courses = () => {
         />
       </Flex>
       <Flex gap={16} className="flex-wrap">
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
+        {courseStore.courses.map((course) => {
+          return (
+            <CourseCard
+              key={course.id}
+              id={course.id}
+              title={course.title}
+              description={course.description}
+            />
+          );
+        })}
       </Flex>
     </Flex>
   );

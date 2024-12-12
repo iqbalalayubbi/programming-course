@@ -1,9 +1,12 @@
 import { thumbnailExample } from '@/assets';
 import { SkillLabel } from '@/components';
+import { useCourse } from '@/stores';
 import { ArrowLeftOutlined, CaretRightOutlined } from '@ant-design/icons';
 import { Button, Collapse, CollapseProps, Flex, List } from 'antd';
 
 const MainContent = () => {
+  const { course } = useCourse();
+
   const data = [
     'Basic HTML',
     'Styling your page with CSS',
@@ -15,14 +18,7 @@ const MainContent = () => {
     {
       key: '1',
       label: <h3 className="font-semibold text-xl">Description</h3>,
-      children: (
-        <p className="text-gray-third w-full">
-          Alteration literature to or an sympathize mr imprudence. Of is ferrars
-          subject as enjoyed or tedious cottage. Procuring as in resembled b
-          Alteration literature to or an sympathize mr imprudence. Of is ferrars
-          subject as enjoyed or tedious cottage. Procuring as in resembled b
-        </p>
-      ),
+      children: <p className="text-gray-third w-full">{course.description}</p>,
     },
     {
       key: '2',
@@ -45,9 +41,7 @@ const MainContent = () => {
     <Flex className="h-full w-full bg-light-bg mx-10 px-10 py-3" vertical>
       <Flex align="center" gap={16}>
         <Button type="text" icon={<ArrowLeftOutlined />} />
-        <h1 className="text-4xl font-bold my-5">
-          Build Website With MERN Stack
-        </h1>
+        <h1 className="text-4xl font-bold my-5">{course.title}</h1>
       </Flex>
       <img
         src={thumbnailExample}
@@ -75,7 +69,7 @@ const MainContent = () => {
           expandIcon={({ isActive }) => (
             <CaretRightOutlined rotate={isActive ? 90 : 180} />
           )}
-          expandIconPosition="right"
+          expandIconPosition="end"
           className="w-full my-8 bg-light-bg"
           items={items}
         />

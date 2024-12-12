@@ -11,4 +11,6 @@ export {
   Tabs,
   Select,
   DatePicker,
+  Card,
+  Rate,
 } from 'antd';

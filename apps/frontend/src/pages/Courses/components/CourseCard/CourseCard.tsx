@@ -1,21 +1,29 @@
 import { thumbnailExample } from '@/assets';
-import { Card, Flex, Rate } from 'antd';
+import { Card, Flex, Rate } from '@/components';
+import { appRoute } from '@/enums';
+import { useNavigate } from '@/hooks';
 
-const CourseCard = () => {
+type Properties = {
+  id: number;
+  title: string;
+  description: string;
+};
+
+const CourseCard = ({ id, title, description }: Properties) => {
+  const navigate = useNavigate();
+
   return (
     <Card
-      className="shadow-lg w-[24%]"
+      className="shadow-lg w-[24%] group"
       cover={<img src={thumbnailExample} />}
       hoverable
+      onClick={() => navigate(`${appRoute.COURSES}/${id}`)}
     >
       <Flex className="mt-2" vertical>
-        <h3 className="font-semibold text-gray-800 text-xl">
-          Create your own portfolio
+        <h3 className="font-semibold text-gray-800 text-xl group-hover:text-secondary">
+          {title}
         </h3>
-        <p className="text-gray-600 text-sm">
-          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
-          sint.
-        </p>
+        <p className="text-gray-600 text-sm">{description}</p>
       </Flex>
       <Flex className="mt-4" gap={16} vertical>
         <Flex className="space-x-2">

@@ -133,7 +133,7 @@ class CourseController {
         res,
         statusCode: statusCode.OK,
         message: 'Course retrieved successfully',
-        data: { course },
+        data: course,
       });
     }
 
