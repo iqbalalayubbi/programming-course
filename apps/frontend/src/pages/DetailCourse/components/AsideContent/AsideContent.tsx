@@ -1,16 +1,14 @@
 import { Button, Flex, Modal, Rate } from '@/components';
 import { MentorProfile, ReviewCard } from './components';
 import { useCourse, useStudentCourse, useUser } from '@/stores';
-import { JoinCoursePayload } from 'common';
 import {
   useEffect,
-  useMutation,
   useNavigate,
   useState,
   useParams,
   useCallback,
+  useJoinCourseData,
 } from '@/hooks';
-import { studentCourseApi } from '@/api';
 import { appRoute, colorPalette } from '@/enums';
 
 const AsideContent = () => {
@@ -21,20 +19,7 @@ const AsideContent = () => {
   const { id } = useParams();
   const [isJoindedCourse, setIsJoinedCourse] = useState<boolean>(false);
 
-  const joinCourseMutation = useMutation({
-    mutationKey: ['joinCourse'],
-    mutationFn: async (data: JoinCoursePayload) => {
-      const response = await studentCourseApi.joinCourse(data);
-      return response;
-    },
-    onSuccess: async () => {
-      setJoined(true);
-      navigate(appRoute.STUDY_ROOM);
-      setTimeout(() => {
-        setJoined(false);
-      }, 3000);
-    },
-  });
+  const { mutate, isSuccess } = useJoinCourseData();
 
   const onUserJoin = () => {
     const studentData = {
@@ -52,7 +37,7 @@ const AsideContent = () => {
         ),
         okText: 'Join',
         okButtonProps: { style: { backgroundColor: colorPalette.PRIMARY } },
-        onOk: () => joinCourseMutation.mutate(studentData),
+        onOk: () => mutate(studentData),
         cancelText: 'Cancel',
         okCancel: true,
         onCancel: () => console.log('cancel join course'),
@@ -75,6 +60,16 @@ const AsideContent = () => {
       checkUserJoinCourse(Number(id));
     }
   }, [studentCourses, checkUserJoinCourse, id]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      setJoined(true);
+      navigate(appRoute.STUDY_ROOM);
+      setTimeout(() => {
+        setJoined(false);
+      }, 3000);
+    }
+  }, [isSuccess, navigate, setJoined]);
 
   return (
     <Flex className="w-1/2 bg-white h-full" gap={16} align="center" vertical>
