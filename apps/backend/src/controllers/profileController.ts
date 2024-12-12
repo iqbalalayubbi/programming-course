@@ -23,7 +23,7 @@ class ProfileController {
   }
 
   public async getUserByUsername(req: Request, res: Response) {
-    const { username } = req.query as UserData;
+    const { username } = req.query.userData as UserData;
 
     const { isSuccess, error, data } = await this.userService.find({
       key: 'username',

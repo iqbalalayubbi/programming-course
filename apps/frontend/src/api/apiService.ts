@@ -22,6 +22,7 @@ class ApiService {
     this.axiosInstance.interceptors.request.use(
       (config: InternalAxiosRequestConfig) => {
         const accessToken = userDataStorage.getAccessToken();
+        console.log({ accessToken });
         if (accessToken) {
           config.headers['Authorization'] = `Bearer ${accessToken}`;
         }

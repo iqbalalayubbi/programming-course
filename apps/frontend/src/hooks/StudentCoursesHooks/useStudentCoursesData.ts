@@ -1,13 +1,13 @@
 import { useCallback, useQuery, useEffect } from '@/hooks';
-import { StudentCourseStore, useStudentCourse, useUser } from '@/stores';
+import { StudentCourseStore, useStudentCourse } from '@/stores';
 import { studentCourseApi } from '@/api';
 import { AxiosError, FormatResponseType } from '@/types';
 import { AxiosResponse } from 'axios';
 import { ResponseApiType } from 'common';
+import { getUsername } from '@/utils';
 
 const useStudentCoursesData = () => {
   const { setStudentCourses, ...studentCourseStore } = useStudentCourse();
-  const { user } = useUser();
 
   const getStudentCourses = useCallback(
     (result: FormatResponseType | AxiosError) => {
@@ -23,10 +23,12 @@ const useStudentCoursesData = () => {
     },
     [setStudentCourses],
   );
+
   const { data: studentCoursesResponse, ...queryStates } = useQuery({
     queryKey: ['student-courses'],
     queryFn: async () => {
-      const response = await studentCourseApi.getStudentCourses(user.username);
+      const username = getUsername();
+      const response = await studentCourseApi.getStudentCourses(username);
       return response;
     },
   });
