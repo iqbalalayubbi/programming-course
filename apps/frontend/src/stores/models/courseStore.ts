@@ -1,6 +1,6 @@
 type CourseStore = {
   id: number;
-  mentor: string;
+  mentor_username: string;
   title: string;
   description: string;
   star_total: number;

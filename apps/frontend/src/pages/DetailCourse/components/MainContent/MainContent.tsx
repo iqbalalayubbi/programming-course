@@ -1,5 +1,6 @@
 import { thumbnailExample } from '@/assets';
-import { SkillLabel } from '@/components';
+import { Link, SkillLabel } from '@/components';
+import { appRoute } from '@/enums';
 import { useCourse } from '@/stores';
 import { ArrowLeftOutlined, CaretRightOutlined } from '@ant-design/icons';
 import { Button, Collapse, CollapseProps, Flex, List } from 'antd';
@@ -40,8 +41,10 @@ const MainContent = () => {
   return (
     <Flex className="h-full w-full bg-light-bg mx-10 px-10 py-3" vertical>
       <Flex align="center" gap={16}>
-        <Button type="text" icon={<ArrowLeftOutlined />} />
-        <h1 className="text-4xl font-bold my-5">{course.title}</h1>
+        <Link to={appRoute.COURSES}>
+          <Button type="text" icon={<ArrowLeftOutlined />} />
+        </Link>
+        <h1 className="text-3xl font-bold my-5">{course.title}</h1>
       </Flex>
       <img
         src={thumbnailExample}
