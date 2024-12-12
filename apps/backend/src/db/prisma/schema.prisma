@@ -12,7 +12,7 @@ model User {
   username String @unique
   password String
   email String
-  age Int?
+  surename String?
   birthday DateTime?
   country String?
   image_url String?
@@ -62,13 +62,13 @@ model UserSkill{
 
 model Course{
   id Int @id @default(autoincrement())
-  mentor_id Int
+  mentor_username String
   title String
   description String
   star_total Int @default(0)
   is_certificate_exist Boolean
   thumbnail_url String
-  mentor User @relation(fields: [mentor_id], references: [id])
+  mentor User @relation(fields: [mentor_username], references: [username])
   contents CourseContent[]
   studentCourses StudentCourse[]
 }
