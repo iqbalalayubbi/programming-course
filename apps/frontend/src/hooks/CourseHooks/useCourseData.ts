@@ -22,7 +22,7 @@ const useCourseData = () => {
     [setCoursesData],
   );
 
-  const { data: listCoursesResponse, ...queryData } = useQuery({
+  const { data: listCoursesResponse, ...queryStates } = useQuery({
     queryKey: ['list-courses'],
     queryFn: async () => {
       const response = await courseApi.getAllCourses();
@@ -39,7 +39,7 @@ const useCourseData = () => {
 
   return {
     ...courseStore,
-    ...queryData,
+    ...queryStates,
   };
 };
 
