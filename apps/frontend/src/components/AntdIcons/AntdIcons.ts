@@ -8,4 +8,5 @@ export {
   LogoutOutlined,
   LeftOutlined,
   RightOutlined,
+  ArrowLeftOutlined,
 } from '@ant-design/icons';

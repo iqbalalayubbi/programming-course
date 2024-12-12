@@ -1,10 +1,19 @@
 import { thumbnailCourse } from '@/assets';
-import { ArrowLeftOutlined } from '@ant-design/icons';
-import { Button, Flex } from 'antd';
-import { Tabs } from 'antd';
-import type { TabsProps } from 'antd';
+import { useUser } from '@/stores';
+import { type TabsProps } from '@/types';
+import { useEffect } from '@/hooks';
+import {
+  toast,
+  ToastContainer,
+  Button,
+  Flex,
+  Tabs,
+  ArrowLeftOutlined,
+} from '@/components';
 
 const MainContent = () => {
+  const userStore = useUser();
+
   const items: TabsProps['items'] = [
     {
       key: '1',
@@ -23,8 +32,15 @@ const MainContent = () => {
     },
   ];
 
+  useEffect(() => {
+    if (userStore.isJoined) {
+      toast.success('successfully joined');
+    }
+  }, [userStore]);
+
   return (
     <Flex gap={8} vertical>
+      <ToastContainer position="top-center" />
       <Flex align="center" gap={16}>
         <Button type="text" icon={<ArrowLeftOutlined />} />
         <h1 className="font-bold text-4xl my-5">Basic HTML</h1>

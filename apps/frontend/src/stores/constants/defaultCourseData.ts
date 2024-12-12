@@ -1,6 +1,6 @@
 const DEFAULT_COURSE_DATA = {
   id: 0,
-  mentor: '',
+  mentor_username: '',
   title: '',
   description: '',
   star_total: 0,
