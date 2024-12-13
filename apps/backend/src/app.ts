@@ -8,6 +8,7 @@ import {
   profileRoutes,
   skillRoutes,
   studentCourseRoutes,
+  uploadRoutes,
   userSkillRoutes,
 } from '@/routes';
 import session from 'express-session';
@@ -15,6 +16,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 
 const app: Application = express();
+
 const sessionConfig = {
   secret: process.env.SESSION_SECRET || 'secret',
   resave: false,
@@ -43,5 +45,6 @@ app.use('/course-contents', courseContentRoutes);
 app.use('/student-courses', studentCourseRoutes);
 app.use('/profile', profileRoutes);
 app.use('/dashboard', dashboardRoutes);
+app.use('/upload', uploadRoutes);
 
 export { app };

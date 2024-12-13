@@ -16,4 +16,7 @@ export {
   Progress,
   Divider,
   List,
+  message,
+  Upload,
+  Spin,
 } from 'antd';

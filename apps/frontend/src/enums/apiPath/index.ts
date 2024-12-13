@@ -1,4 +1,5 @@
 import { authPath as AUTH } from './authPath';
+import { authPath } from './authPath';
 
 const apiPath = {
   AUTH,
@@ -8,4 +9,4 @@ const apiPath = {
   DASHBOARD: '/dashboard',
 };
 
-export { apiPath };
+export { apiPath, authPath };

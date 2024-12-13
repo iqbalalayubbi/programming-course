@@ -6,3 +6,4 @@ export { router as courseContentRoutes } from './courseContentRoutes';
 export { router as studentCourseRoutes } from './studentCourseRoutes';
 export { router as profileRoutes } from './profileRoutes';
 export { router as dashboardRoutes } from './dashboardRoutes';
+export { router as uploadRoutes } from './uploadRoutes';

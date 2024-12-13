@@ -1,7 +1,6 @@
-import { sidebarAvatar } from '@/assets';
-import { Tabs, Flex, Avatar, CustomLoading } from '@/components';
+import { Tabs, Flex, CustomLoading } from '@/components';
 import { FormatResponseType, type TabsProps } from '@/types';
-import { AccountTab, PersonalTab } from './components';
+import { AccountTab, PersonalTab, UserAvatar } from './components';
 import { useQuery } from '@/hooks';
 import { profileApi } from '@/api';
 import { UserStore, useUser } from '@/stores';
@@ -54,11 +53,11 @@ const Profile = () => {
         className="w-3/4 py-10 rounded-md bg-light-bg"
       >
         <Flex vertical align="center">
-          <Avatar size={200} icon={<img src={sidebarAvatar} />} />
+          <UserAvatar />
           <p className="text-center my-3 w-60 italic text-gray-400">
             {userStore.user.description}
           </p>
-          <Flex gap={8} vertical>
+          <Flex gap={8} align="center" vertical>
             <p className="text-gray-third font-semibold">
               @{userStore.user.username}
             </p>

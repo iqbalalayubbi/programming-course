@@ -11,4 +11,5 @@ export {
   ArrowLeftOutlined,
   PlusOutlined,
   PlusCircleOutlined,
+  LoadingOutlined,
 } from '@ant-design/icons';
