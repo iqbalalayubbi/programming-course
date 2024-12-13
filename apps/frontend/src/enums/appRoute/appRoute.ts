@@ -13,6 +13,7 @@ const appRoute = {
   PROFILE: '/profile',
   MENTOR_MANAGEMENT: '/mentor-management',
   MENTOR_COURSES: '/mentor-courses',
+  COURSE_MANAGEMENT: '/course-management',
 };
 
 export { appRoute };

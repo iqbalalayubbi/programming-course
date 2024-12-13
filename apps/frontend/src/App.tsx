@@ -1,5 +1,6 @@
 import {
   Auth,
+  CourseManagement,
   Courses,
   Dashboard,
   DetailCourse,
@@ -42,6 +43,10 @@ const App = () => {
           element={<MentorManagement />}
         />
         <Route path={appRoute.MENTOR_COURSES} element={<MentorCourses />} />
+        <Route
+          path={appRoute.COURSE_MANAGEMENT}
+          element={<CourseManagement />}
+        />
       </Route>
     </Routes>
   );
