@@ -2,6 +2,7 @@ import { useState } from '@/hooks';
 import { Avatar, Flex, message, Upload, Spin, Iconify } from '@/components';
 import type { GetProp, UploadProps } from '@/types';
 import { uploadPath } from '@/enums/apiPath/uploadPath';
+import { useUser } from '@/stores';
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
@@ -24,6 +25,7 @@ const beforeUpload = (file: FileType) => {
 };
 
 const UserAvatar = () => {
+  const { user } = useUser();
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>();
 
@@ -46,7 +48,7 @@ const UserAvatar = () => {
         name="photo"
         className="avatar-uploader"
         showUploadList={false}
-        action={uploadPath.photo}
+        action={`${uploadPath.photo}?username=${user.username}`}
         beforeUpload={beforeUpload}
         onChange={handleChange}
       >

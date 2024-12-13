@@ -142,6 +142,43 @@ class UserService {
     }
   }
 
+  async updateUserProfile(
+    username: string,
+    url: string,
+  ): Promise<ServiceResponse> {
+    try {
+      const updatedUser = await this.userModel.update({
+        where: { username },
+        data: {
+          image_url: url,
+        },
+      });
+
+      if (!updatedUser) {
+        return {
+          isSuccess: false,
+          error: {
+            field: 'user',
+            message: 'User not found',
+          },
+        };
+      }
+
+      return {
+        isSuccess: true,
+        data: { user: updatedUser },
+      };
+    } catch {
+      return {
+        isSuccess: false,
+        error: {
+          field: 'user',
+          message: 'Error updating user',
+        },
+      };
+    }
+  }
+
   async delete(id: number): Promise<ServiceResponse> {
     try {
       const deletedUser = await this.userModel.delete({

@@ -13,6 +13,7 @@ type UserServiceType = {
   findOr(data: FindType[]): Promise<ServiceResponse>;
   create(data: UserWithoutSkills): Promise<ServiceResponse>;
   update(id: number, data: UserWithoutSkills): Promise<ServiceResponse>;
+  updateUserProfile(username: string, url: string): Promise<ServiceResponse>;
   delete(id: number): Promise<ServiceResponse>;
 };
 
