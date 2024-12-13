@@ -12,7 +12,7 @@ import {} from '@ant-design/icons';
 import { useState } from 'react';
 
 const AsideContent = () => {
-  const [isShowModal, setIsShowModal] = useState(true);
+  const [isShowModal, setIsShowModal] = useState(false);
 
   const renderCreateForm = () => {
     return (

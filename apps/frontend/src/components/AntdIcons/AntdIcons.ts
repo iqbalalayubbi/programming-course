@@ -10,4 +10,5 @@ export {
   RightOutlined,
   ArrowLeftOutlined,
   PlusOutlined,
+  PlusCircleOutlined,
 } from '@ant-design/icons';
