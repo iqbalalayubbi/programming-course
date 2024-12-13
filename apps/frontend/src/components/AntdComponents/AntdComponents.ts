@@ -14,4 +14,6 @@ export {
   Card,
   Rate,
   Progress,
+  Divider,
+  List,
 } from 'antd';
