@@ -1,8 +1,14 @@
+import { Flex } from 'antd';
+import { StudentCard } from './components';
+
 const AsideContent = () => {
   return (
-    <h1>
-      ini <aside></aside>
-    </h1>
+    <Flex className="w-full px-5" vertical>
+      <h1 className="text-2xl font-bold my-5">List of Students</h1>
+      <Flex gap={8} vertical className="w-full">
+        <StudentCard children />
+      </Flex>
+    </Flex>
   );
 };
 

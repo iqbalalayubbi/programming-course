@@ -9,3 +9,4 @@ export { SkillLabel } from './SkillLabel/SkillLabel';
 export { CustomLoading } from './CustomLoading/CustomLoading';
 export { CustomQuill } from './CustomQuill/CustomQuill';
 export { ReviewCard } from './ReviewCard/ReviewCard';
+export { LabelRounded } from './LabelRounded/LabelRounded';
