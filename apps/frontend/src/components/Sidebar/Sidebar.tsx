@@ -8,12 +8,15 @@ import {
   LeftOutlined,
   RightOutlined,
   Iconify,
+  Modal,
 } from '@/components';
 import { type MenuProps } from '@/types';
 import { useState } from '@/hooks';
 import { sidebarAvatar } from '@/assets';
 import { useUser } from '@/stores';
-import { appRoute } from '@/enums';
+import { appRoute, colorPalette } from '@/enums';
+import { useNavigate } from 'react-router';
+import { userDataStorage } from '@/services';
 
 const { Sider } = Layout;
 
@@ -22,11 +25,27 @@ type MenuItem = Required<MenuProps>['items'][number];
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const { user } = useUser();
+  const navigate = useNavigate();
 
   const iconSize = 20;
 
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
+  };
+
+  const handleLogout = () => {
+    Modal.info({
+      title: 'Logout',
+      content: 'Are you sure you want to logout?',
+      okText: 'Logout',
+      okCancel: true,
+      okButtonProps: { style: { backgroundColor: colorPalette.PRIMARY } },
+      onOk: () => {
+        userDataStorage.removeAccessToken();
+        navigate(appRoute.LOGIN);
+      },
+      centered: true,
+    });
   };
 
   const mainItems: MenuItem[] = [
@@ -78,9 +97,9 @@ const Sidebar = () => {
     {
       title: 'Logout',
       label: (
-        <Link to="/logout">
-          <span className="text-red-500">Logout</span>
-        </Link>
+        <span onClick={handleLogout} className="text-red-500 block">
+          Logout
+        </span>
       ),
       icon: (
         <Iconify
@@ -88,6 +107,7 @@ const Sidebar = () => {
           style={{ fontSize: iconSize }}
           color="red"
           className="rotate-180"
+          onClick={handleLogout}
         />
       ),
       key: '2',
