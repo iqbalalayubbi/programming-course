@@ -1,6 +1,10 @@
-import { ArrowLeftOutlined, Button, Flex, Select } from '@/components';
-import { CourseCard, CoursePlaceholder, HeaderCourse } from './components';
-import { Link } from 'react-router';
+import { ArrowLeftOutlined, Button, Flex, Select, Link } from '@/components';
+import {
+  CourseCard,
+  CoursePlaceholder,
+  CreateCourseModal,
+  HeaderCourse,
+} from './components';
 import { appRoute } from '@/enums';
 
 const MentorManagement = () => {
@@ -19,6 +23,7 @@ const MentorManagement = () => {
 
   return (
     <Flex className="mx-10 my-5" gap={16} vertical>
+      <CreateCourseModal />
       <HeaderCourse />
       <Flex justify="space-between" gap={8}>
         <Link to={appRoute.COURSES}>
