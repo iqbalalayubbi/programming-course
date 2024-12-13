@@ -1,10 +1,10 @@
 import { Flex, Layout } from '@/components';
 import { Advertisement, CourseCard } from './components';
-import { useStudentCoursesData } from '@/hooks';
+import { useCourse } from '@/stores';
 const { Content } = Layout;
 
 const MainContent = () => {
-  const { studentCourses } = useStudentCoursesData();
+  const { courses } = useCourse();
 
   return (
     <Content className="w-2/3 mx-8 mt-5">
@@ -17,8 +17,10 @@ const MainContent = () => {
       </Flex>
       <h1 className="text-3xl font-bold my-3">Your Courses</h1>
       <Flex gap={16} vertical>
-        {studentCourses.map((course) => {
-          return <CourseCard id={course.course_id} key={course.id} />;
+        {courses.map((course) => {
+          return (
+            <CourseCard id={course.id} title={course.title} key={course.id} />
+          );
         })}
       </Flex>
     </Content>
