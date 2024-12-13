@@ -5,7 +5,7 @@ type UserStore = {
   surename?: string;
   birthdate?: string;
   country?: string;
-  image_id?: number;
+  image_url?: string;
   phone_number?: string;
   total_points?: number;
   description?: string;

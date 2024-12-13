@@ -144,13 +144,13 @@ class UserService {
 
   async updateUserProfile(
     username: string,
-    url: string,
+    filename: string,
   ): Promise<ServiceResponse> {
     try {
       const updatedUser = await this.userModel.update({
         where: { username },
         data: {
-          image_url: url,
+          image_url: `${process.env.PHOTO_URL}/${filename}`,
         },
       });
 

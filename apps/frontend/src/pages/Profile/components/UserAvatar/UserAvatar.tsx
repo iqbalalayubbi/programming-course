@@ -1,5 +1,14 @@
-import { useState } from '@/hooks';
-import { Avatar, Flex, message, Upload, Spin, Iconify } from '@/components';
+import { useEffect, useState, useUserData } from '@/hooks';
+import {
+  Avatar,
+  Flex,
+  message,
+  Upload,
+  Spin,
+  Iconify,
+  ToastContainer,
+  toast,
+} from '@/components';
 import type { GetProp, UploadProps } from '@/types';
 import { uploadPath } from '@/enums/apiPath/uploadPath';
 import { useUser } from '@/stores';
@@ -25,9 +34,10 @@ const beforeUpload = (file: FileType) => {
 };
 
 const UserAvatar = () => {
-  const { user } = useUser();
+  const { user, setUserData } = useUser();
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>();
+  const { refetch } = useUserData();
 
   const handleChange: UploadProps['onChange'] = (info) => {
     if (info.file.status === 'uploading') {
@@ -37,13 +47,21 @@ const UserAvatar = () => {
     if (info.file.status === 'done') {
       getBase64(info.file.originFileObj as FileType, (url) => {
         setLoading(false);
+        setUserData({ ...user, image_url: url });
+        toast.success('update profile image successfully');
+        refetch();
         setImageUrl(url);
       });
     }
   };
 
+  useEffect(() => {
+    setImageUrl(user.image_url);
+  }, [user.image_url]);
+
   return (
     <Flex gap="middle" wrap>
+      <ToastContainer />
       <Upload
         name="photo"
         className="avatar-uploader"

@@ -12,7 +12,6 @@ import {
 } from '@/components';
 import { type MenuProps } from '@/types';
 import { useState } from '@/hooks';
-import { sidebarAvatar } from '@/assets';
 import { useUser } from '@/stores';
 import { appRoute, colorPalette } from '@/enums';
 import { useNavigate } from 'react-router';
@@ -133,7 +132,7 @@ const Sidebar = () => {
           <Link to={appRoute.PROFILE}>
             <Avatar
               size={isCollapsed ? 40 : 80}
-              icon={<img src={sidebarAvatar} />}
+              src={user.image_url}
               className="hover:cursor-pointer hover:shadow-md transition-all duration-300 hover:opacity-50 hover"
             />
           </Link>
