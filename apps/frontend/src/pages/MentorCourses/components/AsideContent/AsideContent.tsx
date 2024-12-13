@@ -1,7 +1,26 @@
-import { Button, Divider, Flex, List, Iconify, Modal } from '@/components';
+import {
+  Button,
+  Divider,
+  Flex,
+  List,
+  Iconify,
+  Modal,
+  Input,
+} from '@/components';
 import { PlusOutlined } from '@ant-design/icons';
+import { useState } from 'react';
+
+const FormModalAdd = ({ isShow }: { isShow: boolean }) => {
+  return (
+    <Modal title="Add New Page" centered open={isShow}>
+      <Input placeholder="Enter page name" />
+    </Modal>
+  );
+};
 
 const AsideContent = () => {
+  const [isShowModal, setIsShowModal] = useState(true);
+
   const data = [
     { isActive: true, text: 'Basic HTML' },
     { isActive: false, text: 'Basic CSS' },
@@ -16,8 +35,7 @@ const AsideContent = () => {
       okText: 'Create',
       okButtonProps: { style: { backgroundColor: '#4caf50' } },
       cancelText: 'Cancel',
-      onOk: onCreatePage,
-      onCancel() {},
+      onOk: () => setIsShowModal(true),
     });
   };
 
@@ -78,6 +96,8 @@ const AsideContent = () => {
           </span>
         </Flex>
       </Flex>
+
+      <FormModalAdd isShow={isShowModal} />
     </Flex>
   );
 };

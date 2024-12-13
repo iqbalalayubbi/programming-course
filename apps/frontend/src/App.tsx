@@ -3,6 +3,7 @@ import {
   Courses,
   Dashboard,
   DetailCourse,
+  MentorCourses,
   MentorManagement,
   Profile,
   ResetPassword,
@@ -40,6 +41,7 @@ const App = () => {
           path={appRoute.MENTOR_MANAGEMENT}
           element={<MentorManagement />}
         />
+        <Route path={appRoute.MENTOR_COURSES} element={<MentorCourses />} />
       </Route>
     </Routes>
   );

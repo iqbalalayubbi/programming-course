@@ -11,7 +11,8 @@ const appRoute = {
   COURSE_DETAIL: '/courses/:id',
   STUDY_ROOM: '/courses/:id/study',
   PROFILE: '/profile',
-  MENTOR_MANAGEMENT: '/mentor',
+  MENTOR_MANAGEMENT: '/mentor-management',
+  MENTOR_COURSES: '/mentor-courses',
 };
 
 export { appRoute };
