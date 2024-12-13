@@ -11,6 +11,8 @@ import { CourseService } from './courseService';
 import { CourseContentService } from './courseContentService';
 import { StudentCourseService } from './studentCourseService';
 import { DashboardService } from './dashboardService';
+import { MulterService } from './MulterService';
+import { directoryName } from '@/enums';
 
 const prismaClient = new PrismaClient();
 const jwtService = new JwtService();
@@ -27,6 +29,8 @@ const dashboardService = new DashboardService({
   prismaClient,
   studentCourseService,
 });
+const multerPhotoService = new MulterService(directoryName.PHOTOS);
+const multerVideoService = new MulterService(directoryName.VIDEOS);
 const authService = new AuthService({
   userService,
   jwtService,
@@ -45,5 +49,7 @@ export {
   studentCourseService,
   userService,
   dashboardService,
+  multerPhotoService,
+  multerVideoService,
 };
 export * from './types';
