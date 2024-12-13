@@ -6,20 +6,26 @@ import {
   Iconify,
   Modal,
   Input,
+  PlusOutlined,
 } from '@/components';
-import { PlusOutlined } from '@ant-design/icons';
+import {} from '@ant-design/icons';
 import { useState } from 'react';
-
-const FormModalAdd = ({ isShow }: { isShow: boolean }) => {
-  return (
-    <Modal title="Add New Page" centered open={isShow}>
-      <Input placeholder="Enter page name" />
-    </Modal>
-  );
-};
 
 const AsideContent = () => {
   const [isShowModal, setIsShowModal] = useState(true);
+
+  const renderCreateForm = () => {
+    return (
+      <Modal
+        title="Add New Page"
+        centered
+        open={isShowModal}
+        onCancel={() => setIsShowModal(false)}
+      >
+        <Input placeholder="Enter page name" />
+      </Modal>
+    );
+  };
 
   const data = [
     { isActive: true, text: 'Basic HTML' },
@@ -27,17 +33,6 @@ const AsideContent = () => {
     { isActive: false, text: 'Basic Javascript' },
     { isActive: false, text: 'Basic CSS' },
   ];
-
-  const onCreatePage = () => {
-    Modal.confirm({
-      title: 'Create New Page',
-      content: 'Want to create a new page',
-      okText: 'Create',
-      okButtonProps: { style: { backgroundColor: '#4caf50' } },
-      cancelText: 'Cancel',
-      onOk: () => setIsShowModal(true),
-    });
-  };
 
   return (
     <Flex className="w-full px-5 h-full" justify="space-between" vertical>
@@ -62,7 +57,7 @@ const AsideContent = () => {
                   icon={<PlusOutlined />}
                   iconPosition="end"
                   className="w-full"
-                  onClick={onCreatePage}
+                  onClick={() => setIsShowModal(true)}
                 >
                   Add Page
                 </Button>
@@ -97,7 +92,7 @@ const AsideContent = () => {
         </Flex>
       </Flex>
 
-      <FormModalAdd isShow={isShowModal} />
+      {renderCreateForm()}
     </Flex>
   );
 };

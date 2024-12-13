@@ -76,6 +76,7 @@ model Course{
 model CourseContent{
   id Int @id @default(autoincrement())
   course_id Int
+  title String
   page Int
   content String @db.LongText
   video_url String
