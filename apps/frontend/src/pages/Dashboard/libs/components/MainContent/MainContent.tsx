@@ -16,7 +16,7 @@ const MainContent = () => {
         <Content>Total Stars</Content>
       </Flex>
       <h1 className="text-3xl font-bold my-3">Your Courses</h1>
-      <Flex gap={16} vertical>
+      <Flex gap={16} vertical className="h-96 overflow-auto">
         {courses.map((course) => {
           return (
             <CourseCard id={course.id} title={course.title} key={course.id} />
