@@ -1,8 +1,12 @@
-import { CustomQuill, Flex } from '@/components';
+import { CustomQuill, Flex, Link } from '@/components';
+import { appRoute } from '@/enums';
+import { useMentorManagement } from '@/stores';
 
-import { InboxOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, InboxOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
-import { message, Upload } from 'antd';
+import { Button, message, Upload } from 'antd';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
 const { Dragger } = Upload;
 
 const props: UploadProps = {
@@ -25,8 +29,23 @@ const props: UploadProps = {
 };
 
 const MainContent = () => {
+  const navigate = useNavigate();
+  const { newCourseName } = useMentorManagement();
+
+  useEffect(() => {
+    if (newCourseName === '') {
+      navigate(appRoute.MENTOR_MANAGEMENT);
+    }
+  }, [newCourseName, navigate]);
+
   return (
     <Flex gap={16} vertical className="h-full">
+      <Flex align="center" gap={16}>
+        <Link to={appRoute.MENTOR_MANAGEMENT}>
+          <Button type="text" icon={<ArrowLeftOutlined />} />
+        </Link>
+        <h1 className="text-3xl font-bold my-5">{newCourseName}</h1>
+      </Flex>
       <Dragger {...props} className="h-1/3">
         <p className="ant-upload-drag-icon">
           <InboxOutlined />
