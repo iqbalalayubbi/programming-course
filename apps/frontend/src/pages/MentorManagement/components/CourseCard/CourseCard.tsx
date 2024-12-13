@@ -9,7 +9,7 @@ type Properties = {
   description: string;
 };
 
-const CourseCard = ({ id, title, description }: Properties) => {
+const CourseCard = ({ title, description }: Properties) => {
   const navigate = useNavigate();
 
   return (
@@ -17,7 +17,7 @@ const CourseCard = ({ id, title, description }: Properties) => {
       className="shadow-lg w-[24%] group"
       cover={<img src={thumbnailExample} />}
       hoverable
-      onClick={() => navigate(`${appRoute.COURSES}/${id}`)}
+      onClick={() => navigate(appRoute.COURSE_MANAGEMENT)}
     >
       <Flex className="mt-2" vertical>
         <h3 className="font-semibold text-gray-800 text-xl group-hover:text-secondary">
