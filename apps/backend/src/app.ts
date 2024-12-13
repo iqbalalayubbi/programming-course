@@ -14,6 +14,8 @@ import {
 import session from 'express-session';
 import cors from 'cors';
 import morgan from 'morgan';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const app: Application = express();
 
@@ -35,6 +37,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session(sessionConfig));
 app.use(cors({ origin: process.env.CLIENT_ENDPOINT }));
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads/photos')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads/videos')));
 
 // routes
 app.use('/auth', authRoutes);
