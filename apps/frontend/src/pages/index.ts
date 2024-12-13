@@ -7,3 +7,4 @@ export { DetailCourse } from './DetailCourse/DetailCourse';
 export { StudyRoom } from './StudyRoom/StudyRoom';
 export { Profile } from './Profile/Profile';
 export { VerifyEmail } from './VerifyEmail/VerifyEmail';
+export { MentorManagement } from './MentorManagement/MentorManagement';
