@@ -3,14 +3,12 @@ import {
   Divider,
   Flex,
   List,
-  Iconify,
   Modal,
   Input,
   PlusOutlined,
 } from '@/components';
-import {} from '@ant-design/icons';
-import { useState } from 'react';
-import { UploadThumbnail } from './components';
+import { useState } from '@/hooks';
+import { ActionButtons, ControlButton, UploadThumbnail } from './components';
 
 const AsideContent = () => {
   const [isShowModal, setIsShowModal] = useState(false);
@@ -37,8 +35,9 @@ const AsideContent = () => {
 
   return (
     <Flex className="w-full px-5 h-full" justify="space-between" vertical>
+      <h1 className="font-bold text-2xl my-5">Course Content</h1>
+      <UploadThumbnail />
       <Flex vertical>
-        <h1 className="font-bold text-2xl my-5">Course Content</h1>
         <List
           className="w-full"
           bordered={false}
@@ -67,34 +66,11 @@ const AsideContent = () => {
           )}
         />
       </Flex>
-      <UploadThumbnail />
 
       <Divider orientation="left" className="my-2" />
-      <Flex gap={60} justify="center" className="my-5 gap-4">
-        <Flex gap={24} align="center" vertical className="group">
-          <Button
-            type="link"
-            shape="circle"
-            icon={<Iconify icon="grommet-icons:previous" />}
-            className="text-6xl group-hover:text-secondary"
-          />
-          <span className="group-hover:text-secondary font-semibold text-gray-third">
-            Prev
-          </span>
-        </Flex>
-        <Flex gap={24} align="center" vertical className="group">
-          <Button
-            type="link"
-            shape="circle"
-            icon={<Iconify icon="grommet-icons:next" />}
-            className="text-6xl group-hover:text-secondary"
-          />
-          <span className="group-hover:text-secondary font-semibold text-gray-third">
-            Next
-          </span>
-        </Flex>
-      </Flex>
+      <ControlButton />
 
+      <ActionButtons />
       {renderCreateForm()}
     </Flex>
   );

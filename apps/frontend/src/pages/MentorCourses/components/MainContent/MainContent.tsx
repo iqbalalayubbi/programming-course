@@ -6,19 +6,20 @@ import { useMentorManagement } from '@/stores';
 import { ArrowLeftOutlined, InboxOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
 import { Button, message, Upload } from 'antd';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
+// import { useEffect } from 'react';
+import { useState } from 'react';
+// import { useNavigate } from 'react-router';
 const { Dragger } = Upload;
 
 const MainContent = () => {
-  const navigate = useNavigate();
-  const { newCourseName } = useMentorManagement();
+  // const navigate = useNavigate();
+  const { newCourseName, newCourseData } = useMentorManagement();
   const [isSuccessUpload, setIsSuccessUpload] = useState(false);
   const [newFilename, setNewFilename] = useState('');
 
   const props: UploadProps = {
     name: 'video',
-    action: `${uploadPath.video}?type=course&courseId=1`,
+    action: `${uploadPath.video}?type=course&courseId=${newCourseData.id}`,
     onChange(info) {
       const { status, response } = info.file;
 
@@ -40,11 +41,11 @@ const MainContent = () => {
     },
   };
 
-  useEffect(() => {
-    if (newCourseName === '') {
-      navigate(appRoute.MENTOR_MANAGEMENT);
-    }
-  }, [newCourseName, navigate]);
+  // useEffect(() => {
+  //   if (newCourseData.title === '') {
+  //     navigate(appRoute.MENTOR_MANAGEMENT);
+  //   }
+  // }, [newCourseData.title, navigate]);
 
   return (
     <Flex gap={16} vertical className="h-full">

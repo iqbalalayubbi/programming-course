@@ -117,28 +117,6 @@ class CourseService {
       };
     }
   }
-
-  // async updateVideo(id: number, filename: string): Promise<ServiceResponse> {
-  //   try {
-  //     console.log(`${process.env.VIDEO_URL}/${filename}`);
-  //     const course = await this.courseModel.update({
-  //       where: { id },
-  //       data: { video_url: `${process.env.VIDEO_URL}/${filename}` },
-  //     });
-  //     return {
-  //       isSuccess: true,
-  //       data: { course },
-  //     };
-  //   } catch {
-  //     return {
-  //       isSuccess: false,
-  //       error: {
-  //         field: 'course',
-  //         message: 'Failed to update course thumbnail',
-  //       },
-  //     };
-  //   }
-  // }
 }
 
 export { CourseService };

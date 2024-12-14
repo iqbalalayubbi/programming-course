@@ -61,6 +61,27 @@ class CourseContentService {
       };
     }
   }
+
+  async updateVideo(id: number, filename: string): Promise<ServiceResponse> {
+    try {
+      const courseContent = await this.courseContentModel.update({
+        where: { id },
+        data: { video_url: `${process.env.VIDEO_URL}/${filename}` },
+      });
+      return {
+        isSuccess: true,
+        data: { courseContent },
+      };
+    } catch {
+      return {
+        isSuccess: false,
+        error: {
+          field: 'course',
+          message: 'Failed to update course thumbnail',
+        },
+      };
+    }
+  }
 }
 
 export { CourseContentService };

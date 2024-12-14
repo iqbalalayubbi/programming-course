@@ -20,4 +20,6 @@ router.patch(
   courseContentController.updateCourseContent,
 );
 
+// router.patch('/', )
+
 export { router };

@@ -11,6 +11,7 @@ import {
 } from '@/components';
 import type { GetProp, UploadProps } from '@/types';
 import { uploadPath } from '@/enums/apiPath/uploadPath';
+import { useMentorManagement } from '@/stores';
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
@@ -36,6 +37,7 @@ const UploadThumbnail = () => {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>();
   const { refetch } = useUserData();
+  const { newCourseData } = useMentorManagement();
 
   const handleChange: UploadProps['onChange'] = (info) => {
     if (info.file.status === 'uploading') {
@@ -59,13 +61,13 @@ const UploadThumbnail = () => {
         name="photo"
         className="avatar-uploader w-full h-60 flex justify-center"
         showUploadList={false}
-        action={`${uploadPath.photo}?type=course&courseId=1`}
+        action={`${uploadPath.photo}?type=course&courseId=${newCourseData.id}`}
         beforeUpload={beforeUpload}
         onChange={handleChange}
       >
         {imageUrl ? (
           <img
-            src={imageUrl}
+            src={newCourseData.imageUrl ? newCourseData.imageUrl : imageUrl}
             alt=""
             className="w-full h-full hover:cursor-pointer hover:opacity-80 transition-all duration-300"
           />
