@@ -1,48 +1,68 @@
-// import { courseContentApi } from '@/api';
-import { Button, Input, List, Modal, PlusOutlined } from '@/components';
-import { useMentorManagement } from '@/stores';
-// import { useMutation } from '@tanstack/react-query';
-import { useState } from 'react';
-import { useSearchParams } from 'react-router';
+import { courseContentApi } from '@/api';
+import { Button, Input, List, Modal, PlusOutlined, toast } from '@/components';
+import { appRoute } from '@/enums';
+import { CourseContent, useMentorManagement, useCourseContent } from '@/stores';
+import { useMutation, useNavigate, useSearchParams, useState } from '@/hooks';
+import { AxiosResponse } from 'axios';
+import { ResponseApiType } from 'common';
 
 const ListCourseContents = () => {
-  const [isShowModal, setIsShowModal] = useState(true);
   const { newCourseData, setNewCourseData } = useMentorManagement();
+  const { setCourseContentData } = useCourseContent();
+  const navigate = useNavigate();
+
+  const [isShowModal, setIsShowModal] = useState(true);
   const [queryParameters] = useSearchParams();
   const [pageName, setPageName] = useState('');
 
-  // useMutation({
-  //   mutationKey: ['addCourseContent'],
-  //   //   course_id: Joi.number().integer().required(),
-  //   // page: Joi.number().integer().required(),
-  //   // content: Joi.string(),
-  //   // video_url: Joi.string().uri(),
-  //   mutationFn: async (courseId: number, data:) => {
-  //     const response = await courseContentApi.createCourseContent(
-  //       courseId,
-  //       data,
-  //     );
-  //     return response;
-  //   },
-  //   onSuccess: (result) => {
-  //     console.log(result);
-  //     // Refresh the course content list
-  //   },
-  //   onError: () => {
-  //     // Show error message
-  //   },
-  // });
+  const addCourseMutation = useMutation({
+    mutationKey: ['addCourseContent'],
+    mutationFn: async (payload: { course_id: number; data: CourseContent }) => {
+      const response = await courseContentApi.createCourseContent(
+        payload.course_id,
+        payload.data,
+      );
+      return response;
+    },
+    onSuccess: (result) => {
+      const response = result as unknown as AxiosResponse;
+      const responseData = response.data as ResponseApiType;
+      const newCourseContent = responseData.data
+        ?.courseContent as unknown as CourseContent;
+      setCourseContentData(newCourseContent);
+      setIsShowModal(false);
+      toast.success('Your first content has been added');
+    },
+    onError: () => {
+      toast.error('Failed to add course content');
+      navigate(appRoute.MENTOR_MANAGEMENT);
+    },
+  });
 
   const handleAddCourseContent = () => {
     const pageNumber = queryParameters.get('page');
-    if (newCourseData.id) {
+    const courseId = Number(newCourseData.id);
+
+    if (courseId) {
       const newCourseContent = {
         ...newCourseData,
+        course_id: courseId,
         title: pageName,
         page: Number(pageNumber),
       };
 
       setNewCourseData(newCourseContent);
+
+      addCourseMutation.mutate({
+        course_id: courseId,
+        data: {
+          title: pageName,
+          page: Number(pageNumber),
+          course_id: courseId,
+          content: '',
+          video_url: '',
+        },
+      });
     }
   };
 

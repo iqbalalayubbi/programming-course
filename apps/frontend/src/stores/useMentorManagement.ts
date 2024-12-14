@@ -4,6 +4,7 @@ type NewCourseData = {
   id?: number;
   title: string;
   description: string;
+  videoUrl: string;
   selectedImage: File | null;
   imageUrl?: string;
 };
@@ -25,6 +26,7 @@ const useMentorManagement = create<StoreState>((set) => ({
     title: '',
     description: '',
     selectedImage: null,
+    videoUrl: '',
     imageUrl: undefined,
   },
   setNewCourseData: (data: NewCourseData) => set({ newCourseData: data }),
