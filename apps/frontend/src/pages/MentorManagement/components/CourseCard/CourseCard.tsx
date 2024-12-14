@@ -1,4 +1,3 @@
-import { thumbnailExample } from '@/assets';
 import { Card, Flex, Rate } from '@/components';
 import { appRoute } from '@/enums';
 import { useNavigate } from '@/hooks';
@@ -7,15 +6,16 @@ type Properties = {
   id: number;
   title: string;
   description: string;
+  imageUrl: string;
 };
 
-const CourseCard = ({ title, description }: Properties) => {
+const CourseCard = ({ title, description, imageUrl }: Properties) => {
   const navigate = useNavigate();
 
   return (
     <Card
       className="shadow-lg w-[24%] group"
-      cover={<img src={thumbnailExample} />}
+      cover={<img src={imageUrl} className="h-40" />}
       hoverable
       onClick={() => navigate(appRoute.COURSE_MANAGEMENT)}
     >
