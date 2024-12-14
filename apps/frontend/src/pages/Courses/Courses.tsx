@@ -1,8 +1,8 @@
 import { Button, Flex, Link, Select } from '@/components';
 import { CourseCard, HeaderCourse } from './components';
 import { useCourseData } from '@/hooks';
-import { appRoute } from '@/enums';
-import { getUsername } from '@/utils';
+import { appRoute, role } from '@/enums';
+import { getRole, getUsername } from '@/utils';
 
 const Courses = () => {
   const { courses } = useCourseData();
@@ -31,9 +31,11 @@ const Courses = () => {
             ]}
           />
         </Flex>
-        <Link to={appRoute.MENTOR_MANAGEMENT}>
-          <Button type="primary">Mentor Management</Button>
-        </Link>
+        {getRole() === role.MENTOR && (
+          <Link to={appRoute.MENTOR_MANAGEMENT}>
+            <Button type="primary">Mentor Management</Button>
+          </Link>
+        )}
       </Flex>
       <Flex gap={16} className="flex-wrap">
         {courses.map((course) => {
