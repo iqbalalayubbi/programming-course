@@ -2,6 +2,7 @@ import { Button, Flex, Link, Select } from '@/components';
 import { CourseCard, HeaderCourse } from './components';
 import { useCourseData } from '@/hooks';
 import { appRoute } from '@/enums';
+import { getUsername } from '@/utils';
 
 const Courses = () => {
   const { courses } = useCourseData();
@@ -36,15 +37,17 @@ const Courses = () => {
       </Flex>
       <Flex gap={16} className="flex-wrap">
         {courses.map((course) => {
-          return (
-            <CourseCard
-              key={course.id}
-              id={course.id}
-              title={course.title}
-              description={course.description}
-              imageUrl={course.thumbnail_url}
-            />
-          );
+          if (course.mentor_username !== getUsername()) {
+            return (
+              <CourseCard
+                key={course.id}
+                id={course.id}
+                title={course.title}
+                description={course.description}
+                imageUrl={course.thumbnail_url}
+              />
+            );
+          }
         })}
       </Flex>
     </Flex>
