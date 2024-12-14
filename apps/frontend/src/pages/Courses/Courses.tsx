@@ -42,6 +42,7 @@ const Courses = () => {
               id={course.id}
               title={course.title}
               description={course.description}
+              imageUrl={course.thumbnail_url}
             />
           );
         })}
