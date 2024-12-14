@@ -7,7 +7,6 @@ type CourseServiceType = {
   getAll(): Promise<ServiceResponse>;
   getById(id: number): Promise<ServiceResponse>;
   updateThumbnail(id: number, filename: string): Promise<ServiceResponse>;
-  updateVideo(id: number, filename: string): Promise<ServiceResponse>;
 };
 
 export { CourseServiceType };

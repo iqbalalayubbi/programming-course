@@ -1,6 +1,7 @@
 import { Flex } from '@/components';
+import { appRoute } from '@/enums';
 import { uploadPath } from '@/enums/apiPath/uploadPath';
-import { useMentorManagement } from '@/stores';
+import { useCourseContent } from '@/stores';
 import { InboxOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
 import { message, Upload } from 'antd';
@@ -8,17 +9,16 @@ import { useState } from 'react';
 const { Dragger } = Upload;
 
 const UploadVideo = () => {
-  const { newCourseData } = useMentorManagement();
   const [isSuccessUpload, setIsSuccessUpload] = useState(false);
   const [newFilename, setNewFilename] = useState('');
+  const { courseContent } = useCourseContent();
 
   const props: UploadProps = {
     name: 'video',
-    action: `${uploadPath.video}?type=course&courseId=${newCourseData.id}`,
+    action: `${uploadPath.video}?type=course&courseContentId=${courseContent.id}`,
     onChange(info) {
       const { status, response } = info.file;
 
-      console.log(response);
       if (status !== 'uploading') {
         console.log(info.file, info.fileList);
       }
@@ -41,9 +41,20 @@ const UploadVideo = () => {
       <Flex justify="center">
         <video width="600" controls>
           <source
-            src={`http://localhost:8000/uploads/${newFilename}`}
+            src={`${import.meta.env.VITE_BASE_API}${appRoute.UPLOADS}/${newFilename}`}
             type="video/mp4"
           />
+          Your browser does not support the video tag.
+        </video>
+      </Flex>
+    );
+  }
+
+  if (courseContent.video_url) {
+    return (
+      <Flex justify="center">
+        <video width="600" controls>
+          <source src={courseContent.video_url} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       </Flex>

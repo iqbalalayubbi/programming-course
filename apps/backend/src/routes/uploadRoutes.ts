@@ -18,7 +18,7 @@ router.post(
 router.post(
   '/video',
   multerVideoService.singleUpload(INPUT_NAME.VIDEO),
-  uploadController.updateVideoCourse,
+  uploadController.updateVideoCourseContent,
 );
 
 export { router };

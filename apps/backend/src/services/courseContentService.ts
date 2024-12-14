@@ -50,8 +50,7 @@ class CourseContentService {
         isSuccess: true,
         data: { courseContent: updatedCourseContent },
       };
-    } catch (err) {
-      console.log(err);
+    } catch {
       return {
         isSuccess: false,
         error: {
@@ -130,9 +129,20 @@ class CourseContentService {
         where: { id },
         data: { video_url: `${process.env.VIDEO_URL}/${filename}` },
       });
+
+      if (courseContent) {
+        return {
+          isSuccess: true,
+          data: { courseContent },
+        };
+      }
+
       return {
-        isSuccess: true,
-        data: { courseContent },
+        isSuccess: false,
+        error: {
+          field: 'course',
+          message: 'Course content not found',
+        },
       };
     } catch {
       return {

@@ -1,4 +1,8 @@
-import { CourseServiceType, UserServiceType } from '@/services';
+import {
+  CourseContentServiceType,
+  CourseServiceType,
+  UserServiceType,
+} from '@/services';
 import { formatResponse } from '@/utils';
 import { statusCode } from 'common';
 import { NextFunction, Request, Response } from 'express';
@@ -6,19 +10,26 @@ import { NextFunction, Request, Response } from 'express';
 type Constructor = {
   userService: UserServiceType;
   courseService: CourseServiceType;
+  courseContentService: CourseContentServiceType;
 };
 
 class UploadController {
   private userService: UserServiceType;
   private courseService: CourseServiceType;
+  private courseContentService: CourseContentServiceType;
 
-  constructor({ userService, courseService }: Constructor) {
+  constructor({
+    userService,
+    courseService,
+    courseContentService,
+  }: Constructor) {
     this.userService = userService;
     this.courseService = courseService;
+    this.courseContentService = courseContentService;
 
     this.updateUserProfile = this.updateUserProfile.bind(this);
     this.updateThumbnailCourse = this.updateThumbnailCourse.bind(this);
-    this.updateVideoCourse = this.updateVideoCourse.bind(this);
+    this.updateVideoCourseContent = this.updateVideoCourseContent.bind(this);
   }
 
   async updateUserProfile(req: Request, res: Response, next: NextFunction) {
@@ -111,10 +122,10 @@ class UploadController {
     });
   }
 
-  async updateVideoCourse(req: Request, res: Response) {
+  async updateVideoCourseContent(req: Request, res: Response) {
     const {
       file,
-      query: { courseId },
+      query: { courseContentId },
     } = req;
 
     if (!file) {
@@ -125,7 +136,7 @@ class UploadController {
       });
     }
 
-    if (!courseId) {
+    if (!courseContentId) {
       return formatResponse({
         res,
         statusCode: statusCode.BAD_REQUEST,
@@ -143,8 +154,18 @@ class UploadController {
       });
     }
 
-    await this.courseService.updateVideo(Number(courseId), filename);
+    const { error } = await this.courseContentService.updateVideo(
+      Number(courseContentId),
+      filename,
+    );
 
+    if (error) {
+      return formatResponse({
+        res,
+        statusCode: statusCode.INTERNAL_SERVER_ERROR,
+        message: 'Error updating course content',
+      });
+    }
     return formatResponse({
       res,
       statusCode: statusCode.OK,

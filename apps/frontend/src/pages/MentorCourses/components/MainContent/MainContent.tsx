@@ -27,7 +27,7 @@ const MainContent = () => {
         <h1 className="text-3xl font-bold my-5">{courseContent.title}</h1>
       </Flex>
       <UploadVideo />
-      <CustomQuill children className="flex-1 h-full mt-10" />;
+      <CustomQuill children className="h-80 mt-10" />;
     </Flex>
   );
 };

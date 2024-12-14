@@ -9,6 +9,7 @@ type CourseContentServiceType = {
   ): Promise<ServiceResponse>;
   getByPage(courseId: number, page: number): Promise<ServiceResponse>;
   getAllContents(courseId: number): Promise<ServiceResponse>;
+  updateVideo(id: number, filename: string): Promise<ServiceResponse>;
 };
 
 export { CourseContentServiceType };

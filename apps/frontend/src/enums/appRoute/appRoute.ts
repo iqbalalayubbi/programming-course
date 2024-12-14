@@ -15,6 +15,7 @@ const appRoute = {
   MENTOR_COURSES: '/mentor-courses',
   COURSE_MANAGEMENT: '/course-management',
   COURSE_MANAGEMENT_ID: '/course-management/:courseId',
+  UPLOADS: '/uploads',
 };
 
 export { appRoute };

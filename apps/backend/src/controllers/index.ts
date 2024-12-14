@@ -25,7 +25,11 @@ const courseContentController = new CourseContentController({
 const studentCourseController = new StudentCourseController();
 const profileController = new ProfileController({ userService });
 const dashboardController = new DashboarController({ dashboardService });
-const uploadController = new UploadController({ userService, courseService });
+const uploadController = new UploadController({
+  userService,
+  courseService,
+  courseContentService,
+});
 
 export {
   authController,
