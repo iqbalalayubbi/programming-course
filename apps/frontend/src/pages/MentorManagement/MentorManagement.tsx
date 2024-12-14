@@ -58,7 +58,7 @@ const MentorManagement = () => {
           />
         </Flex>
       </Flex>
-      <Flex gap={16} className="flex-wrap">
+      <Flex gap={16} className="flex-wrap" align="stretch">
         {mentorCourses.map((course) => {
           return (
             <CourseCard

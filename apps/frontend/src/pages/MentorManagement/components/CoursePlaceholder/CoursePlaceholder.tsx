@@ -6,17 +6,17 @@ const CoursePlaceholder = () => {
 
   return (
     <Card
-      className="shadow-lg w-[24%] group h-full flex flex-col items-center justify-center bg-gray-200"
+      className="shadow-lg w-[24%] group flex flex-col items-center justify-center bg-light-bg group:"
       hoverable
       onClick={() => setIsShowCreateModal(true)}
     >
-      <Flex justify="center" align="center" gap={8} vertical>
-        <h1 className="text-center text-xl font-semibold text-gray-400">
+      <Flex justify="center" align="center" gap={16} vertical>
+        <h1 className="text-center text-xl font-semibold text-gray-300 group-hover:text-slate-400 transition-all duration-300">
           Add New Course
         </h1>
         <PlusCircleOutlined
           style={{ fontSize: 30 }}
-          className="text-gray-400"
+          className="text-gray-300 group-hover:text-slate-400 transition-all duration-300"
         />
       </Flex>
     </Card>
