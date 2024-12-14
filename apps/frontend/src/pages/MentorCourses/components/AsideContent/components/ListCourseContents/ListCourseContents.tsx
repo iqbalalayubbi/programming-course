@@ -160,7 +160,7 @@ const ListCourseContents = () => {
   return (
     <>
       <List
-        className="w-full"
+        className="w-full h-40 overflow-auto border-t border-b shadow-sm"
         bordered={false}
         dataSource={courseContents}
         renderItem={(item) => (

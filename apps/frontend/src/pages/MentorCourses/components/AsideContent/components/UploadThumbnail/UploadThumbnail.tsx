@@ -1,17 +1,16 @@
-import { useState, useUserData } from '@/hooks';
+import { useDetailCourseData, useState, useUserData } from '@/hooks';
 import {
-  Avatar,
   Flex,
   message,
   Upload,
   Spin,
-  Iconify,
   ToastContainer,
   toast,
 } from '@/components';
 import type { GetProp, UploadProps } from '@/types';
 import { uploadPath } from '@/enums/apiPath/uploadPath';
-import { useMentorManagement } from '@/stores';
+import { useCourse } from '@/stores';
+import { useSearchParams } from 'react-router';
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
@@ -37,7 +36,11 @@ const UploadThumbnail = () => {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>();
   const { refetch } = useUserData();
-  const { newCourseData } = useMentorManagement();
+  const { course } = useCourse();
+  const [queryParameters] = useSearchParams();
+
+  const courseId = Number(queryParameters.get('course'));
+  const { refetch: refetchDetailCourseData } = useDetailCourseData(courseId);
 
   const handleChange: UploadProps['onChange'] = (info) => {
     if (info.file.status === 'uploading') {
@@ -49,6 +52,7 @@ const UploadThumbnail = () => {
         setLoading(false);
         toast.success('update profile image successfully');
         refetch();
+        refetchDetailCourseData();
         setImageUrl(url);
       });
     }
@@ -61,30 +65,27 @@ const UploadThumbnail = () => {
         name="photo"
         className="avatar-uploader w-full h-60 flex justify-center"
         showUploadList={false}
-        action={`${uploadPath.photo}?type=course&courseId=${newCourseData.id}`}
+        action={`${uploadPath.photo}?type=course&courseId=${course.id}`}
         beforeUpload={beforeUpload}
         onChange={handleChange}
       >
         {imageUrl ? (
           <img
-            src={newCourseData.imageUrl ? newCourseData.imageUrl : imageUrl}
+            src={course.thumbnail_url ? course.thumbnail_url : imageUrl}
             alt=""
             className="w-full h-full hover:cursor-pointer hover:opacity-80 transition-all duration-300"
           />
         ) : (
           <Flex className="w-full h-full">
-            <Avatar
-              icon={
-                loading ? (
-                  <Spin spinning />
-                ) : (
-                  <Iconify icon="material-symbols:image-outline" />
-                )
-              }
-              size={200}
-              shape="square"
-              className="w-full h-full bg-slate-200 hover:bg-slate-400 transition-all duration-300 hover:cursor-pointer"
-            />
+            {loading ? (
+              <Spin spinning />
+            ) : (
+              <img
+                src={course.thumbnail_url ? course.thumbnail_url : imageUrl}
+                alt=""
+                className="w-full h-full hover:cursor-pointer hover:opacity-80 transition-all duration-300"
+              />
+            )}
           </Flex>
         )}
       </Upload>
