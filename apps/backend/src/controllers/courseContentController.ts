@@ -15,6 +15,7 @@ class CourseContentController {
 
     this.createCourseContent = this.createCourseContent.bind(this);
     this.updateCourseContent = this.updateCourseContent.bind(this);
+    this.getCourseContentByPage = this.getCourseContentByPage.bind(this);
   }
 
   async createCourseContent(req: Request, res: Response) {
@@ -84,6 +85,42 @@ class CourseContentController {
       res,
       statusCode: statusCode.INTERNAL_SERVER_ERROR,
       message: 'Failed to update course content',
+    });
+  }
+
+  async getCourseContentByPage(req: Request, res: Response) {
+    const { courseId, page } = req.query;
+
+    const {
+      isSuccess,
+      data: courseContents,
+      error,
+    } = await this.courseContentService.getByPage(
+      Number(courseId),
+      Number(page),
+    );
+
+    if (isSuccess && courseContents) {
+      return formatResponse({
+        res,
+        statusCode: statusCode.OK,
+        message: 'Course contents retrieved successfully',
+        data: courseContents,
+      });
+    }
+
+    if (error) {
+      return formatResponse({
+        res,
+        statusCode: statusCode.INTERNAL_SERVER_ERROR,
+        message: 'Failed to retrieve course contents',
+      });
+    }
+
+    return formatResponse({
+      res,
+      statusCode: statusCode.NOT_FOUND,
+      message: 'Course not found',
     });
   }
 }

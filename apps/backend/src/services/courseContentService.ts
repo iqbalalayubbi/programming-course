@@ -62,6 +62,39 @@ class CourseContentService {
     }
   }
 
+  async getByPage(courseId: number, page: number): Promise<ServiceResponse> {
+    try {
+      const courseContent = await this.courseContentModel.findFirst({
+        where: { course_id: courseId, page },
+        take: 10,
+        skip: (page - 1) * 10,
+        orderBy: { id: 'desc' },
+      });
+
+      if (courseContent) {
+        return {
+          isSuccess: true,
+          data: { courseContent },
+        };
+      }
+      return {
+        isSuccess: false,
+        error: {
+          field: 'course',
+          message: 'Course not found',
+        },
+      };
+    } catch {
+      return {
+        isSuccess: false,
+        error: {
+          field: 'course',
+          message: 'Failed to get course contents',
+        },
+      };
+    }
+  }
+
   async updateVideo(id: number, filename: string): Promise<ServiceResponse> {
     try {
       const courseContent = await this.courseContentModel.update({

@@ -7,4 +7,6 @@ router.post('/:courseId', courseContentController.createCourseContent);
 
 router.patch('/:courseContentId', courseContentController.updateCourseContent);
 
+router.get('/', courseContentController.getCourseContentByPage);
+
 export { router };

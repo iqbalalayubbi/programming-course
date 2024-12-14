@@ -34,6 +34,20 @@ class CourseContentApi extends ApiService {
       throw error as AxiosError;
     }
   }
+
+  public async getCourseContentsByPage(
+    courseId: number,
+    page: number,
+  ): Promise<FormatResponseType | AxiosError> {
+    try {
+      const response = await this.get(
+        `${apiPath.COURSE_CONTENTS}?courseId=${courseId}&page=${page}`,
+      );
+      return formatResponse(response as AxiosResponse);
+    } catch (error) {
+      throw error as AxiosError;
+    }
+  }
 }
 
 export { CourseContentApi };
