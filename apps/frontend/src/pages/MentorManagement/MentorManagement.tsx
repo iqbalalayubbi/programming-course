@@ -6,20 +6,28 @@ import {
   HeaderCourse,
 } from './components';
 import { appRoute } from '@/enums';
+import { useCallback, useCourseData, useEffect, useState } from '@/hooks';
+import { getUsername } from '@/utils';
 
 const MentorManagement = () => {
-  const allCourses = [
-    {
-      id: 1,
-      title: 'React for Beginners',
-      description: 'Learn React from scratch',
+  const { courses } = useCourseData();
+  const [mentorCourses, setMentorCourses] = useState(courses);
+
+  const filterCourseByMentor = useCallback(
+    (username: string) => {
+      const mentorCourses = courses.filter(
+        (course) => course.mentor_username === username,
+      );
+
+      setMentorCourses(mentorCourses);
     },
-    {
-      id: 2,
-      title: 'Node.js for Beginners',
-      description: 'Learn Node.js from scratch',
-    },
-  ];
+    [courses],
+  );
+
+  useEffect(() => {
+    const username = getUsername();
+    filterCourseByMentor(username);
+  }, [courses, filterCourseByMentor]);
 
   return (
     <Flex className="mx-10 my-5" gap={16} vertical>
@@ -51,7 +59,7 @@ const MentorManagement = () => {
         </Flex>
       </Flex>
       <Flex gap={16} className="flex-wrap">
-        {allCourses.map((course) => {
+        {mentorCourses.map((course) => {
           return (
             <CourseCard
               key={course.id}
