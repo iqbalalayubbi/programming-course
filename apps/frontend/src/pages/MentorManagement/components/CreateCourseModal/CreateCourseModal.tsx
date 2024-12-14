@@ -1,7 +1,8 @@
 import { appRoute } from '@/enums';
 import { useMentorManagement } from '@/stores';
-import { Input, Modal } from '@/components';
+import { Flex, Input, Modal } from '@/components';
 import { useNavigate } from '@/hooks';
+import { UploadThumbnail } from './components';
 
 const CreateCourseModal = () => {
   const navigate = useNavigate();
@@ -24,11 +25,20 @@ const CreateCourseModal = () => {
       onCancel={() => setIsShowCreateModal(false)}
       onOk={handleCreateCourse}
     >
-      <Input
-        placeholder="Enter course name"
-        value={newCourseName}
-        onChange={(e) => setNewCourseName(e.target.value)}
-      />
+      <Flex gap={16} vertical>
+        <UploadThumbnail />
+        <Input
+          placeholder="Enter course name"
+          value={newCourseName}
+          onChange={(e) => setNewCourseName(e.target.value)}
+        />
+        <Input.TextArea
+          placeholder="Enter description"
+          // value=
+          // onChange={(e) => setNewCourseName(e.target.value)}
+          autoSize={{ minRows: 3, maxRows: 3 }}
+        />
+      </Flex>
     </Modal>
   );
 };
