@@ -18,6 +18,7 @@ class UploadController {
 
     this.updateUserProfile = this.updateUserProfile.bind(this);
     this.updateThumbnailCourse = this.updateThumbnailCourse.bind(this);
+    this.updateVideoCourse = this.updateVideoCourse.bind(this);
   }
 
   async updateUserProfile(req: Request, res: Response, next: NextFunction) {
@@ -148,7 +149,7 @@ class UploadController {
       res,
       statusCode: statusCode.OK,
       message: 'File uploaded successfully',
-      data: { file },
+      data: file,
     });
   }
 }

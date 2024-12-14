@@ -120,9 +120,10 @@ class CourseService {
 
   async updateVideo(id: number, filename: string): Promise<ServiceResponse> {
     try {
+      console.log(`${process.env.VIDEO_URL}/${filename}`);
       const course = await this.courseModel.update({
         where: { id },
-        data: { thumbnail_url: `${process.env.VIDEO_URL}/${filename}` },
+        data: { video_url: `${process.env.VIDEO_URL}/${filename}` },
       });
       return {
         isSuccess: true,

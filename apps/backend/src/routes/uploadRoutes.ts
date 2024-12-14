@@ -1,5 +1,5 @@
 import { uploadController } from '@/controllers';
-import { multerPhotoService } from '@/services';
+import { multerPhotoService, multerVideoService } from '@/services';
 import express from 'express';
 
 const router = express.Router();
@@ -17,8 +17,8 @@ router.post(
 
 router.post(
   '/video',
-  multerPhotoService.singleUpload(INPUT_NAME.VIDEO),
-  uploadController.updateThumbnailCourse,
+  multerVideoService.singleUpload(INPUT_NAME.VIDEO),
+  uploadController.updateVideoCourse,
 );
 
 export { router };
