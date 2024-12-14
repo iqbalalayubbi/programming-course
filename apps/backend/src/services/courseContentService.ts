@@ -66,9 +66,6 @@ class CourseContentService {
     try {
       const courseContent = await this.courseContentModel.findFirst({
         where: { course_id: courseId, page },
-        take: 10,
-        skip: (page - 1) * 10,
-        orderBy: { id: 'desc' },
       });
 
       if (courseContent) {
@@ -90,6 +87,38 @@ class CourseContentService {
         error: {
           field: 'course',
           message: 'Failed to get course contents',
+        },
+      };
+    }
+  }
+
+  async getAllContents(courseId: number): Promise<ServiceResponse> {
+    try {
+      const courseContents = await this.courseContentModel.findMany({
+        where: { course_id: courseId },
+        orderBy: { page: 'asc' },
+      });
+
+      if (courseContents) {
+        return {
+          isSuccess: true,
+          data: { courseContents },
+        };
+      }
+
+      return {
+        isSuccess: false,
+        error: {
+          field: 'course',
+          message: 'Course not found',
+        },
+      };
+    } catch {
+      return {
+        isSuccess: false,
+        error: {
+          field: 'course',
+          message: 'Failed to get all course contents',
         },
       };
     }

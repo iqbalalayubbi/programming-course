@@ -16,6 +16,7 @@ class CourseContentController {
     this.createCourseContent = this.createCourseContent.bind(this);
     this.updateCourseContent = this.updateCourseContent.bind(this);
     this.getCourseContentByPage = this.getCourseContentByPage.bind(this);
+    this.getCourseContents = this.getCourseContents.bind(this);
   }
 
   async createCourseContent(req: Request, res: Response) {
@@ -99,6 +100,39 @@ class CourseContentController {
       Number(courseId),
       Number(page),
     );
+
+    if (isSuccess && courseContents) {
+      return formatResponse({
+        res,
+        statusCode: statusCode.OK,
+        message: 'Course contents retrieved successfully',
+        data: courseContents,
+      });
+    }
+
+    if (error) {
+      return formatResponse({
+        res,
+        statusCode: statusCode.INTERNAL_SERVER_ERROR,
+        message: 'Failed to retrieve course contents',
+      });
+    }
+
+    return formatResponse({
+      res,
+      statusCode: statusCode.NOT_FOUND,
+      message: 'Course not found',
+    });
+  }
+
+  async getCourseContents(req: Request, res: Response) {
+    const { courseId } = req.params;
+
+    const {
+      isSuccess,
+      data: courseContents,
+      error,
+    } = await this.courseContentService.getAllContents(Number(courseId));
 
     if (isSuccess && courseContents) {
       return formatResponse({

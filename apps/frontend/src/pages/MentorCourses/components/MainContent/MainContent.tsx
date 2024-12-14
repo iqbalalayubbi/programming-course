@@ -6,11 +6,17 @@ import {
   ArrowLeftOutlined,
 } from '@/components';
 import { appRoute } from '@/enums';
-import { useCourseContent } from '@/stores';
+import { useCourseContent, useQuill } from '@/stores';
 import { UploadVideo } from './components';
+import { useEffect } from 'react';
 
 const MainContent = () => {
   const { courseContent } = useCourseContent();
+  const { setValue } = useQuill();
+
+  useEffect(() => {
+    setValue(courseContent.content);
+  }, [courseContent.content, setValue]);
 
   return (
     <Flex gap={16} vertical className="h-full">

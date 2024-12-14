@@ -9,4 +9,6 @@ router.patch('/:courseContentId', courseContentController.updateCourseContent);
 
 router.get('/', courseContentController.getCourseContentByPage);
 
+router.get('/:courseId', courseContentController.getCourseContents);
+
 export { router };

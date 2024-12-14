@@ -8,6 +8,7 @@ type CourseContentServiceType = {
     data: CourseContentModel,
   ): Promise<ServiceResponse>;
   getByPage(courseId: number, page: number): Promise<ServiceResponse>;
+  getAllContents(courseId: number): Promise<ServiceResponse>;
 };
 
 export { CourseContentServiceType };

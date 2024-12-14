@@ -100,6 +100,10 @@ const ListCourseContents = () => {
     setIsShowModal(isCreateCourse);
   }, [isCreateCourse]);
 
+  useEffect(() => {
+    console.log(courseContents);
+  }, [courseContents]);
+
   return (
     <>
       <List
