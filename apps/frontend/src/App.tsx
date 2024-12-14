@@ -1,5 +1,6 @@
 import {
   Auth,
+  Challenges,
   CourseManagement,
   Courses,
   Dashboard,
@@ -51,6 +52,7 @@ const App = () => {
         />
         <Route path={`${appRoute.NOTES}`} element={<Notes />} />
         <Route path={`${appRoute.NOTE_DETAIL}`} element={<Notes />} />
+        <Route path={`${appRoute.CHALLENGES}`} element={<Challenges />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

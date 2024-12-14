@@ -18,6 +18,7 @@ const appRoute = {
   UPLOADS: '/uploads',
   NOTES: '/notes',
   NOTE_DETAIL: '/notes/:id',
+  CHALLENGES: 'challenges',
 };
 
 export { appRoute };

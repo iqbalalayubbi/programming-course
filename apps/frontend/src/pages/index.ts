@@ -11,3 +11,4 @@ export { MentorManagement } from './MentorManagement/MentorManagement';
 export { MentorCourses } from './MentorCourses/MentorCourses';
 export { CourseManagement } from './CourseManagement/CourseManagement';
 export { NotFound } from './NotFound/NotFound';
+export { Challenges } from './Challenges/Challenges';
