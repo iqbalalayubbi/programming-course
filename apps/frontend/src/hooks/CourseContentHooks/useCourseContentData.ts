@@ -13,17 +13,20 @@ const useCourseContentData = (courseId: number, page: number) => {
   } = useCourseContent();
 
   // get by page
-  const { data: courseContenByPageResponse, ...queryCourseContentStates } =
-    useQuery({
-      queryKey: ['get-course-contents'],
-      queryFn: async () => {
-        const response = await courseContentApi.getCourseContentsByPage(
-          courseId,
-          page,
-        );
-        return response;
-      },
-    });
+  const {
+    data: courseContenByPageResponse,
+    refetch: refetchCourseContent,
+    ...queryCourseContentStates
+  } = useQuery({
+    queryKey: ['get-course-contents'],
+    queryFn: async () => {
+      const response = await courseContentApi.getCourseContentsByPage(
+        courseId,
+        page,
+      );
+      return response;
+    },
+  });
 
   const getCourseContentByPage = useCallback(
     (result: FormatResponseType | AxiosError) => {
@@ -41,14 +44,17 @@ const useCourseContentData = (courseId: number, page: number) => {
   );
 
   // get all contents
-  const { data: courseContentsResponse, ...queryCourseContentsStates } =
-    useQuery({
-      queryKey: ['get-all-course-contents'],
-      queryFn: async () => {
-        const response = await courseContentApi.getAllCourseContents(courseId);
-        return response;
-      },
-    });
+  const {
+    data: courseContentsResponse,
+    refetch: refetchCourseContents,
+    ...queryCourseContentsStates
+  } = useQuery({
+    queryKey: ['get-all-course-contents'],
+    queryFn: async () => {
+      const response = await courseContentApi.getAllCourseContents(courseId);
+      return response;
+    },
+  });
 
   const getAllCourseContents = useCallback(
     (result: FormatResponseType | AxiosError) => {
@@ -79,6 +85,8 @@ const useCourseContentData = (courseId: number, page: number) => {
 
   return {
     ...courseContentStore,
+    refetchCourseContent,
+    refetchCourseContents,
     ...queryCourseContentStates,
     ...queryCourseContentsStates,
   };

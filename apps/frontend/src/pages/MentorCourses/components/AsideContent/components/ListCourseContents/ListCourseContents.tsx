@@ -1,8 +1,22 @@
 import { courseContentApi } from '@/api';
-import { Button, Input, List, Modal, PlusOutlined, toast } from '@/components';
-import { appRoute } from '@/enums';
-import { CourseContent, useMentorManagement, useCourseContent } from '@/stores';
 import {
+  Button,
+  Input,
+  Link,
+  List,
+  Modal,
+  PlusOutlined,
+  toast,
+} from '@/components';
+import { appRoute } from '@/enums';
+import {
+  CourseContent,
+  useMentorManagement,
+  useCourseContent,
+  useQuill,
+} from '@/stores';
+import {
+  useCourseContentData,
   useEffect,
   useMutation,
   useNavigate,
@@ -11,13 +25,17 @@ import {
 } from '@/hooks';
 import { AxiosResponse } from 'axios';
 import { ResponseApiType } from 'common';
+import { useLocation } from 'react-router';
 
 const ListCourseContents = () => {
   const { newCourseData, setNewCourseData, isCreateCourse, setIsCreateCourse } =
     useMentorManagement();
   const { setCourseContentData, setCoursesContentsData, courseContents } =
     useCourseContent();
+  const { setValue } = useQuill();
+
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [isShowModal, setIsShowModal] = useState(false);
   const [queryParameters] = useSearchParams();
@@ -51,9 +69,38 @@ const ListCourseContents = () => {
     },
   });
 
+  const pageNumber = Number(queryParameters.get('page'));
+  const courseId = Number(queryParameters.get('course'));
+
+  const { refetchCourseContent, refetchCourseContents } = useCourseContentData(
+    courseId,
+    pageNumber,
+  );
+
   const handleAddCourseContent = () => {
-    const pageNumber = queryParameters.get('page');
-    const courseId = Number(newCourseData.id);
+    const newCourseId = Number(newCourseData.id);
+
+    if (newCourseId) {
+      const newCourseContent = {
+        ...newCourseData,
+        course_id: newCourseId,
+        title: pageName,
+        page: Number(pageNumber),
+      };
+
+      setNewCourseData(newCourseContent);
+
+      addCourseMutation.mutate({
+        course_id: newCourseId,
+        data: {
+          title: pageName,
+          page: Number(pageNumber),
+          course_id: newCourseId,
+          content: '',
+          video_url: '',
+        },
+      });
+    }
 
     if (courseId) {
       const newCourseContent = {
@@ -64,17 +111,22 @@ const ListCourseContents = () => {
       };
 
       setNewCourseData(newCourseContent);
+      setValue('');
+      const newPage = courseContents.length + 1;
 
       addCourseMutation.mutate({
         course_id: courseId,
         data: {
           title: pageName,
-          page: Number(pageNumber),
+          page: newPage,
           course_id: courseId,
           content: '',
           video_url: '',
         },
       });
+
+      refetchCourseContent();
+      navigate(`${appRoute.MENTOR_COURSES}?page=${newPage}&course=${courseId}`);
     }
   };
 
@@ -101,8 +153,9 @@ const ListCourseContents = () => {
   }, [isCreateCourse]);
 
   useEffect(() => {
-    console.log(courseContents);
-  }, [courseContents]);
+    refetchCourseContent();
+    refetchCourseContents();
+  }, [location.search, refetchCourseContent, refetchCourseContents]);
 
   return (
     <>
@@ -111,13 +164,17 @@ const ListCourseContents = () => {
         bordered={false}
         dataSource={courseContents}
         renderItem={(item) => (
-          <List.Item className="group hover:cursor-pointer hover:bg-primary hover:text-light-text">
-            <h3
-              className={`font-medium text-xl indent-3 block w-full transition-all duration-300`}
-            >
-              {item.title}
-            </h3>
-          </List.Item>
+          <Link
+            to={`${appRoute.MENTOR_COURSES}?course=${item.course_id}&page=${item.page}`}
+          >
+            <List.Item className="group hover:cursor-pointer hover:bg-primary hover:text-light-text">
+              <h3
+                className={`font-medium text-xl indent-3 block w-full transition-all duration-300`}
+              >
+                {item.title}
+              </h3>
+            </List.Item>
+          </Link>
         )}
       />
       <Button

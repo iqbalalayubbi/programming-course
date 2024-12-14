@@ -41,7 +41,7 @@ const CreateCourseModal = () => {
       setNewCourseData({ ...newCourseData, id: course.id });
       setIsCreateCourse(true);
       setIsShowCreateModal(false);
-      navigate(`${appRoute.MENTOR_COURSES}?page=1&course=${course.id}`);
+      navigate(`${appRoute.MENTOR_COURSES}?page=0&course=${course.id}`);
     },
     onError: () => {
       toast.error('error creating course');
