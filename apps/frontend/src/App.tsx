@@ -50,6 +50,7 @@ const App = () => {
           element={<CourseManagement />}
         />
         <Route path={`${appRoute.NOTES}`} element={<Notes />} />
+        <Route path={`${appRoute.NOTE_DETAIL}`} element={<Notes />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

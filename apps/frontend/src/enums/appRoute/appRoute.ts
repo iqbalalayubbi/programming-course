@@ -17,6 +17,7 @@ const appRoute = {
   COURSE_MANAGEMENT_ID: '/course-management/:courseId',
   UPLOADS: '/uploads',
   NOTES: '/notes',
+  NOTE_DETAIL: '/notes/:id',
 };
 
 export { appRoute };
