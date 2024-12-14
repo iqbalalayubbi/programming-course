@@ -13,7 +13,7 @@ import { AxiosResponse } from 'axios';
 import { ResponseApiType } from 'common';
 
 const ListCourseContents = () => {
-  const { newCourseData, setNewCourseData, isCreateCourse } =
+  const { newCourseData, setNewCourseData, isCreateCourse, setIsCreateCourse } =
     useMentorManagement();
   const { setCourseContentData, setCoursesContentsData, courseContents } =
     useCourseContent();
@@ -37,9 +37,12 @@ const ListCourseContents = () => {
       const responseData = response.data as ResponseApiType;
       const newCourseContent = responseData.data
         ?.courseContent as unknown as CourseContent;
+
       setCourseContentData(newCourseContent);
       setCoursesContentsData([newCourseContent]);
       setIsShowModal(false);
+      setIsCreateCourse(false);
+
       toast.success('Your first content has been added');
     },
     onError: () => {

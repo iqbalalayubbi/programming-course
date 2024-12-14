@@ -40,6 +40,7 @@ const CreateCourseModal = () => {
       const course = responseData.data?.course as unknown as CourseStore;
       setNewCourseData({ ...newCourseData, id: course.id });
       setIsCreateCourse(true);
+      setIsShowCreateModal(false);
       navigate(`${appRoute.MENTOR_COURSES}?page=1&course=${course.id}`);
     },
     onError: () => {
