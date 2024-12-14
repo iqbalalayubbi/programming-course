@@ -19,4 +19,5 @@ export {
   message,
   Upload,
   Spin,
+  FloatButton,
 } from 'antd';

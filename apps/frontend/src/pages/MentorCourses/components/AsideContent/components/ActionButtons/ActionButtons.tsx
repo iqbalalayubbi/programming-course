@@ -1,13 +1,51 @@
-import { Iconify } from '@/components';
-import { FloatButton } from 'antd';
-import { SaveOutlined } from '@ant-design/icons';
+import { Iconify, FloatButton, SaveOutlined } from '@/components';
+import { CourseContent, useCourseContent } from '@/stores';
+import { useMutation } from '@/hooks';
+import { courseContentApi } from '@/api';
+import { AxiosResponse } from 'axios';
+import { ResponseApiType } from 'common';
 
 const ActionButtons = () => {
+  const { courseContent, setCourseContentData } = useCourseContent();
+
+  const updateCourseContent = useMutation({
+    mutationKey: ['updateCourseContent'],
+    mutationFn: async (payload: { id: number; data: CourseContent }) => {
+      const response = await courseContentApi.updateCourseContent(
+        payload.id,
+        payload.data,
+      );
+      return response;
+    },
+    onSuccess: (result) => {
+      const response = result as unknown as AxiosResponse;
+      const responseData = response.data as ResponseApiType;
+      const updatedCourseContent = responseData.data
+        ?.courseContent as unknown as CourseContent;
+      setCourseContentData(updatedCourseContent);
+    },
+    onError: () => {
+      console.error('Failed to update course content');
+    },
+  });
+
+  const handleSaveContent = () => {
+    const updatedData = {
+      ...courseContent,
+      content: courseContent.content.trim(),
+    };
+
+    updateCourseContent.mutate({
+      id: Number(courseContent.id),
+      data: updatedData,
+    });
+  };
+
   return (
     <FloatButton.Group shape="circle" style={{ insetInlineEnd: 24 }}>
       <FloatButton
         icon={<SaveOutlined />}
-        onClick={() => console.log('onClick')}
+        onClick={() => handleSaveContent()}
         tooltip="Save Page"
         type="default"
         style={{ insetInlineEnd: 64 }}

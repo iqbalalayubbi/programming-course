@@ -19,6 +19,21 @@ class CourseContentApi extends ApiService {
       throw error as AxiosError;
     }
   }
+
+  public async updateCourseContent(
+    courseContentId: number,
+    data: object,
+  ): Promise<FormatResponseType | AxiosError> {
+    try {
+      const response = await this.patch(
+        `${apiPath.COURSE_CONTENTS}/${courseContentId}`,
+        data,
+      );
+      return formatResponse(response as AxiosResponse);
+    } catch (error) {
+      throw error as AxiosError;
+    }
+  }
 }
 
 export { CourseContentApi };

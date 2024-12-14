@@ -12,4 +12,5 @@ export {
   PlusOutlined,
   PlusCircleOutlined,
   LoadingOutlined,
+  SaveOutlined,
 } from '@ant-design/icons';

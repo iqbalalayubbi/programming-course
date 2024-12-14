@@ -1,4 +1,5 @@
 type CourseContent = {
+  id?: number;
   course_id: number;
   title: string;
   page: number;
