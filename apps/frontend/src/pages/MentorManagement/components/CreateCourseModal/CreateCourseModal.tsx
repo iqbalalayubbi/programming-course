@@ -1,6 +1,14 @@
 import { appRoute, colorPalette } from '@/enums';
 import { useMentorManagement } from '@/stores';
-import { Button, Flex, Form, Input, Modal } from '@/components';
+import {
+  Button,
+  Flex,
+  Form,
+  Input,
+  Modal,
+  toast,
+  ToastContainer,
+} from '@/components';
 import { useMutation, useNavigate } from '@/hooks';
 import { UploadThumbnail } from './components';
 import { courseApi } from '@/api';
@@ -27,8 +35,8 @@ const CreateCourseModal = () => {
       setIsShowCreateModal(false);
       navigate(appRoute.MENTOR_COURSES);
     },
-    onError: (error) => {
-      console.error(error);
+    onError: () => {
+      toast.error('error creating course');
     },
   });
 
@@ -41,17 +49,11 @@ const CreateCourseModal = () => {
       mentor_username: username,
     };
     const formData = new FormData();
+
     formData.append('title', values.title);
     formData.append('description', values.description);
     formData.append('mentor_username', username);
     formData.append('photo', newCourseData.selectedImage as Blob);
-
-    // for (const key in newCourse) {
-    //   if (newCourse[key]) {
-    //     formData.append(key, newCourse[key]);
-    //   }
-    // }
-    // console.log(formData);
 
     setNewCourseData(newCourse);
     createCourseMutation.mutate(formData);
@@ -74,7 +76,11 @@ const CreateCourseModal = () => {
       centered
       title="Create new course"
       footer={false}
+      onCancel={() => {
+        setIsShowCreateModal(false);
+      }}
     >
+      <ToastContainer />
       <Flex vertical>
         <UploadThumbnail />
         <Form
