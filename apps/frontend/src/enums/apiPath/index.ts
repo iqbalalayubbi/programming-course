@@ -7,6 +7,7 @@ const apiPath = {
   COURSES: '/courses',
   STUDENT_COURSES: '/student-courses',
   DASHBOARD: '/dashboard',
+  COURSE_CONTENTS: '/course-contents',
 };
 
 export { apiPath, authPath };
