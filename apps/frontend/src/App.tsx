@@ -6,6 +6,7 @@ import {
   DetailCourse,
   MentorCourses,
   MentorManagement,
+  NotFound,
   Profile,
   ResetPassword,
   StudyRoom,
@@ -48,6 +49,7 @@ const App = () => {
           element={<CourseManagement />}
         />
       </Route>
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };
