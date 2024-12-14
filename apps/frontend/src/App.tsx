@@ -16,6 +16,7 @@ import {
 import { Routes, Route } from '@/components';
 import { MainLayout } from '@/layouts';
 import { appRoute } from '@/enums';
+import { Notes } from './pages/Notes/Notes';
 
 const App = () => {
   return (
@@ -48,6 +49,7 @@ const App = () => {
           path={`${appRoute.COURSE_MANAGEMENT_ID}`}
           element={<CourseManagement />}
         />
+        <Route path={`${appRoute.NOTES}`} element={<Notes />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
