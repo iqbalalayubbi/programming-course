@@ -15,10 +15,10 @@ router.post(
   uploadController.updateThumbnailCourse,
 );
 
-// router.post(
-//   '/video',
-//   multerPhotoService.singleUpload(INPUT_NAME.PHOTO),
-//   uploadController.updateThumbnailCourse,
-// );
+router.post(
+  '/video',
+  multerPhotoService.singleUpload(INPUT_NAME.VIDEO),
+  uploadController.updateThumbnailCourse,
+);
 
 export { router };

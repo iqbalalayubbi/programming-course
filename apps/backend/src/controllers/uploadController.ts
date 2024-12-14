@@ -110,24 +110,47 @@ class UploadController {
     });
   }
 
-  // async uploadFile(req: Request, res: Response) {
-  //   const { file } = req;
+  async updateVideoCourse(req: Request, res: Response) {
+    const {
+      file,
+      query: { courseId },
+    } = req;
 
-  //   if (!file) {
-  //     return formatResponse({
-  //       res,
-  //       statusCode: statusCode.BAD_REQUEST,
-  //       message: 'No file provided',
-  //     });
-  //   }
+    if (!file) {
+      return formatResponse({
+        res,
+        statusCode: statusCode.BAD_REQUEST,
+        message: 'No file provided',
+      });
+    }
 
-  //   return formatResponse({
-  //     res,
-  //     statusCode: statusCode.OK,
-  //     message: 'File uploaded successfully',
-  //     data: { file },
-  //   });
-  // }
+    if (!courseId) {
+      return formatResponse({
+        res,
+        statusCode: statusCode.BAD_REQUEST,
+        message: 'Course ID is required',
+      });
+    }
+
+    const filename = file.filename;
+
+    if (!filename) {
+      return formatResponse({
+        res,
+        statusCode: statusCode.INTERNAL_SERVER_ERROR,
+        message: 'Error saving file',
+      });
+    }
+
+    await this.courseService.updateVideo(Number(courseId), filename);
+
+    return formatResponse({
+      res,
+      statusCode: statusCode.OK,
+      message: 'File uploaded successfully',
+      data: { file },
+    });
+  }
 }
 
 export { UploadController };

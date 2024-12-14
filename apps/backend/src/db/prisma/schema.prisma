@@ -66,8 +66,9 @@ model Course{
   title String
   description String
   star_total Int @default(0)
-  is_certificate_exist Boolean
+  is_certificate_exist Boolean @default(false)
   thumbnail_url String
+  video_url String
   mentor User @relation(fields: [mentor_username], references: [username])
   contents CourseContent[]
   studentCourses StudentCourse[]
