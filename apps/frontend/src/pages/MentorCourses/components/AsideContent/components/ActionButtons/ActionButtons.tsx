@@ -1,5 +1,5 @@
 import { Iconify, FloatButton, SaveOutlined } from '@/components';
-import { CourseContent, useCourseContent } from '@/stores';
+import { CourseContent, useCourseContent, useQuill } from '@/stores';
 import { useMutation } from '@/hooks';
 import { courseContentApi } from '@/api';
 import { AxiosResponse } from 'axios';
@@ -7,6 +7,7 @@ import { ResponseApiType } from 'common';
 
 const ActionButtons = () => {
   const { courseContent, setCourseContentData } = useCourseContent();
+  const { value } = useQuill();
 
   const updateCourseContent = useMutation({
     mutationKey: ['updateCourseContent'],
@@ -32,7 +33,7 @@ const ActionButtons = () => {
   const handleSaveContent = () => {
     const updatedData = {
       ...courseContent,
-      content: courseContent.content.trim(),
+      content: value.trim(),
     };
 
     updateCourseContent.mutate({

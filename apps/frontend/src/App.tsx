@@ -44,7 +44,7 @@ const App = () => {
         />
         <Route path={appRoute.MENTOR_COURSES} element={<MentorCourses />} />
         <Route
-          path={appRoute.COURSE_MANAGEMENT}
+          path={`${appRoute.COURSE_MANAGEMENT_ID}`}
           element={<CourseManagement />}
         />
       </Route>

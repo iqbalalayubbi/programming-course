@@ -1,10 +1,10 @@
-import { useState } from '@/hooks';
+import { useQuill } from '@/stores';
 import { Flex, FlexProps } from 'antd';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 function CustomQuill(props: FlexProps) {
-  const [value, setValue] = useState('');
+  const { value, setValue } = useQuill();
 
   return (
     <Flex vertical {...props}>
