@@ -1,20 +1,71 @@
-import { appRoute } from '@/enums';
+import { appRoute, colorPalette } from '@/enums';
 import { useMentorManagement } from '@/stores';
-import { Flex, Input, Modal } from '@/components';
-import { useNavigate } from '@/hooks';
+import { Button, Flex, Form, Input, Modal } from '@/components';
+import { useMutation, useNavigate } from '@/hooks';
 import { UploadThumbnail } from './components';
+import { courseApi } from '@/api';
+import { getUsername } from '@/utils';
 
 const CreateCourseModal = () => {
   const navigate = useNavigate();
+  const [form] = Form.useForm();
+
   const {
-    setNewCourseName,
-    newCourseName,
+    setNewCourseData,
+    newCourseData,
     setIsShowCreateModal,
     isShowCreateModal,
   } = useMentorManagement();
 
+  const createCourseMutation = useMutation({
+    mutationKey: ['createCourse'],
+    mutationFn: async (data: FormData) => {
+      const result = await courseApi.createCourse(data);
+      return result;
+    },
+    onSuccess: () => {
+      setIsShowCreateModal(false);
+      navigate(appRoute.MENTOR_COURSES);
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+  });
+
   const handleCreateCourse = () => {
-    navigate(appRoute.MENTOR_COURSES);
+    const values = form.getFieldsValue();
+    const username = getUsername();
+    const newCourse = {
+      ...newCourseData,
+      ...values,
+      mentor_username: username,
+    };
+    const formData = new FormData();
+    formData.append('title', values.title);
+    formData.append('description', values.description);
+    formData.append('mentor_username', username);
+    formData.append('photo', newCourseData.selectedImage as Blob);
+
+    // for (const key in newCourse) {
+    //   if (newCourse[key]) {
+    //     formData.append(key, newCourse[key]);
+    //   }
+    // }
+    // console.log(formData);
+
+    setNewCourseData(newCourse);
+    createCourseMutation.mutate(formData);
+  };
+
+  const onCreateCourse = () => {
+    Modal.confirm({
+      title: 'Create Course?',
+      content: 'Are you sure to create this course?',
+      onOk: handleCreateCourse,
+      onCancel: () => {},
+      centered: true,
+      okButtonProps: { style: { backgroundColor: colorPalette.PRIMARY } },
+    });
   };
 
   return (
@@ -22,22 +73,45 @@ const CreateCourseModal = () => {
       open={isShowCreateModal}
       centered
       title="Create new course"
-      onCancel={() => setIsShowCreateModal(false)}
-      onOk={handleCreateCourse}
+      footer={false}
     >
-      <Flex gap={16} vertical>
+      <Flex vertical>
         <UploadThumbnail />
-        <Input
-          placeholder="Enter course name"
-          value={newCourseName}
-          onChange={(e) => setNewCourseName(e.target.value)}
-        />
-        <Input.TextArea
-          placeholder="Enter description"
-          // value=
-          // onChange={(e) => setNewCourseName(e.target.value)}
-          autoSize={{ minRows: 3, maxRows: 3 }}
-        />
+        <Form
+          layout="vertical"
+          form={form}
+          onFinish={onCreateCourse}
+          className="flex flex-col"
+        >
+          <Form.Item
+            name="title"
+            label={<span className="font-semibold">Course Name</span>}
+            className="my-2"
+            rules={[{ required: true, message: 'Please enter course name!' }]}
+          >
+            <Input placeholder="Enter course name" />
+          </Form.Item>
+          <Form.Item
+            name="description"
+            label={<span className="font-semibold">Description</span>}
+            rules={[
+              { required: true, message: 'Please enter course description!' },
+            ]}
+          >
+            <Input.TextArea
+              placeholder="Enter description"
+              autoSize={{ minRows: 3, maxRows: 3 }}
+            />
+          </Form.Item>
+          <Flex gap={16} className="self-end">
+            <Button type="default" onClick={() => setIsShowCreateModal(false)}>
+              Cancel
+            </Button>
+            <Button type="primary" htmlType="submit">
+              Create New Course
+            </Button>
+          </Flex>
+        </Form>
       </Flex>
     </Modal>
   );

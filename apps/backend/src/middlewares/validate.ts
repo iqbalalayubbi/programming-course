@@ -7,6 +7,7 @@ const validate = (
   schema: ObjectSchema,
 ): ((req: Request, res: Response, next: NextFunction) => void) => {
   return (req: Request, res: Response, next: NextFunction) => {
+    console.log(req.body);
     const { error } = schema.validate(req.body);
     if (error) {
       const errors = error.details.map((detail) => ({

@@ -3,7 +3,6 @@ import { ApiService } from './apiService';
 import { formatResponse } from '@/utils';
 import { type FormatResponseType } from '@/types';
 import { AxiosError, AxiosResponse } from 'axios';
-import { CreateCoursePayload } from 'common';
 
 class CourseApi extends ApiService {
   public async getAllCourses(): Promise<FormatResponseType | AxiosError> {
@@ -27,10 +26,12 @@ class CourseApi extends ApiService {
   }
 
   public async createCourse(
-    data: CreateCoursePayload,
+    data: FormData,
   ): Promise<FormatResponseType | AxiosError> {
     try {
-      const response = await this.post(apiPath.COURSES, data);
+      const response = await this.post(apiPath.COURSES, data, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
       return formatResponse(response as AxiosResponse);
     } catch (error) {
       throw error as AxiosError;

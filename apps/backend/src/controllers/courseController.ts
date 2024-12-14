@@ -20,7 +20,8 @@ class CourseController {
   }
 
   async createCourse(req: Request, res: Response) {
-    const data = req.body;
+    const data = { ...req.body, thumbnail_url: '' };
+    const file = req.file;
 
     const {
       isSuccess,
@@ -28,7 +29,12 @@ class CourseController {
       data: course,
     } = await this.courseService.create(data);
 
-    if (isSuccess && data) {
+    if (isSuccess && data && file) {
+      await this.courseService.updateThumbnail(
+        Number(course?.course?.id),
+        file.filename,
+      );
+
       return formatResponse({
         res,
         statusCode: statusCode.CREATED,

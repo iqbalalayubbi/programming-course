@@ -1,14 +1,19 @@
 import { courseController } from '@/controllers';
 import { checkRoles, validate, validateToken } from '@/middlewares';
-import { createCourseSchema, updateCourseSchema } from '@/validations';
+import { multerPhotoService } from '@/services';
+import { updateCourseSchema } from '@/validations';
 import express from 'express';
 
 const router = express.Router();
+const INPUT_NAME = {
+  PHOTO: 'photo',
+  VIDEO: 'video',
+};
 
 router.post(
   '/',
   checkRoles('mentor'),
-  validate(createCourseSchema),
+  multerPhotoService.singleUpload(INPUT_NAME.PHOTO),
   courseController.createCourse,
 );
 router.patch(
