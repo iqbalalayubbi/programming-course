@@ -39,7 +39,7 @@ class CourseController {
         res,
         statusCode: statusCode.CREATED,
         message: 'Course created successfully',
-        data: { course },
+        data: course,
       });
     }
 

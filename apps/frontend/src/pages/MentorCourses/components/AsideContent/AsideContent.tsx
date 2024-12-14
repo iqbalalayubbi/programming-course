@@ -14,7 +14,6 @@ const AsideContent = () => {
       <ListCourseContents />
       <Divider orientation="left" className="my-2" />
       <ControlButton />
-
       <ActionButtons />
     </Flex>
   );

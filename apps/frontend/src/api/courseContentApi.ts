@@ -6,7 +6,7 @@ import { AxiosError, AxiosResponse } from 'axios';
 
 class CourseContentApi extends ApiService {
   public async createCourseContent(
-    courseId: string,
+    courseId: number,
     data: object,
   ): Promise<FormatResponseType | AxiosError> {
     try {

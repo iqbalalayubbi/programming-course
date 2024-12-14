@@ -21,7 +21,7 @@ const useMentorManagement = create<StoreState>((set) => ({
   isShowCreateModal: false,
   newCourseName: '',
   newCourseData: {
-    id: 0,
+    id: undefined,
     title: '',
     description: '',
     selectedImage: null,

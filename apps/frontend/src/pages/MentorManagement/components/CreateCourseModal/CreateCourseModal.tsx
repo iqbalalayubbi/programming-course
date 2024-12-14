@@ -1,5 +1,5 @@
 import { appRoute, colorPalette } from '@/enums';
-import { useMentorManagement } from '@/stores';
+import { CourseStore, useMentorManagement } from '@/stores';
 import {
   Button,
   Flex,
@@ -13,6 +13,8 @@ import { useMutation, useNavigate } from '@/hooks';
 import { UploadThumbnail } from './components';
 import { courseApi } from '@/api';
 import { getUsername } from '@/utils';
+import { AxiosResponse } from 'axios';
+import { ResponseApiType } from 'common';
 
 const CreateCourseModal = () => {
   const navigate = useNavigate();
@@ -31,9 +33,12 @@ const CreateCourseModal = () => {
       const result = await courseApi.createCourse(data);
       return result;
     },
-    onSuccess: () => {
-      setIsShowCreateModal(false);
-      navigate(appRoute.MENTOR_COURSES);
+    onSuccess: (result) => {
+      const response = result as unknown as AxiosResponse;
+      const responseData = response.data as ResponseApiType;
+      const course = responseData.data?.course as unknown as CourseStore;
+      setNewCourseData({ ...newCourseData, id: course.id });
+      navigate(`${appRoute.MENTOR_COURSES}?page=1`);
     },
     onError: () => {
       toast.error('error creating course');
