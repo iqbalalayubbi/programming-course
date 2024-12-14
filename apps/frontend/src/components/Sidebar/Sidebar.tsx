@@ -64,26 +64,16 @@ const Sidebar = () => {
       key: '2',
     },
     {
-      label: <Link to="/forum">Forum</Link>,
-      icon: <Iconify icon="stash:article" style={{ fontSize: iconSize }} />,
-      key: '3',
-    },
-    {
       label: <Link to="/notes">Notes</Link>,
       icon: <Iconify icon="hugeicons:note" style={{ fontSize: iconSize }} />,
-      key: '4',
-    },
-    {
-      label: <Link to="/friends">Friends</Link>,
-      icon: <Iconify icon="f7:person-2" style={{ fontSize: iconSize }} />,
-      key: '5',
+      key: '3',
     },
     {
       label: <Link to="/challenges">Challenges</Link>,
       icon: (
         <Iconify icon="solar:ranking-broken" style={{ fontSize: iconSize }} />
       ),
-      key: '6',
+      key: '4',
     },
   ];
 
