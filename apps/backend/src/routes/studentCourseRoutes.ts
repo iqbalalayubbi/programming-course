@@ -12,5 +12,6 @@ router.patch(
   validate(updateStudentCourseValidation),
   studentCourseController.updateStudentCourse,
 );
+router.get('/:courseId', studentCourseController.getStudentCourseByCourseId);
 
 export { router };

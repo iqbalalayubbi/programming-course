@@ -209,6 +209,43 @@ class UserService {
       };
     }
   }
+
+  async findUserInCourse(courseId: number): Promise<ServiceResponse> {
+    try {
+      const usersInCourse = await this.userModel.findMany({
+        where: {
+          studentCourses: {
+            some: {
+              course_id: courseId,
+            },
+          },
+        },
+      });
+
+      if (courseId) {
+        return {
+          isSuccess: true,
+          data: { users: usersInCourse },
+        };
+      }
+
+      return {
+        isSuccess: false,
+        error: {
+          field: 'course',
+          message: 'Course not found',
+        },
+      };
+    } catch {
+      return {
+        isSuccess: false,
+        error: {
+          field: 'course',
+          message: 'Error finding user in course',
+        },
+      };
+    }
+  }
 }
 
 export { UserService };

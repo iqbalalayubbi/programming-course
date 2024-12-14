@@ -82,6 +82,37 @@ class StudentCourseService {
       };
     }
   }
+
+  async findByCourseId(courseId: number): Promise<ServiceResponse> {
+    try {
+      const studentCourses = await this.studentCourseModel.findMany({
+        where: { course_id: courseId },
+      });
+
+      if (!studentCourses) {
+        return {
+          isSuccess: false,
+          error: {
+            field: 'course',
+            message: 'Student course not found',
+          },
+        };
+      }
+
+      return {
+        isSuccess: true,
+        data: { studentCourses },
+      };
+    } catch {
+      return {
+        isSuccess: false,
+        error: {
+          field: 'course',
+          message: 'Failed to find student course by course id',
+        },
+      };
+    }
+  }
 }
 
 export { StudentCourseService };

@@ -29,6 +29,17 @@ class StudentCourseApi extends ApiService {
       throw error as AxiosError;
     }
   }
+
+  public async getStudentCourseByCourseId(
+    courseId: number,
+  ): Promise<FormatResponseType | AxiosError> {
+    try {
+      const response = await this.get(`${apiPath.STUDENT_COURSES}/${courseId}`);
+      return formatResponse(response as AxiosResponse);
+    } catch (error) {
+      throw error as AxiosError;
+    }
+  }
 }
 
 export { StudentCourseApi };

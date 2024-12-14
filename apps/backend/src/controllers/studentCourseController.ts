@@ -1,4 +1,4 @@
-import { studentCourseService } from '@/services';
+import { studentCourseService, userService } from '@/services';
 import { formatResponse } from '@/utils';
 import { statusCode } from 'common';
 import { Request, Response } from 'express';
@@ -102,6 +102,39 @@ class StudentCourseController {
       res,
       statusCode: 500,
       message: 'Error updating student course',
+    });
+  }
+
+  async getStudentCourseByCourseId(req: Request, res: Response) {
+    const { courseId } = req.params;
+
+    const {
+      isSuccess,
+      error,
+      data: studentCourse,
+    } = await userService.findUserInCourse(Number(courseId));
+
+    if (isSuccess) {
+      return formatResponse({
+        res,
+        statusCode: statusCode.OK,
+        message: 'Student course retrieved successfully',
+        data: studentCourse,
+      });
+    }
+
+    if (error) {
+      return formatResponse({
+        res,
+        statusCode: statusCode.INTERNAL_SERVER_ERROR,
+        message: error.message,
+      });
+    }
+
+    return formatResponse({
+      res,
+      statusCode: statusCode.INTERNAL_SERVER_ERROR,
+      message: 'Failed to retrieve student course by course ID',
     });
   }
 }
