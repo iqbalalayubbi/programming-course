@@ -1,4 +1,4 @@
-import { Iconify, FloatButton, SaveOutlined } from '@/components';
+import { Iconify, FloatButton, SaveOutlined, toast } from '@/components';
 import { CourseContent, useCourseContent, useQuill } from '@/stores';
 import { useMutation } from '@/hooks';
 import { courseContentApi } from '@/api';
@@ -24,6 +24,7 @@ const ActionButtons = () => {
       const updatedCourseContent = responseData.data
         ?.courseContent as unknown as CourseContent;
       setCourseContentData(updatedCourseContent);
+      toast.success('Course Content updated successfully');
     },
     onError: () => {
       console.error('Failed to update course content');
