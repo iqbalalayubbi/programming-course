@@ -8,7 +8,8 @@ import { ResponseApiType } from 'common';
 
 const ListCourseContents = () => {
   const { newCourseData, setNewCourseData } = useMentorManagement();
-  const { setCourseContentData } = useCourseContent();
+  const { setCourseContentData, setCoursesContentsData, courseContents } =
+    useCourseContent();
   const navigate = useNavigate();
 
   const [isShowModal, setIsShowModal] = useState(true);
@@ -30,6 +31,7 @@ const ListCourseContents = () => {
       const newCourseContent = responseData.data
         ?.courseContent as unknown as CourseContent;
       setCourseContentData(newCourseContent);
+      setCoursesContentsData([newCourseContent]);
       setIsShowModal(false);
       toast.success('Your first content has been added');
     },
@@ -84,29 +86,22 @@ const ListCourseContents = () => {
     );
   };
 
-  const data = [
-    { isActive: true, text: 'Basic HTML' },
-    { isActive: false, text: 'Basic CSS' },
-    { isActive: false, text: 'Basic Javascript' },
-    { isActive: false, text: 'Basic CSS' },
-  ];
-
   return (
     <>
       <List
         className="w-full"
         bordered={false}
-        dataSource={data}
+        dataSource={courseContents}
         renderItem={(item, i) => (
           <>
             <List.Item className="group hover:cursor-pointer hover:bg-primary hover:text-light-text">
               <h3
-                className={`${item.isActive ? 'text-primary font-semibold group-hover:text-light-text' : ''} font-medium text-xl indent-3 block w-full transition-all duration-300`}
+                className={`font-medium text-xl indent-3 block w-full transition-all duration-300`}
               >
-                {item.text}
+                {item.title}
               </h3>
             </List.Item>
-            {i === data.length - 1 && (
+            {i === courseContents.length - 1 && (
               <Button
                 type="text"
                 icon={<PlusOutlined />}
