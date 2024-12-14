@@ -1,4 +1,4 @@
-import { useEffect, useState, useUserData } from '@/hooks';
+import { useState, useUserData } from '@/hooks';
 import {
   Avatar,
   Flex,
@@ -11,7 +11,6 @@ import {
 } from '@/components';
 import type { GetProp, UploadProps } from '@/types';
 import { uploadPath } from '@/enums/apiPath/uploadPath';
-import { useUser } from '@/stores';
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
@@ -33,8 +32,7 @@ const beforeUpload = (file: FileType) => {
   return isJpgOrPng && isLt2M;
 };
 
-const UserAvatar = () => {
-  const { user, setUserData } = useUser();
+const UploadThumbnail = () => {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>();
   const { refetch } = useUserData();
@@ -47,7 +45,6 @@ const UserAvatar = () => {
     if (info.file.status === 'done') {
       getBase64(info.file.originFileObj as FileType, (url) => {
         setLoading(false);
-        setUserData({ ...user, image_url: url });
         toast.success('update profile image successfully');
         refetch();
         setImageUrl(url);
@@ -55,39 +52,42 @@ const UserAvatar = () => {
     }
   };
 
-  useEffect(() => {
-    setImageUrl(user.image_url);
-  }, [user.image_url]);
-
   return (
-    <Flex gap="middle" wrap>
+    <Flex wrap>
       <ToastContainer />
       <Upload
         name="photo"
-        className="avatar-uploader"
+        className="avatar-uploader w-full h-60 flex justify-center"
         showUploadList={false}
-        action={`${uploadPath.photo}?type=user&username=${user.username}`}
+        action={`${uploadPath.photo}?type=course&courseId=1`}
         beforeUpload={beforeUpload}
         onChange={handleChange}
       >
         {imageUrl ? (
-          <Avatar src={imageUrl} alt="avatar" shape="circle" size={200} />
-        ) : (
-          <Avatar
-            icon={
-              loading ? (
-                <Spin spinning />
-              ) : (
-                <Iconify icon="carbon:user-avatar" />
-              )
-            }
-            size={150}
-            className="bg-slate-200 hover:bg-slate-400 transition-all duration-300 hover:cursor-pointer"
+          <img
+            src={imageUrl}
+            alt=""
+            className="w-full h-full hover:cursor-pointer hover:opacity-80 transition-all duration-300"
           />
+        ) : (
+          <Flex className="w-full h-full">
+            <Avatar
+              icon={
+                loading ? (
+                  <Spin spinning />
+                ) : (
+                  <Iconify icon="material-symbols:image-outline" />
+                )
+              }
+              size={200}
+              shape="square"
+              className="w-full h-full bg-slate-200 hover:bg-slate-400 transition-all duration-300 hover:cursor-pointer"
+            />
+          </Flex>
         )}
       </Upload>
     </Flex>
   );
 };
 
-export { UserAvatar };
+export { UploadThumbnail };

@@ -10,6 +10,7 @@ import {
 } from '@/components';
 import {} from '@ant-design/icons';
 import { useState } from 'react';
+import { UploadThumbnail } from './components';
 
 const AsideContent = () => {
   const [isShowModal, setIsShowModal] = useState(false);
@@ -66,6 +67,8 @@ const AsideContent = () => {
           )}
         />
       </Flex>
+      <UploadThumbnail />
+
       <Divider orientation="left" className="my-2" />
       <Flex gap={60} justify="center" className="my-5 gap-4">
         <Flex gap={24} align="center" vertical className="group">

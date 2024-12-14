@@ -12,6 +12,13 @@ router.post(
   '/photo',
   multerPhotoService.singleUpload(INPUT_NAME.PHOTO),
   uploadController.updateUserProfile,
+  uploadController.updateThumbnailCourse,
 );
+
+// router.post(
+//   '/video',
+//   multerPhotoService.singleUpload(INPUT_NAME.PHOTO),
+//   uploadController.updateThumbnailCourse,
+// );
 
 export { router };
