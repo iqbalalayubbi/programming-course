@@ -2,17 +2,24 @@ import { courseContentApi } from '@/api';
 import { Button, Input, List, Modal, PlusOutlined, toast } from '@/components';
 import { appRoute } from '@/enums';
 import { CourseContent, useMentorManagement, useCourseContent } from '@/stores';
-import { useMutation, useNavigate, useSearchParams, useState } from '@/hooks';
+import {
+  useEffect,
+  useMutation,
+  useNavigate,
+  useSearchParams,
+  useState,
+} from '@/hooks';
 import { AxiosResponse } from 'axios';
 import { ResponseApiType } from 'common';
 
 const ListCourseContents = () => {
-  const { newCourseData, setNewCourseData } = useMentorManagement();
+  const { newCourseData, setNewCourseData, isCreateCourse } =
+    useMentorManagement();
   const { setCourseContentData, setCoursesContentsData, courseContents } =
     useCourseContent();
   const navigate = useNavigate();
 
-  const [isShowModal, setIsShowModal] = useState(true);
+  const [isShowModal, setIsShowModal] = useState(false);
   const [queryParameters] = useSearchParams();
   const [pageName, setPageName] = useState('');
 
@@ -86,35 +93,35 @@ const ListCourseContents = () => {
     );
   };
 
+  useEffect(() => {
+    setIsShowModal(isCreateCourse);
+  }, [isCreateCourse]);
+
   return (
     <>
       <List
         className="w-full"
         bordered={false}
         dataSource={courseContents}
-        renderItem={(item, i) => (
-          <>
-            <List.Item className="group hover:cursor-pointer hover:bg-primary hover:text-light-text">
-              <h3
-                className={`font-medium text-xl indent-3 block w-full transition-all duration-300`}
-              >
-                {item.title}
-              </h3>
-            </List.Item>
-            {i === courseContents.length - 1 && (
-              <Button
-                type="text"
-                icon={<PlusOutlined />}
-                iconPosition="end"
-                className="w-full"
-                onClick={() => setIsShowModal(true)}
-              >
-                Add Page
-              </Button>
-            )}
-          </>
+        renderItem={(item) => (
+          <List.Item className="group hover:cursor-pointer hover:bg-primary hover:text-light-text">
+            <h3
+              className={`font-medium text-xl indent-3 block w-full transition-all duration-300`}
+            >
+              {item.title}
+            </h3>
+          </List.Item>
         )}
       />
+      <Button
+        type="text"
+        icon={<PlusOutlined />}
+        iconPosition="end"
+        className="w-full"
+        onClick={() => setIsShowModal(true)}
+      >
+        Add Page
+      </Button>
       {renderCreateForm()}
     </>
   );

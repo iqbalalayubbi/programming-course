@@ -25,6 +25,7 @@ const CreateCourseModal = () => {
     newCourseData,
     setIsShowCreateModal,
     isShowCreateModal,
+    setIsCreateCourse,
   } = useMentorManagement();
 
   const createCourseMutation = useMutation({
@@ -38,6 +39,7 @@ const CreateCourseModal = () => {
       const responseData = response.data as ResponseApiType;
       const course = responseData.data?.course as unknown as CourseStore;
       setNewCourseData({ ...newCourseData, id: course.id });
+      setIsCreateCourse(true);
       navigate(`${appRoute.MENTOR_COURSES}?page=1&course=${course.id}`);
     },
     onError: () => {
