@@ -1,4 +1,6 @@
+import { appRoute } from '@/enums';
 import { Button, Flex } from 'antd';
+import { Link } from 'react-router';
 
 const Promote = () => {
   return (
@@ -9,9 +11,11 @@ const Promote = () => {
       <span className="italic text-center text-gray-third">
         “From community to community”
       </span>
-      <Button type="primary" shape="round" className=" w-1/3 mt-10">
-        Join Now
-      </Button>
+      <Link to={appRoute.REGISTER} className="w-1/3">
+        <Button type="primary" shape="round" className=" w-full mt-10">
+          Join Now
+        </Button>
+      </Link>
     </Flex>
   );
 };

@@ -1,5 +1,7 @@
 import { ilustationHomepage } from '@/assets';
+import { appRoute } from '@/enums';
 import { Layout, Button, Flex } from 'antd';
+import { Link } from 'react-router';
 const { Content } = Layout;
 
 const HeroSection = () => {
@@ -15,9 +17,11 @@ const HeroSection = () => {
             Consectetur, inventore?Lorem ipsum dolor sit amet consectetur
             adipisicing elit. Nihil, ab?
           </p>
-          <Button type="primary" shape="round" className="w-1/2 mt-10">
-            Start Learning
-          </Button>
+          <Link to={appRoute.REGISTER}>
+            <Button type="primary" shape="round" className="w-1/2 mt-10">
+              Start Learning
+            </Button>
+          </Link>
         </Flex>
         <img src={ilustationHomepage} alt="ilustation" className="w-1/2" />
       </Flex>
