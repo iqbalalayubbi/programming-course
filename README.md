@@ -113,14 +113,14 @@ erDiagram
       String username
       String password
       String email
-      String? surename
-      DateTime? birthday
-      String? country
-      String? image_url
-      String? phone_number
+      String surename
+      DateTime birthday
+      String country
+      String image_url
+      String phone_number
       Int total_point
       String role
-      String? description
+      String description
       Boolean is_verified
       DateTime createdAt
       DateTime updatedAt
