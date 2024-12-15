@@ -46,7 +46,7 @@ const AsideContent = () => {
   }, [data, getStudentsJoinCourse]);
 
   return (
-    <Flex className="w-full px-5" vertical>
+    <Flex className="w-full px-5 h-screen" vertical>
       <h1 className="text-2xl font-bold my-5">List of Students</h1>
       <Flex gap={8} vertical className="w-full mb-5">
         {usersInCourse.map((student) => {
