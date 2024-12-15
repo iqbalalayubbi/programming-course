@@ -16,3 +16,6 @@ export { default as challengeIllustration } from './challenge-illustration.png';
 export { default as courseIllustration } from './course-illustration.png';
 export { default as noteIllustration } from './note-illustration.png';
 export { default as peopleIllustration } from './people-illustration.png';
+export { default as bossAvatarIllustration } from './boss-avatar-illustration.png';
+export { default as manAvatarIllustration } from './man-avatar-illustration.png';
+export { default as womanAvatarIllustration } from './woman-avatar-illustration.png';
