@@ -41,7 +41,12 @@ const PersonalTab = () => {
         <Input placeholder="phoneNumber" />
       </Form.Item>
       <Form.Item className="w-full">
-        <Button type="primary" htmlType="submit" disabled className="w-full">
+        <Button
+          type="primary"
+          htmlType="submit"
+          disabled
+          className="w-full mt-5"
+        >
           Save
         </Button>
       </Form.Item>

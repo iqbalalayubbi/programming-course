@@ -44,13 +44,16 @@ const Profile = () => {
   ];
 
   return (
-    <Flex align="center" justify="center" className="w-full h-full">
+    <Flex
+      align="center"
+      justify="center"
+      className="w-full sm:h-full h-screen overflow-auto"
+    >
       <CustomLoading isLoading={isLoading} />
       <Flex
         align="center"
         justify="center"
-        gap={100}
-        className="w-3/4 py-10 rounded-md bg-light-bg"
+        className="w-3/4 py-10 rounded-md bg-light-bg flex-col gap-5 md:gap-20 md:flex-row"
       >
         <Flex vertical align="center">
           <UserAvatar />
@@ -58,7 +61,7 @@ const Profile = () => {
             {userStore.user.description}
           </p>
           <Flex gap={8} align="center" vertical>
-            <p className="text-gray-third font-semibold">
+            <p className="text-gray-third font-semibold text-center">
               @{userStore.user.username}
             </p>
             <span className="bg-yellow-500 text-light-text px-3 py-1 rounded-full uppercase text-center">
@@ -66,7 +69,7 @@ const Profile = () => {
             </span>
           </Flex>
         </Flex>
-        <Tabs defaultActiveKey="2" items={items} className="w-1/3" />
+        <Tabs defaultActiveKey="2" items={items} className="w-3/4 md:w-1/3" />
       </Flex>
     </Flex>
   );

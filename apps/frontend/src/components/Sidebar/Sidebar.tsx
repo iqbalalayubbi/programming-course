@@ -11,7 +11,7 @@ import {
   Modal,
 } from '@/components';
 import { type MenuProps } from '@/types';
-import { useState } from '@/hooks';
+import { useState, useEffect } from 'react';
 import { useUser } from '@/stores';
 import { appRoute, colorPalette } from '@/enums';
 import { useNavigate } from 'react-router';
@@ -49,7 +49,7 @@ const Sidebar = () => {
 
   const mainItems: MenuItem[] = [
     {
-      label: <Link to="/"> Dashboard</Link>,
+      label: <Link to={appRoute.DASHBOARD}> Dashboard</Link>,
       icon: (
         <Iconify
           icon="cuida:dashboard-outline"
@@ -59,17 +59,17 @@ const Sidebar = () => {
       key: '1',
     },
     {
-      label: <Link to="/courses">Courses</Link>,
+      label: <Link to={appRoute.COURSES}>Courses</Link>,
       icon: <Iconify icon="tdesign:course" style={{ fontSize: iconSize }} />,
       key: '2',
     },
     {
-      label: <Link to="/notes">Notes</Link>,
+      label: <Link to={appRoute.NOTES}>Notes</Link>,
       icon: <Iconify icon="hugeicons:note" style={{ fontSize: iconSize }} />,
       key: '3',
     },
     {
-      label: <Link to="/challenges">Challenges</Link>,
+      label: <Link to={appRoute.CHALLENGES}>Challenges</Link>,
       icon: (
         <Iconify icon="solar:ranking-broken" style={{ fontSize: iconSize }} />
       ),
@@ -78,11 +78,6 @@ const Sidebar = () => {
   ];
 
   const settingItems: MenuItem[] = [
-    {
-      label: <Link to="/settings">Settings</Link>,
-      icon: <Iconify icon="uil:setting" style={{ fontSize: iconSize }} />,
-      key: '1',
-    },
     {
       title: 'Logout',
       label: (
@@ -103,10 +98,28 @@ const Sidebar = () => {
     },
   ];
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setIsCollapsed(true);
+      } else {
+        setIsCollapsed(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <Sider
       theme="light"
-      width={200}
+      className={`transition-all duration-300 ${isCollapsed ? 'w-16' : 'w-52'} 
+                  md:w-52`} // Use Tailwind classes for responsive width
       collapsed={isCollapsed}
       onCollapse={toggleSidebar}
     >
@@ -123,7 +136,7 @@ const Sidebar = () => {
             <Avatar
               size={isCollapsed ? 40 : 80}
               src={user.image_url}
-              className="hover:cursor-pointer hover:shadow-md transition-all duration-300 hover:opacity-50 hover"
+              className="hover:cursor-pointer hover:shadow-md transition-all duration-300 hover:opacity-50"
             />
           </Link>
           <Flex
@@ -146,7 +159,6 @@ const Sidebar = () => {
           {!isCollapsed && (
             <h1 className="text-sm font-semibold text-gray-third px-8">Main</h1>
           )}
-
           <Menu
             theme="light"
             mode="inline"
@@ -157,10 +169,9 @@ const Sidebar = () => {
         <Flex gap={8} vertical>
           {!isCollapsed && (
             <h1 className="text-sm font-semibold text-gray-third px-8">
-              Settings
+              Logout
             </h1>
           )}
-
           <Menu
             theme="light"
             mode="inline"

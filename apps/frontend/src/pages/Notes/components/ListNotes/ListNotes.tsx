@@ -25,7 +25,7 @@ const notesData = [
 
 const ListNotes = () => {
   return (
-    <div className="container mx-8 p-4">
+    <div className="container mx-0 sm:mx-8 p-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {notesData.map((note, index) => (
           <NoteCard

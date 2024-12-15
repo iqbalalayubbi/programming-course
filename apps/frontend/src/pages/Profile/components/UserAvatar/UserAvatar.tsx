@@ -60,7 +60,7 @@ const UserAvatar = () => {
   }, [user.image_url]);
 
   return (
-    <Flex gap="middle" wrap>
+    <Flex wrap>
       <ToastContainer />
       <Upload
         name="photo"

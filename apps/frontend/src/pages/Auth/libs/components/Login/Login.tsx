@@ -52,7 +52,7 @@ const Login = () => {
       const accessToken = result.data?.accessToken as string;
       userDataStorage.saveAccessToken(accessToken);
       const { username, role } = decodeToken(accessToken);
-      navigate(appRoute.MAIN);
+      navigate(appRoute.DASHBOARD);
       setUserData({ username, role });
     },
     onError: (error) => {

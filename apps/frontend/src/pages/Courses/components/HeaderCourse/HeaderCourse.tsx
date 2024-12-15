@@ -13,8 +13,8 @@ const HeaderCourse = () => {
         <div className="bg-white opacity-10 rounded-full h-24 w-24 animate-pulse absolute bottom-10 left-20"></div>
         <div className="bg-white opacity-10 rounded-full h-36 w-36 animate-pulse absolute bottom-20 right-10"></div>
       </div>
-      <Flex gap={16} vertical>
-        <h1 className="text-white text-4xl font-bold z-10">
+      <Flex gap={16} vertical className="w-3/4 sm:w-auto">
+        <h1 className="text-white text-4xl font-bold z-10 text-center">
           Tell Me What Do Yo you Need
         </h1>
         <Input placeholder="Find your best course..." />

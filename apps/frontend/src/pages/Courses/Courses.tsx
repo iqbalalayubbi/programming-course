@@ -37,7 +37,7 @@ const Courses = () => {
           </Link>
         )}
       </Flex>
-      <Flex gap={16} className="flex-wrap">
+      <Flex gap={16} className="flex-col sm:flex-row sm:flex-wrap">
         {courses.map((course) => {
           if (course.mentor_username !== getUsername()) {
             return (

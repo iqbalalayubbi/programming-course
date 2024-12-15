@@ -31,7 +31,7 @@ const AccountTab = () => {
         <Input.Password placeholder="password" disabled />
       </Form.Item>
       <Form.Item className="w-full">
-        <Flex gap={16} vertical>
+        <Flex gap={16} vertical className="mt-5">
           <Button type="primary" htmlType="submit" disabled className="w-full">
             Save
           </Button>

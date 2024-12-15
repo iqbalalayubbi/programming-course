@@ -7,7 +7,7 @@ const MainContent = () => {
   const { courses } = useCourse();
 
   return (
-    <Content className="w-2/3 mx-8 mt-5">
+    <Content className="mx-8 mt-5 h-screen overflow-auto">
       <Advertisement />
       <h1 className="text-3xl font-bold my-3">Statistics</h1>
       <Flex>
