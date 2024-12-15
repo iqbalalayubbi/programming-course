@@ -12,3 +12,7 @@ export { default as aiIllustration } from './ai-illustration.png';
 export { default as dataAnalysisIllustration } from './data-analysis-illustration.png';
 export { default as gameDevelopmentIllustration } from './game-development-illustration.png';
 export { default as uiUxIllustration } from './ui-ux-illustration.png';
+export { default as challengeIllustration } from './challenge-illustration.png';
+export { default as courseIllustration } from './course-illustration.png';
+export { default as noteIllustration } from './note-illustration.png';
+export { default as peopleIllustration } from './people-illustration.png';

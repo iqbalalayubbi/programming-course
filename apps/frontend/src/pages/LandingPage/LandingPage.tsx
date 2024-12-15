@@ -1,5 +1,5 @@
 import { Layout } from 'antd';
-import { HeroSection, Navbar } from './components';
+import { Features, HeroSection, Navbar } from './components';
 import { Category } from './components/Category/Category';
 
 const LandingPage = () => {
@@ -8,6 +8,7 @@ const LandingPage = () => {
       <Navbar />
       <HeroSection />
       <Category />
+      <Features />
       {/* <Footer className="text-center bg-gray-200">
         ©2024 Course Name. All Rights Reserved.
       </Footer> */}
