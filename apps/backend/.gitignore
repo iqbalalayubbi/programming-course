@@ -3,3 +3,6 @@ node_modules
 .env.*
 seed.ts
 uploads
+!.env.example
+!.env.development.example
+!.env.production.example
