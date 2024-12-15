@@ -19,3 +19,4 @@ export { default as peopleIllustration } from './people-illustration.png';
 export { default as bossAvatarIllustration } from './boss-avatar-illustration.png';
 export { default as manAvatarIllustration } from './man-avatar-illustration.png';
 export { default as womanAvatarIllustration } from './woman-avatar-illustration.png';
+export { default as appLogo } from './logo.png';

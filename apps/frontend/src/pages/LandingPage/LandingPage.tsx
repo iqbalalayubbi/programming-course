@@ -1,5 +1,6 @@
 import { Layout } from 'antd';
 import {
+  CustomFooter,
   Features,
   HeroSection,
   Navbar,
@@ -17,9 +18,7 @@ const LandingPage = () => {
       <Features />
       <Testimonials />
       <Promote />
-      {/* <Footer className="text-center bg-gray-200">
-        ©2024 Course Name. All Rights Reserved.
-      </Footer> */}
+      <CustomFooter />
     </Layout>
   );
 };
