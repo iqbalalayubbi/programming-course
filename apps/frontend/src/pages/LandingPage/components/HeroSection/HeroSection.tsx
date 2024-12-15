@@ -4,7 +4,7 @@ const { Content } = Layout;
 
 const HeroSection = () => {
   return (
-    <Content className="p-20 bg-light-bg">
+    <Content className="p-20">
       <Flex justify="space-between">
         <Flex vertical gap={16} justify="center">
           <h1 className="font-bold text-6xl leading-normal">
@@ -19,7 +19,7 @@ const HeroSection = () => {
             Start Learning
           </Button>
         </Flex>
-        <img src={ilustationHomepage} alt="ilustation" className="w-1/3" />
+        <img src={ilustationHomepage} alt="ilustation" className="w-1/2" />
       </Flex>
     </Content>
   );
