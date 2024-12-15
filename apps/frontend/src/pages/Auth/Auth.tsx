@@ -53,7 +53,10 @@ const Auth: React.FC<Properties> = ({ pageName }: Properties) => {
   }, [pageName]);
 
   return (
-    <Flex justify="space-between" className="h-screen bg-b">
+    <Flex
+      justify="space-between"
+      className={`${pageName !== 'register' ? 'sm:flex-col-reverse' : 'sm:flex-col'} h-screen bg-b lg:flex-row`}
+    >
       {/* left */}
       <Flex
         justify="center"
@@ -72,7 +75,7 @@ const Auth: React.FC<Properties> = ({ pageName }: Properties) => {
         vertical
         gap={16}
         flex={1}
-        className={`${pageName === 'register' ? 'order-1' : 'order-2'} bg-yellow-50`}
+        className={`${pageName === 'register' ? 'order-1 sm:hidden lg:flex' : 'order-2'} bg-yellow-50 hidden sm:flex`}
       >
         <h1 className="text-secondary text-6xl font-bold">
           {textIllustration}
