@@ -1,4 +1,4 @@
-import { Flex } from '@/components';
+import { Button, Flex } from '@/components';
 import { OutputCode, UserCard } from './components';
 
 const AsideContent = () => {
@@ -10,6 +10,9 @@ const AsideContent = () => {
       <Flex gap={8} vertical className="mt-5 w-80" align="stretch">
         <strong>Ouput</strong>
         <OutputCode />
+        <Button type="primary" className="w-full mt-10">
+          Submit Code
+        </Button>
       </Flex>
     </Flex>
   );

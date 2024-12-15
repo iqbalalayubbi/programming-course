@@ -10,3 +10,4 @@ export { CustomLoading } from './CustomLoading/CustomLoading';
 export { CustomQuill } from './CustomQuill/CustomQuill';
 export { ReviewCard } from './ReviewCard/ReviewCard';
 export { LabelRounded } from './LabelRounded/LabelRounded';
+export { OutputCode } from './OutputCode/OutputCode';

@@ -53,6 +53,10 @@ const App = () => {
         <Route path={`${appRoute.NOTES}`} element={<Notes />} />
         <Route path={`${appRoute.NOTE_DETAIL}`} element={<Notes />} />
         <Route path={`${appRoute.CHALLENGES}`} element={<Challenges />} />
+        <Route
+          path={`${appRoute.CHALLENGES_DETAIL}`}
+          element={<Challenges />}
+        />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

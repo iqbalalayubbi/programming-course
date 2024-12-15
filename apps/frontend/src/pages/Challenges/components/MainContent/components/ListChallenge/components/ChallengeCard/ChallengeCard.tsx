@@ -1,4 +1,6 @@
+import { appRoute } from '@/enums';
 import { Button, Flex } from 'antd';
+import { Link } from 'react-router';
 
 const ChallengeCard = () => {
   return (
@@ -7,7 +9,9 @@ const ChallengeCard = () => {
       className="border shadow-md rounded-lg px-10 py-5"
     >
       <h1 className="text-2xl font-semibold">Spent Last Time With No Change</h1>
-      <Button type="primary">Solve This</Button>
+      <Link to={`${appRoute.CHALLENGES}/1`}>
+        <Button type="primary">Solve This</Button>
+      </Link>
     </Flex>
   );
 };
