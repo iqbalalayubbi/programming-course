@@ -20,6 +20,7 @@ const appRoute = {
   NOTE_DETAIL: '/notes/:id',
   CHALLENGES: '/challenges',
   CHALLENGES_DETAIL: '/challenges/:challengeId',
+  DASHBOARD: '/dashboard',
 };
 
 export { appRoute };

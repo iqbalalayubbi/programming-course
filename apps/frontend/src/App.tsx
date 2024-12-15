@@ -5,6 +5,7 @@ import {
   Courses,
   Dashboard,
   DetailCourse,
+  LandingPage,
   MentorCourses,
   MentorManagement,
   NotFound,
@@ -35,8 +36,9 @@ const App = () => {
       <Route path={appRoute.VERIFY_OTP} element={<VerifyOTP />} />
       <Route path={appRoute.VERIFY_EMAIL} element={<VerifyEmail />} />
       <Route path={appRoute.RESET_PASSWORD} element={<ResetPassword />} />
+      <Route path="/" element={<LandingPage />} />
       <Route path={appRoute.MAIN} element={<MainLayout />}>
-        <Route index element={<Dashboard />} />
+        <Route path={`${appRoute.DASHBOARD}`} element={<Dashboard />} />
         <Route path={appRoute.COURSES} element={<Courses />} />
         <Route path={appRoute.COURSE_DETAIL} element={<DetailCourse />} />
         <Route path={appRoute.STUDY_ROOM} element={<StudyRoom />} />

@@ -7,3 +7,4 @@ export { default as sidebarAvatar } from './sidebar-avatar.jpg';
 export { default as advertisement } from './advertisement.png';
 export { default as thumbnailCourse } from './thumbnail-course.png';
 export { default as thumbnailExample } from './thumbnail-example.png';
+export { default as ilustationHomepage } from './ilustation-homepage.png';
