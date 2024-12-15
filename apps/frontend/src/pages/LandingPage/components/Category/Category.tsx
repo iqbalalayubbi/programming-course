@@ -18,34 +18,31 @@ const Category = () => {
     >
       <Flex gap={16} vertical align="center">
         <h1 className="font-bold text-4xl leading-normal">Category</h1>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consectetur,
-          vitae.
+        <p className="w-3/4 text-center">
+          Explore diverse tech fields and enhance your skills in development,
+          data analysis, and AI.
         </p>
       </Flex>
       <Flex gap={24} className="px-10">
         <CategoryCard
           title="Game Development"
-          description="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consectetur,
-        vitae."
+          description="Dive into the exciting world of game development, Create and launch your own games across platforms."
           imageUrl={gameDevelopmentIllustration}
         />
         <CategoryCard
           title="Web Development"
-          description="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consectetur,
-        vitae."
+          description="Explore the fundamentals of web development, including front-end and back-end technologies.
+"
           imageUrl={uiUxIllustration}
         />
         <CategoryCard
           title="Data Science"
-          description="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consectetur,
-        vitae."
+          description="Unlock the power of data with our data science courses. Analyze and visualize data for informed decisions."
           imageUrl={dataAnalysisIllustration}
         />
         <CategoryCard
           title="Artificial Intelligence"
-          description="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consectetur,
-        vitae."
+          description="Step into the future with artificial intelligence. Develop intelligent systems that learn and adapt."
           imageUrl={aiIllustration}
         />
       </Flex>

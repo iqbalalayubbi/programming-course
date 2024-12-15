@@ -18,24 +18,24 @@ const Testimonials = () => {
       <Flex vertical align="center">
         <h1 className="font-bold text-4xl leading-normal">What They Said</h1>
         <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consectetur,
-          vitae.
+          Hear from our satisfied learners about their experiences and the
+          impact of our courses.
         </p>
       </Flex>
       <Flex gap={16} justify="center">
         <TestimonialCard
-          name="Kemal Saka"
-          feedback="Amazing course i guess, best mentor ever"
+          name="Alex Johnson"
+          feedback='"Transformative courses that truly enhance your skills. The mentorship is exceptional!"'
           imageUrl={bossAvatarIllustration}
         />
         <TestimonialCard
-          name="Sofia Mala"
-          feedback="Amazing course i guess, best mentor ever"
+          name="Mia Chen"
+          feedback='"An incredible learning experience! The support from instructors made all the difference."'
           imageUrl={womanAvatarIllustration}
         />
         <TestimonialCard
-          name="Rizky Davide"
-          feedback="Amazing course i guess, best mentor ever"
+          name="Leo Martinez"
+          feedback='"Engaging content and practical challenges. I feel more confident in my abilities!"'
           imageUrl={manAvatarIllustration}
         />
       </Flex>
