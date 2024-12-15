@@ -6,7 +6,7 @@ import { ResponseApiType } from 'common';
 import { CourseStore, useCourse } from '@/stores';
 
 const useCourseData = () => {
-  const { setCoursesData, ...courseStore } = useCourse();
+  const { setCoursesData, setdefaultCourses, ...courseStore } = useCourse();
 
   const getCourses = useCallback(
     (result: FormatResponseType | AxiosError) => {
@@ -18,8 +18,9 @@ const useCourseData = () => {
       const responseData = response.data as ResponseApiType;
       const courses = responseData.data?.courses as unknown as CourseStore[];
       setCoursesData(courses);
+      setdefaultCourses(courses);
     },
-    [setCoursesData],
+    [setCoursesData, setdefaultCourses],
   );
 
   const { data: listCoursesResponse, ...queryStates } = useQuery({
@@ -38,6 +39,7 @@ const useCourseData = () => {
   }, [listCoursesResponse, getCourses]);
 
   return {
+    setCoursesData,
     ...courseStore,
     ...queryStates,
   };

@@ -1,6 +1,13 @@
+import { useCourse } from '@/stores';
 import { Flex, Input } from 'antd';
 
 const HeaderCourse = () => {
+  const { setSearch } = useCourse();
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value);
+  };
+
   return (
     <Flex
       justify="center"
@@ -17,7 +24,10 @@ const HeaderCourse = () => {
         <h1 className="text-white text-4xl font-bold z-10 text-center">
           Tell Me What Do Yo you Need
         </h1>
-        <Input placeholder="Find your best course..." />
+        <Input
+          placeholder="Find your best course..."
+          onChange={handleSearchChange}
+        />
       </Flex>
     </Flex>
   );

@@ -1,11 +1,39 @@
 import { Button, Flex, Link, Select } from '@/components';
 import { CourseCard, HeaderCourse } from './components';
-import { useCourseData } from '@/hooks';
+import { useCallback, useCourseData, useEffect, useState } from '@/hooks';
 import { appRoute, role } from '@/enums';
 import { getRole, getUsername } from '@/utils';
+import { CourseStore } from '@/stores';
 
 const Courses = () => {
-  const { courses } = useCourseData();
+  const { courses, search, defaultCourses, setCoursesData } = useCourseData();
+
+  const [searchCourses, setSearchCourses] = useState<CourseStore[]>([]);
+
+  const searchCourse = useCallback(
+    (value: string) => {
+      if (value === '') {
+        setCoursesData(defaultCourses);
+        return;
+      }
+
+      setTimeout(() => {
+        const findCourses = courses.filter((c) =>
+          c.title.toLowerCase().includes(value.toLowerCase()),
+        );
+        setSearchCourses(findCourses);
+      }, 300);
+    },
+    [courses, setCoursesData, defaultCourses],
+  );
+
+  useEffect(() => {
+    searchCourse(search);
+  }, [search, searchCourse]);
+
+  useEffect(() => {
+    setSearchCourses(defaultCourses);
+  }, [defaultCourses]);
 
   return (
     <Flex className="mx-10 my-5" gap={16} vertical>
@@ -14,20 +42,24 @@ const Courses = () => {
         <Flex gap={16}>
           <Select
             placeholder="Category"
-            style={{ width: 120 }}
+            style={{ width: 200 }}
             options={[
-              { value: 'jack', label: 'Jack' },
-              { value: 'lucy', label: 'Lucy' },
-              { value: 'Yiminghe', label: 'yiminghe' },
+              { value: 'web programming', label: 'web programming' },
+              { value: 'data science', label: 'data science' },
+              {
+                value: 'artificial inteligience',
+                label: 'artificial inteligience',
+              },
+              { value: 'backend development', label: 'backend development' },
             ]}
           />
           <Select
             placeholder="Filter By"
             style={{ width: 120 }}
             options={[
-              { value: 'jack', label: 'Jack' },
-              { value: 'lucy', label: 'Lucy' },
-              { value: 'Yiminghe', label: 'yiminghe' },
+              { value: 'popular', label: 'popular' },
+              { value: 'rating', label: 'rating' },
+              { value: 'student', label: 'student' },
             ]}
           />
         </Flex>
@@ -38,7 +70,7 @@ const Courses = () => {
         )}
       </Flex>
       <Flex gap={16} className="flex-col sm:flex-row sm:flex-wrap">
-        {courses.map((course) => {
+        {searchCourses.map((course) => {
           if (course.mentor_username !== getUsername()) {
             return (
               <CourseCard
@@ -52,6 +84,11 @@ const Courses = () => {
           }
         })}
       </Flex>
+      {searchCourses.length === 0 && (
+        <span className="text-gray-third font-semibold italic text-center mt-20">
+          Not Found Content
+        </span>
+      )}
     </Flex>
   );
 };
