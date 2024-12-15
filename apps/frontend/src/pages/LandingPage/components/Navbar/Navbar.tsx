@@ -21,34 +21,39 @@ const Navbar = () => {
     <Header className="bg-light-bg border-b shadow-sm z-20" id="navbar">
       <div className="flex items-center justify-between">
         <img src={appLogo} alt="Logo" className="h-10" />
-        <Flex align="center" className="hidden md:flex gap-8">
-          <Button
-            type="link"
-            onClick={() => scrollToSection('category')}
-            className="text-black"
-          >
-            Category
-          </Button>
-          <Button
-            type="link"
-            onClick={() => scrollToSection('features')}
-            className="text-black"
-          >
-            Features
-          </Button>
-          <Button
-            type="link"
-            onClick={() => scrollToSection('testimonials')}
-            className="text-black"
-          >
-            Testimonials
-          </Button>
-          <Link to={appRoute.LOGIN}>
-            <Button type="default">Login</Button>
-          </Link>
-          <Link to={appRoute.REGISTER}>
-            <Button type="primary">Register</Button>
-          </Link>
+        {/* nav laptop */}
+        <Flex align="center" className="hidden md:flex gap-8 md:gap-3">
+          <Flex align="center">
+            <Button
+              type="link"
+              onClick={() => scrollToSection('category')}
+              className="text-black"
+            >
+              Category
+            </Button>
+            <Button
+              type="link"
+              onClick={() => scrollToSection('features')}
+              className="text-black"
+            >
+              Features
+            </Button>
+            <Button
+              type="link"
+              onClick={() => scrollToSection('testimonials')}
+              className="text-black"
+            >
+              Testimonials
+            </Button>
+          </Flex>
+          <Flex align="center" gap={16}>
+            <Link to={appRoute.LOGIN}>
+              <Button type="default">Login</Button>
+            </Link>
+            <Link to={appRoute.REGISTER}>
+              <Button type="primary">Register</Button>
+            </Link>
+          </Flex>
         </Flex>
         <div className="md:hidden">
           <button onClick={() => setIsOpen(!isOpen)} className="text-black">
@@ -60,6 +65,7 @@ const Navbar = () => {
           </button>
         </div>
       </div>
+      {/* nav mobile */}
       {isOpen && (
         <Flex vertical className="md:hidden bg-white shadow-lg p-4">
           <Button
@@ -83,16 +89,18 @@ const Navbar = () => {
           >
             Testimonials
           </Button>
-          <Link to={appRoute.LOGIN}>
-            <Button type="default" className="w-full">
-              Login
-            </Button>
-          </Link>
-          <Link to={appRoute.REGISTER}>
-            <Button type="primary" className="w-full">
-              Register
-            </Button>
-          </Link>
+          <Flex vertical>
+            <Link to={appRoute.LOGIN}>
+              <Button type="default" className="w-full">
+                Login
+              </Button>
+            </Link>
+            <Link to={appRoute.REGISTER}>
+              <Button type="primary" className="w-full">
+                Register
+              </Button>
+            </Link>
+          </Flex>
         </Flex>
       )}
       <FloatButton
