@@ -1,4 +1,6 @@
+import { appRoute } from '@/enums';
 import { Card } from 'antd';
+import { Link } from 'react-router';
 
 type Properties = {
   title: string;
@@ -7,9 +9,11 @@ type Properties = {
 
 const NoteCard = (note: Properties) => {
   return (
-    <Card title={note.title} className="shadow-md" hoverable>
-      <p>{note.description}</p>
-    </Card>
+    <Link to={`${appRoute.NOTES}/1`}>
+      <Card title={note.title} className="shadow-md" hoverable>
+        <p>{note.description}</p>
+      </Card>
+    </Link>
   );
 };
 

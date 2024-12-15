@@ -39,7 +39,10 @@ const MainContent = () => {
   ];
 
   return (
-    <Flex className="h-full w-full bg-light-bg mx-10 px-10 py-3" vertical>
+    <Flex
+      className="h-full w-full bg-light-bg mx-0 sm:mx-10 px-10 py-3"
+      vertical
+    >
       <Flex align="center" gap={16}>
         <Link to={appRoute.COURSES}>
           <Button type="text" icon={<ArrowLeftOutlined />} />
@@ -61,8 +64,8 @@ const MainContent = () => {
         </Flex>
         <h3 className="font-semibold text-xl my-3">Prerequisite</h3>
         <Flex gap={16}>
-          <SkillLabel skillName="Javascript Fundamental" />
-          <SkillLabel skillName="Basic Algorithm" />
+          <SkillLabel skillName="Javascript" />
+          <SkillLabel skillName="Algorithm" />
           <SkillLabel skillName="HTML" />
           <SkillLabel skillName="CSS" />
         </Flex>

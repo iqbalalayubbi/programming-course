@@ -8,7 +8,7 @@ const DetailCourse = () => {
   useStudentCoursesData();
 
   return (
-    <Flex className="h-full">
+    <Flex className="h-screen overflow-auto sm:h-full sm:flex-row flex-col">
       <MainContent />
       <AsideContent />
     </Flex>

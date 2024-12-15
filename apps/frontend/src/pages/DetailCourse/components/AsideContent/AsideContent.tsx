@@ -72,7 +72,12 @@ const AsideContent = () => {
   }, [isSuccess, navigate, setJoined]);
 
   return (
-    <Flex className="w-1/2 bg-white h-full" gap={16} align="center" vertical>
+    <Flex
+      className="w-full sm:w-1/2 bg-white h-full"
+      gap={16}
+      align="center"
+      vertical
+    >
       <h1 className="text-4xl font-bold my-5">Mentor</h1>
       <MentorProfile />
       <h1 className="text-dark-text font-bold text-6xl">4.0</h1>

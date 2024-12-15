@@ -11,7 +11,11 @@ const CourseCard = ({ id, title }: Properties) => {
   return (
     <Flex gap={32} align="center" className="bg-light-bg p-5 w-full rounded-md">
       <img src={thumbnailCourse} alt="thumbnail course" />
-      <Flex align="end" justify="space-between" gap={32} className="w-full">
+      <Flex
+        align="end"
+        // justify="space-between"
+        className="w-full flex-col gap-4 md:gap-8 items-start md:items-end md:justify-between md:flex-row"
+      >
         <Flex gap={16} vertical>
           <h1>{title}</h1>
           <Flex gap={8}>
@@ -28,13 +32,18 @@ const CourseCard = ({ id, title }: Properties) => {
           <Progress
             percent={100}
             percentPosition={{ align: 'center', type: 'inner' }}
-            size={[400, 20]}
+            size={[300, 20]}
             strokeColor={colorPalette.PRIMARY}
             trailColor={colorPalette.GRAY_THIRD}
             type="line"
           />
         </Flex>
-        <Button type="primary" data-id={id}>
+        <Button
+          type="primary"
+          data-id={id}
+          className="md:w-auto w-full"
+          shape="round"
+        >
           View Course
         </Button>
       </Flex>

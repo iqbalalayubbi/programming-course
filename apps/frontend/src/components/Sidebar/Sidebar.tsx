@@ -119,7 +119,7 @@ const Sidebar = () => {
     <Sider
       theme="light"
       className={`transition-all duration-300 ${isCollapsed ? 'w-16' : 'w-52'} 
-                  md:w-52`} // Use Tailwind classes for responsive width
+                  md:w-52 bg-white shadow-md`} // Use Tailwind classes for responsive width
       collapsed={isCollapsed}
       onCollapse={toggleSidebar}
     >
