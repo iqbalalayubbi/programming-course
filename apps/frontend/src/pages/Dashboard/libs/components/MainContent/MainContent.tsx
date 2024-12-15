@@ -1,6 +1,8 @@
 import { Flex, Layout } from '@/components';
 import { Advertisement, CourseCard } from './components';
 import { useCourse } from '@/stores';
+import { Link } from 'react-router';
+import { appRoute } from '@/enums';
 const { Content } = Layout;
 
 const MainContent = () => {
@@ -13,7 +15,9 @@ const MainContent = () => {
       <Flex gap={16} vertical className="h-96 overflow-auto">
         {courses.map((course) => {
           return (
-            <CourseCard id={course.id} title={course.title} key={course.id} />
+            <Link to={`${appRoute.COURSES}/${course.id}`}>
+              <CourseCard id={course.id} title={course.title} key={course.id} />
+            </Link>
           );
         })}
       </Flex>
