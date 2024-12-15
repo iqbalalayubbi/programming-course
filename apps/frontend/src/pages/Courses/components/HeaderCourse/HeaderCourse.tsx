@@ -12,7 +12,7 @@ const HeaderCourse = () => {
     <Flex
       justify="center"
       align="center"
-      className="relative h-60 bg-gradient-to-br from-green-400 to-yellow-400 overflow-hidden rounded-lg"
+      className="relative py-20 h-60 bg-gradient-to-br from-green-400 to-yellow-400 rounded-lg"
     >
       <div className="absolute inset-0">
         <div className="bg-white opacity-10 rounded-full h-32 w-32 animate-pulse absolute top-10 left-10"></div>

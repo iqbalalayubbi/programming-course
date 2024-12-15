@@ -36,7 +36,7 @@ const Courses = () => {
   }, [defaultCourses]);
 
   return (
-    <Flex className="mx-10 my-5" gap={16} vertical>
+    <Flex className="mx-10 my-5 h-screen overflow-auto" gap={16} vertical>
       <HeaderCourse />
       <Flex justify="space-between" gap={8}>
         <Flex gap={16}>

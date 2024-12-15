@@ -40,20 +40,24 @@ const MentorManagement = () => {
         <Flex gap={16}>
           <Select
             placeholder="Category"
-            style={{ width: 120 }}
+            style={{ width: 200 }}
             options={[
-              { value: 'jack', label: 'Jack' },
-              { value: 'lucy', label: 'Lucy' },
-              { value: 'Yiminghe', label: 'yiminghe' },
+              { value: 'web programming', label: 'web programming' },
+              { value: 'data science', label: 'data science' },
+              {
+                value: 'artificial inteligience',
+                label: 'artificial inteligience',
+              },
+              { value: 'backend development', label: 'backend development' },
             ]}
           />
           <Select
             placeholder="Filter By"
             style={{ width: 120 }}
             options={[
-              { value: 'jack', label: 'Jack' },
-              { value: 'lucy', label: 'Lucy' },
-              { value: 'Yiminghe', label: 'yiminghe' },
+              { value: 'popular', label: 'popular' },
+              { value: 'rating', label: 'rating' },
+              { value: 'student', label: 'student' },
             ]}
           />
         </Flex>
