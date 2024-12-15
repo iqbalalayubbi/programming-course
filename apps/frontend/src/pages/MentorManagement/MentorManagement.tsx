@@ -30,7 +30,7 @@ const MentorManagement = () => {
   }, [courses, filterCourseByMentor]);
 
   return (
-    <Flex className="mx-10 my-5" gap={16} vertical>
+    <Flex className="mx-10 my-5 h-screen overflow-auto" gap={16} vertical>
       <CreateCourseModal />
       <HeaderCourse />
       <Flex justify="space-between" gap={8}>
@@ -58,7 +58,11 @@ const MentorManagement = () => {
           />
         </Flex>
       </Flex>
-      <Flex gap={16} className="flex-wrap" align="stretch">
+      <Flex
+        gap={16}
+        className="flex-col sm:flex-row sm:flex-wrap"
+        align="stretch"
+      >
         {mentorCourses.map((course) => {
           return (
             <CourseCard

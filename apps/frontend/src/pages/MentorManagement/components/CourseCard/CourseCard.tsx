@@ -14,7 +14,7 @@ const CourseCard = ({ id, title, description, imageUrl }: Properties) => {
 
   return (
     <Card
-      className="shadow-lg w-[24%] group"
+      className="shadow-lg w-full sm:flex-1 lg:w-[24%] group"
       cover={<img src={imageUrl} className="h-40" />}
       hoverable
       onClick={() => navigate(`${appRoute.COURSE_MANAGEMENT}/${id}`)}
