@@ -7,6 +7,7 @@ import { PasswordService } from './passwordService';
 import { OtpService } from './otpService';
 import { type ServiceResponse } from './types';
 import dayjs from 'dayjs';
+import { emailVerifyTemplate } from './helpers';
 
 type Constructor = {
   userService: UserService;
@@ -107,7 +108,11 @@ class AuthService implements AuthServiceType {
 
     const callbackUrl = `${process.env.CALLBACK_VERIFY_EMAIL}/${accessToken}`;
     const subject = 'Verify your email';
-    const html = `Click the link below to verify your email: <a href="${callbackUrl}">Click Here</a>`;
+    const html = emailVerifyTemplate(
+      newUser.username,
+      newUser.role,
+      callbackUrl,
+    );
 
     await this.mailerService.sendEmail({ recipient: email, subject, html });
 

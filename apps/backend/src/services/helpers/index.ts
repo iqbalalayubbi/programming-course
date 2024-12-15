@@ -1,0 +1,1 @@
+export { emailVerifyTemplate } from './emailVerifyTemplate';
