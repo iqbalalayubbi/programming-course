@@ -28,7 +28,7 @@ const CustomFooter = () => {
         </div>
         <Flex align="center" gap={16}>
           <Flex align="center" gap={32}>
-            <Flex align="center" gap={24}>
+            <Flex align="center" className="md:gap-6 flex-col sm:flex-row">
               <Button
                 type="link"
                 onClick={() => scrollToSection('category')}
@@ -53,7 +53,7 @@ const CustomFooter = () => {
             </Flex>
           </Flex>
         </Flex>
-        <img src={appLogo} alt="logo" />
+        <img src={appLogo} alt="logo" className="w-24 sm:w-auto" />
       </div>
     </Footer>
   );

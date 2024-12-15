@@ -10,29 +10,33 @@ import {
 const Category = () => {
   return (
     <Flex
-      className="h-screen w-screen"
+      className="min-h-screen w-screen p-5 md:p-10"
       align="center"
-      gap={64}
+      gap={32}
       vertical
       id="category"
     >
       <Flex gap={16} vertical align="center">
-        <h1 className="font-bold text-4xl leading-normal">Category</h1>
-        <p className="w-3/4 text-center">
+        <h1 className="font-bold text-4xl md:text-5xl leading-normal">
+          Category
+        </h1>
+        <p className="w-full md:w-3/4 text-center text-lg md:text-xl">
           Explore diverse tech fields and enhance your skills in development,
           data analysis, and AI.
         </p>
       </Flex>
-      <Flex gap={24} className="px-10">
+      <Flex
+        gap={16}
+        className="flex-col md:flex-row justify-center w-full items-center"
+      >
         <CategoryCard
           title="Game Development"
-          description="Dive into the exciting world of game development, Create and launch your own games across platforms."
+          description="Dive into the exciting world of game development. Create and launch your own games across platforms."
           imageUrl={gameDevelopmentIllustration}
         />
         <CategoryCard
           title="Web Development"
-          description="Explore the fundamentals of web development, including front-end and back-end technologies.
-"
+          description="Explore the fundamentals of web development, including front-end and back-end technologies."
           imageUrl={uiUxIllustration}
         />
         <CategoryCard

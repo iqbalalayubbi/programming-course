@@ -9,7 +9,7 @@ type Properties = {
 const CategoryCard = ({ title, description, imageUrl }: Properties) => {
   return (
     <Card
-      className="shadow-lg w-1/4"
+      className="shadow-lg w-full md:w-1/4"
       cover={<img src={imageUrl} alt="illustration" className="h-60" />}
       hoverable
     >
