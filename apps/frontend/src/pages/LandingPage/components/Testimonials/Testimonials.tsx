@@ -8,7 +8,13 @@ import {
 
 const Testimonials = () => {
   return (
-    <Flex className="w-screen mt-40" align="center" gap={64} vertical>
+    <Flex
+      className="w-screen mt-40"
+      align="center"
+      gap={64}
+      vertical
+      id="testimonials"
+    >
       <Flex vertical align="center">
         <h1 className="font-bold text-4xl leading-normal">What They Said</h1>
         <p>

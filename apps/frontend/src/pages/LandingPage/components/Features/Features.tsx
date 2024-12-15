@@ -9,7 +9,13 @@ import { FeatureCard } from './components';
 
 const Features = () => {
   return (
-    <Flex className="h-screen w-screen" align="center" gap={64} vertical>
+    <Flex
+      className="h-screen w-screen"
+      align="center"
+      gap={64}
+      vertical
+      id="features"
+    >
       <Flex gap={16} vertical align="center">
         <h1 className="font-bold text-4xl leading-normal">Our Features</h1>
         <p>
