@@ -11,7 +11,7 @@ import {
 } from '@/components';
 import { appRoute } from '@/enums';
 import { AxiosError } from '@/types';
-import { useMutation, useNavigate } from '@/hooks';
+import { useMutation, useNavigate, useSearchParams } from '@/hooks';
 import { RegisterPayload, ResponseApiType } from 'common';
 
 const { Title, Text, Link: TextLink } = Typography;
@@ -19,6 +19,8 @@ const { Title, Text, Link: TextLink } = Typography;
 const Register = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  const [queryParameters] = useSearchParams();
+  const role = queryParameters.get('role');
 
   const registerMutation = useMutation({
     mutationKey: ['register'],
@@ -71,7 +73,11 @@ const Register = () => {
         >
           <Input.Password placeholder="Enter your password" />
         </Form.Item>
-        <Form.Item name="role" initialValue="student" hidden></Form.Item>
+        <Form.Item
+          name="role"
+          initialValue={role === 'mentor' ? 'mentor' : 'student'}
+          hidden
+        ></Form.Item>
         <Flex gap={16} vertical>
           <Button
             type="primary"

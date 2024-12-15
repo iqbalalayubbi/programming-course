@@ -47,6 +47,9 @@ const Navbar = () => {
             </Button>
           </Flex>
           <Flex align="center" gap={16}>
+            <Link to={`${appRoute.REGISTER}?role=mentor`}>
+              <Button type="text">Become a Mentor</Button>
+            </Link>
             <Link to={appRoute.LOGIN}>
               <Button type="default">Login</Button>
             </Link>
