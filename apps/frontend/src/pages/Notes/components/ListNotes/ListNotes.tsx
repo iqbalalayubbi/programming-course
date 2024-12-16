@@ -1,4 +1,4 @@
-import { NoteCard, NotePlaceholder } from './components';
+import { CreateNote, NoteCard, NotePlaceholder } from './components';
 import { getUsername } from '@/utils';
 import { useNoteData } from '@/hooks';
 import { useNote } from '@/stores';
@@ -17,6 +17,7 @@ const ListNotes = () => {
         ))}
         <NotePlaceholder />
       </div>
+      <CreateNote />
     </div>
   );
 };

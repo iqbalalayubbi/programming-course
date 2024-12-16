@@ -3,6 +3,7 @@ import { ApiService } from './apiService';
 import { formatResponse } from '@/utils';
 import { type FormatResponseType } from '@/types';
 import { AxiosError, AxiosResponse } from 'axios';
+import { NoteStore } from '@/stores';
 
 class NoteApi extends ApiService {
   public async getNotesByUsername(
@@ -12,6 +13,17 @@ class NoteApi extends ApiService {
       const response = await this.get(
         `${apiPath.NOTES}?user_username=${username}`,
       );
+      return formatResponse(response as AxiosResponse);
+    } catch (error) {
+      throw error as AxiosError;
+    }
+  }
+
+  public async createNote(
+    data: NoteStore,
+  ): Promise<FormatResponseType | AxiosError> {
+    try {
+      const response = await this.post(`${apiPath.NOTES}`, data);
       return formatResponse(response as AxiosResponse);
     } catch (error) {
       throw error as AxiosError;
