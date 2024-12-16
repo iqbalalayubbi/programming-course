@@ -75,6 +75,7 @@ const MentorManagement = () => {
               title={course.title}
               description={course.description}
               imageUrl={course.thumbnail_url}
+              courseTotal={mentorCourses.length}
             />
           );
         })}

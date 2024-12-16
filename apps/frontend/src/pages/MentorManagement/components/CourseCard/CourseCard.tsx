@@ -7,14 +7,22 @@ type Properties = {
   title: string;
   description: string;
   imageUrl: string;
+  courseTotal: number;
 };
 
-const CourseCard = ({ id, title, description, imageUrl }: Properties) => {
+const CourseCard = ({
+  id,
+  title,
+  description,
+  imageUrl,
+  courseTotal,
+}: Properties) => {
   const navigate = useNavigate();
+  const MAX_COURSE_ONE_ROW = 4;
 
   return (
     <Card
-      className="shadow-lg w-full sm:flex-1 lg:w-[24%] group"
+      className={`${courseTotal < MAX_COURSE_ONE_ROW ? 'sm:flex-1' : ''} shadow-lg w-full lg:w-[24%] group`}
       cover={<img src={imageUrl} className="h-40" />}
       hoverable
       onClick={() => navigate(`${appRoute.COURSE_MANAGEMENT}/${id}`)}
