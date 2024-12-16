@@ -28,20 +28,43 @@ class NoteService {
     }
   }
 
-  // async getSkills(): Promise<ServiceResponse> {
-  //   try {
-  //     const skills = await this.skillModel.findMany();
-  //     return {
-  //       isSuccess: true,
-  //       data: { skills },
-  //     };
-  //   } catch {
-  //     return {
-  //       isSuccess: false,
-  //       error: { field: 'skill', message: 'Failed to get skills' },
-  //     };
-  //   }
-  // }
+  async getNotesByUsername(username: string): Promise<ServiceResponse> {
+    try {
+      const notes = await this.noteModel.findMany({
+        where: { user_username: username },
+      });
+      return {
+        isSuccess: true,
+        data: { notes },
+      };
+    } catch {
+      return {
+        isSuccess: false,
+        error: { field: 'note', message: 'Failed to get notes' },
+      };
+    }
+  }
+
+  async getNoteById(id: number): Promise<ServiceResponse> {
+    try {
+      const note = await this.noteModel.findUnique({ where: { id } });
+      if (!note) {
+        return {
+          isSuccess: false,
+          error: { field: 'note', message: 'Note not found' },
+        };
+      }
+      return {
+        isSuccess: true,
+        data: { note },
+      };
+    } catch {
+      return {
+        isSuccess: false,
+        error: { field: 'note', message: 'Failed to get note' },
+      };
+    }
+  }
 
   // async getById(id: number): Promise<ServiceResponse> {
   //   try {
