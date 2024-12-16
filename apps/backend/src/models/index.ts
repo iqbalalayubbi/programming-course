@@ -5,3 +5,4 @@ export { UserSkill as UserSkillModel } from './userSkill';
 export { Course as CourseModel } from './course';
 export { CourseContent as CourseContentModel } from './courseContent';
 export { StudentCourse as StudentCourseModel } from './studentCourse';
+export { Note as NoteModel } from './note';

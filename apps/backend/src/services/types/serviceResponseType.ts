@@ -5,6 +5,7 @@ import {
   CourseModel,
   CourseContentModel,
   StudentCourseModel,
+  NoteModel,
 } from '@/models';
 
 type FieldType =
@@ -13,12 +14,14 @@ type FieldType =
   | keyof CourseModel
   | keyof CourseContentModel
   | keyof StudentCourseModel
+  | keyof NoteModel
   | 'token'
   | 'user'
   | 'otp'
   | 'skill'
   | 'course'
-  | 'content';
+  | 'content'
+  | 'note';
 
 type ServiceResponse = {
   isSuccess: boolean;
@@ -36,6 +39,8 @@ type ServiceResponse = {
     courseContents?: CourseContentModel[];
     studentCourse?: StudentCourseModel;
     studentCourses?: StudentCourseModel[];
+    note?: NoteModel;
+    notes?: NoteModel[];
     token?: string;
   };
 };
