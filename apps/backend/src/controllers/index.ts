@@ -3,6 +3,7 @@ import {
   courseContentService,
   courseService,
   dashboardService,
+  noteService,
   userService,
 } from '@/services';
 import { AuthController } from './authController';
@@ -14,6 +15,7 @@ import { StudentCourseController } from './studentCourseController';
 import { ProfileController } from './profileController';
 import { DashboarController } from './dashboardController';
 import { UploadController } from './uploadController';
+import { NoteController } from './noteController';
 
 const skillController = new SkillController();
 const userSkillController = new UserSkillController();
@@ -30,6 +32,7 @@ const uploadController = new UploadController({
   courseService,
   courseContentService,
 });
+const noteController = new NoteController({ noteService });
 
 export {
   authController,
@@ -41,4 +44,5 @@ export {
   profileController,
   dashboardController,
   uploadController,
+  noteController,
 };

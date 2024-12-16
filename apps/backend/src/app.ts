@@ -5,6 +5,7 @@ import {
   courseContentRoutes,
   courseRoutes,
   dashboardRoutes,
+  noteRoutes,
   profileRoutes,
   skillRoutes,
   studentCourseRoutes,
@@ -54,5 +55,6 @@ app.use('/student-courses', studentCourseRoutes);
 app.use('/profile', profileRoutes);
 app.use('/dashboard', dashboardRoutes);
 app.use('/upload', uploadRoutes);
+app.use('/notes', noteRoutes);
 
 export { app };

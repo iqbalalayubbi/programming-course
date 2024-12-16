@@ -13,6 +13,7 @@ import { StudentCourseService } from './studentCourseService';
 import { DashboardService } from './dashboardService';
 import { MulterService } from './MulterService';
 import { directoryName } from '@/enums';
+import { NoteService } from './noteService';
 
 const prismaClient = new PrismaClient();
 const jwtService = new JwtService();
@@ -38,6 +39,7 @@ const authService = new AuthService({
   passwordService,
   otpService,
 });
+const noteService = new NoteService({ prismaClient });
 
 export {
   authService,
@@ -51,5 +53,6 @@ export {
   dashboardService,
   multerPhotoService,
   multerVideoService,
+  noteService,
 };
 export * from './types';
