@@ -1,4 +1,5 @@
 import {
+  NoteModel,
   type CourseContentModel,
   type CourseModel,
   type SkillModel,
@@ -37,6 +38,8 @@ type ResponseApiType = {
     courseContents?: CourseContentModel[];
     studentCourse?: StudentCourseModel;
     studentCourses?: StudentCourseModel[];
+    note?: NoteModel;
+    notes?: NoteModel[];
     accessToken?: string;
   };
 };

@@ -8,6 +8,7 @@ const apiPath = {
   STUDENT_COURSES: '/student-courses',
   DASHBOARD: '/dashboard',
   COURSE_CONTENTS: '/course-contents',
+  NOTES: '/notes',
 };
 
 export { apiPath, authPath };

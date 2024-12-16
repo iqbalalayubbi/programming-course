@@ -5,4 +5,5 @@ export { useMentorManagement } from './useMentorManagement';
 export { useCourseContent } from './useCourseContent';
 export { useQuill } from './useQuill';
 export { useMonaco } from './useMonaco';
+export { useNote } from './useNote';
 export * from './models';

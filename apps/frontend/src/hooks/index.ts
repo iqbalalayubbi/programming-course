@@ -5,3 +5,4 @@ export * from './UserHooks/UserHooks';
 export * from './StudentCoursesHooks/StudentCoursesHooks';
 export * from './DashboardHooks/DashboardHooks';
 export * from './CourseContentHooks/CourseContentHooks';
+export * from './NoteHooks/NoteHooks';
