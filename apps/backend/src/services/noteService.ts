@@ -66,26 +66,27 @@ class NoteService {
     }
   }
 
-  // async getById(id: number): Promise<ServiceResponse> {
-  //   try {
-  //     const skill = await this.skillModel.findUnique({ where: { id } });
-  //     if (!skill) {
-  //       return {
-  //         isSuccess: false,
-  //         error: { field: 'skill', message: 'Skill not found' },
-  //       };
-  //     }
-  //     return {
-  //       isSuccess: true,
-  //       data: { skill },
-  //     };
-  //   } catch {
-  //     return {
-  //       isSuccess: false,
-  //       error: { field: 'skill', message: 'Failed to get skill' },
-  //     };
-  //   }
-  // }
+  async deleteNote(id: number): Promise<ServiceResponse> {
+    try {
+      const deletedNote = await this.noteModel.delete({ where: { id } });
+
+      if (!deletedNote) {
+        return {
+          isSuccess: false,
+          error: { field: 'note', message: 'Note not found' },
+        };
+      }
+
+      return {
+        isSuccess: true,
+      };
+    } catch {
+      return {
+        isSuccess: false,
+        error: { field: 'note', message: 'Note not found' },
+      };
+    }
+  }
 }
 
 export { NoteService };
