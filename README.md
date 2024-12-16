@@ -87,18 +87,24 @@ This package contains shared logic and utilities used by both the frontend and b
    ```bash
    pnpm common:build
    ```
-6. Run Prisma migrations:
+6. Create new folder at
+
+- **/apps/backend/src/uploads/photos**
+- **/apps/backend/src/uploads/videos**
+
+7. Run Prisma migrations:
    ```bash
    pnpm backend migrate
    ```
-7. Run backend server:
+8. Run backend server:
    ```bash
    pnpm backend dev
    ```
-8. Run frontend server:
+9. Run frontend server:
    ```bash
-   pnpm backend dev
+   pnpm frontend dev
    ```
+10. make sure your API and CLIENT apps run with the same port from env config
 
 ---
 
