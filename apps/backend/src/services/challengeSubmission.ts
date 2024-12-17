@@ -29,6 +29,24 @@ class ChallengeSubmissionService {
       };
     }
   }
+
+  async getAll(): Promise<ServiceResponse> {
+    try {
+      const challengeSubmissions = await this.challengeSubmission.findMany();
+      return {
+        isSuccess: true,
+        data: { challengeSubmissions },
+      };
+    } catch {
+      return {
+        isSuccess: false,
+        error: {
+          field: 'challenge',
+          message: 'Failed to get all challenge submissions',
+        },
+      };
+    }
+  }
 }
 
 export { ChallengeSubmissionService };

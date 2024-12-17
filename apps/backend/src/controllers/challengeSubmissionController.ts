@@ -14,6 +14,7 @@ class ChallengeSubmissionController {
     this.challengeSubmissionService = challengeSubmissionService;
 
     this.createChallengeSubmission = this.createChallengeSubmission.bind(this);
+    this.getAllChallenges = this.getAllChallenges.bind(this);
   }
 
   async createChallengeSubmission(req: Request, res: Response) {
@@ -44,6 +45,35 @@ class ChallengeSubmissionController {
       res,
       statusCode: statusCode.INTERNAL_SERVER_ERROR,
       message: 'Failed to create challenge submission',
+    });
+  }
+
+  async getAllChallenges(req: Request, res: Response) {
+    const { isSuccess, data, error } =
+      await this.challengeSubmissionService.getAll();
+
+    if (isSuccess && data) {
+      return formatResponse({
+        res,
+        statusCode: statusCode.OK,
+        message: 'Challenges retrieved successfully',
+        data,
+      });
+    }
+
+    if (error) {
+      return formatResponse({
+        res,
+        statusCode: statusCode.NOT_FOUND,
+        message: error.message,
+        errors: [{ field: error.field, message: error.message }],
+      });
+    }
+
+    return formatResponse({
+      res,
+      statusCode: statusCode.INTERNAL_SERVER_ERROR,
+      message: 'Failed to get all challenges',
     });
   }
 }
