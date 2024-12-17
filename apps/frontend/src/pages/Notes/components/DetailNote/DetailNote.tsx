@@ -18,8 +18,9 @@ import {
   useMutation,
   useNavigate,
   useParams,
+  useUpdateNote,
 } from '@/hooks';
-import { NoteStore, useNote, useQuill } from '@/stores';
+import { useNote, useQuill } from '@/stores';
 
 const DetailNote = () => {
   const { note } = useNote();
@@ -43,18 +44,14 @@ const DetailNote = () => {
     },
   });
 
-  const { mutate: updateMutate } = useMutation({
-    mutationKey: ['update-note'],
-    mutationFn: async (payload: { id: number; data: NoteStore }) => {
-      await noteApi.updateNote(payload.id, payload.data);
-    },
-    onSuccess: () => {
-      toast.success('Note updated successfully');
-    },
-    onError: () => {
-      toast.error('Error updating note');
-    },
-  });
+  const handleReponseUpdate = (isSuccess: boolean) => {
+    if (isSuccess) {
+      return toast.success('Note updated successfully');
+    }
+    return toast.error('Error updating note');
+  };
+
+  const { mutate: updateMutate } = useUpdateNote(handleReponseUpdate);
 
   const handleDeleteNote = (id: number) => {
     deleteMutate(id);
