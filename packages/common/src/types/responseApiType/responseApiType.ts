@@ -1,11 +1,13 @@
 import {
+  UserModel,
+  SkillModel,
+  UserSkillModel,
+  CourseModel,
+  CourseContentModel,
+  StudentCourseModel,
   NoteModel,
-  type CourseContentModel,
-  type CourseModel,
-  type SkillModel,
-  type StudentCourseModel,
-  type UserModel,
-  type UserSkillModel,
+  ChallengeModel,
+  ChallengeSubmissionModel,
 } from '../modelsType';
 
 type FieldType =
@@ -14,17 +16,19 @@ type FieldType =
   | keyof CourseModel
   | keyof CourseContentModel
   | keyof StudentCourseModel
+  | keyof NoteModel
   | 'token'
   | 'user'
   | 'otp'
   | 'skill'
   | 'course'
-  | 'content';
+  | 'content'
+  | 'note'
+  | 'challenge';
 
 type ResponseApiType = {
   isSuccess: boolean;
-  message: string;
-  errors?: { field: FieldType; message: string };
+  error?: { field: FieldType; message: string };
   data?: {
     skill?: SkillModel;
     skills?: SkillModel[];
@@ -40,7 +44,11 @@ type ResponseApiType = {
     studentCourses?: StudentCourseModel[];
     note?: NoteModel;
     notes?: NoteModel[];
-    accessToken?: string;
+    challenge?: ChallengeModel;
+    challenges?: ChallengeModel[];
+    challengeSubmission?: ChallengeSubmissionModel;
+    challengeSubmissions?: ChallengeSubmissionModel[];
+    token?: string;
   };
 };
 

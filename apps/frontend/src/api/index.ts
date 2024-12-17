@@ -6,6 +6,7 @@ import { DashboardApi } from './dashboardApi';
 import { CourseContentApi } from './courseContentApi';
 import { PistonApi } from './pistonApi';
 import { NoteApi } from './noteApi';
+import { ChallengeApi } from './challengeApi';
 
 const authApi = new AuthApi();
 const profileApi = new ProfileApi();
@@ -15,6 +16,7 @@ const dashboardApi = new DashboardApi();
 const courseContentApi = new CourseContentApi();
 const pistonApi = new PistonApi();
 const noteApi = new NoteApi();
+const challengeApi = new ChallengeApi();
 
 export {
   authApi,
@@ -25,4 +27,5 @@ export {
   courseContentApi,
   pistonApi,
   noteApi,
+  challengeApi,
 };

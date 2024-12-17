@@ -2,9 +2,9 @@ import { AxiosError, FormatResponseType } from '@/types';
 import { AxiosResponse } from 'axios';
 import { ResponseApiType } from 'common';
 
-const getResponseData = async (
+const getResponseData = (
   result: FormatResponseType | AxiosError,
-): Promise<ResponseApiType | null> => {
+): ResponseApiType | null => {
   if (result instanceof AxiosError) {
     return null;
   }

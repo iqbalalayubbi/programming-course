@@ -6,3 +6,4 @@ export * from './StudentCoursesHooks/StudentCoursesHooks';
 export * from './DashboardHooks/DashboardHooks';
 export * from './CourseContentHooks/CourseContentHooks';
 export * from './NoteHooks/NoteHooks';
+export * from './ChallengeHooks/ChallengeHooks';

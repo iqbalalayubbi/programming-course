@@ -6,4 +6,5 @@ export { useCourseContent } from './useCourseContent';
 export { useQuill } from './useQuill';
 export { useMonaco } from './useMonaco';
 export { useNote } from './useNote';
+export { useChallenge } from './useChallenge';
 export * from './models';

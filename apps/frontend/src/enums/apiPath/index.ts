@@ -9,6 +9,7 @@ const apiPath = {
   DASHBOARD: '/dashboard',
   COURSE_CONTENTS: '/course-contents',
   NOTES: '/notes',
+  CHALLENGES: '/challenges',
 };
 
 export { apiPath, authPath };
