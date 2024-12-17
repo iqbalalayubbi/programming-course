@@ -28,6 +28,7 @@ model User {
   otp OTP[]
   studentCourses StudentCourse[]
   notes Note[]
+  submissions ChallengeSubmission[] 
 }
 
 model StudentCourse{
@@ -105,3 +106,27 @@ model Note{
   updatedAt DateTime @updatedAt
   user User @relation(fields: [user_username], references: [username])
 }
+
+model Challenge{
+  id Int @id @default(autoincrement())
+  title String
+  description String @db.LongText @default("")
+  output_examples String @db.LongText @default("")
+  output_answers String @db.LongText @default("")
+  star_total Int @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  submissions ChallengeSubmission[]
+}
+
+model ChallengeSubmission{
+  id Int @id @default(autoincrement())
+  challenge_id Int
+  user_username String
+  is_submitted Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  challenge Challenge @relation(fields: [challenge_id], references: [id])
+  user User @relation(fields: [user_username], references: [username])
+}
+
