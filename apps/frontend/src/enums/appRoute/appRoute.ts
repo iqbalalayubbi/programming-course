@@ -17,7 +17,7 @@ const appRoute = {
   COURSE_MANAGEMENT_ID: '/course-management/:courseId',
   UPLOADS: '/uploads',
   NOTES: '/notes',
-  NOTE_DETAIL: '/notes/:id',
+  NOTE_DETAIL: '/notes/:noteId',
   CHALLENGES: '/challenges',
   CHALLENGES_DETAIL: '/challenges/:challengeId',
   DASHBOARD: '/dashboard',
