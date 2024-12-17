@@ -51,6 +51,18 @@ class NoteApi extends ApiService {
       throw error as AxiosError;
     }
   }
+
+  public async updateNote(
+    noteId: number,
+    data: NoteStore,
+  ): Promise<FormatResponseType | AxiosError> {
+    try {
+      const response = await this.patch(`${apiPath.NOTES}/${noteId}`, data);
+      return formatResponse(response as AxiosResponse);
+    } catch (error) {
+      throw error as AxiosError;
+    }
+  }
 }
 
 export { NoteApi };
