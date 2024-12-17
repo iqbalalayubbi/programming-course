@@ -1,11 +1,15 @@
 import { ArrowLeftOutlined, CustomQuill } from '@/components';
 import { appRoute } from '@/enums';
+import { useDetailNoteData } from '@/hooks';
 import { useNote } from '@/stores';
 import { Button, Flex } from 'antd';
-import { Link } from 'react-router';
+import { Link, useParams } from 'react-router';
 
 const DetailNote = () => {
   const { note } = useNote();
+  const { noteId } = useParams();
+
+  useDetailNoteData(Number(noteId));
 
   return (
     <Flex className="w-full px-10 mt-10 h-full" gap={16} vertical>

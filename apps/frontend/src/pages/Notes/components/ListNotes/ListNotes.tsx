@@ -9,11 +9,18 @@ const ListNotes = () => {
   const username = getUsername();
   useNoteData(username);
 
+  console.log(notes);
+
   return (
     <div className="container mx-0 sm:mx-8 p-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {notes.map((note, index) => (
-          <NoteCard key={index} title={note.title} contents={note.contents} />
+          <NoteCard
+            key={index}
+            id={Number(note.id)}
+            title={note.title}
+            contents={note.contents}
+          />
         ))}
         <NotePlaceholder />
       </div>
