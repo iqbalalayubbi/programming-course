@@ -7,6 +7,7 @@ import {
   StudentCourseModel,
   NoteModel,
   ChallengeModel,
+  ChallengeSubmissionModel,
 } from '@/models';
 
 type FieldType =
@@ -45,6 +46,8 @@ type ServiceResponse = {
     notes?: NoteModel[];
     challenge?: ChallengeModel;
     challenges?: ChallengeModel[];
+    challengeSubmission?: ChallengeSubmissionModel;
+    challengeSubmissions?: ChallengeSubmissionModel[];
     token?: string;
   };
 };

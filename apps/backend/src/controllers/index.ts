@@ -6,6 +6,7 @@ import {
   dashboardService,
   noteService,
   userService,
+  challengeSubmissionService,
 } from '@/services';
 import { AuthController } from './authController';
 import { SkillController } from './skillController';
@@ -18,6 +19,7 @@ import { DashboarController } from './dashboardController';
 import { UploadController } from './uploadController';
 import { NoteController } from './noteController';
 import { ChallengeController } from './challengeController';
+import { ChallengeSubmissionController } from './challengeSubmissionController';
 
 const skillController = new SkillController();
 const userSkillController = new UserSkillController();
@@ -36,6 +38,9 @@ const uploadController = new UploadController({
 });
 const noteController = new NoteController({ noteService });
 const challengeController = new ChallengeController({ challengeService });
+const challengeSubmissionController = new ChallengeSubmissionController({
+  challengeSubmissionService,
+});
 
 export {
   authController,
@@ -49,4 +54,5 @@ export {
   uploadController,
   noteController,
   challengeController,
+  challengeSubmissionController,
 };

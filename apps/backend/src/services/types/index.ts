@@ -7,3 +7,4 @@ export { type UserServiceType } from './userServiceType';
 export { type DashboardServiceType } from './dashboardServiceType';
 export { type NoteServiceType } from './noteServiceType';
 export { type ChallengeServiceType } from './challengeServiceType';
+export { type ChallengeSubmissionServiceType } from './challengeSubmissionServiceType';

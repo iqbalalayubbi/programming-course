@@ -3,6 +3,7 @@ import express, { Application } from 'express';
 import {
   authRoutes,
   challengeRoutes,
+  challengeSubmissionRoutes,
   courseContentRoutes,
   courseRoutes,
   dashboardRoutes,
@@ -58,5 +59,6 @@ app.use('/dashboard', dashboardRoutes);
 app.use('/upload', uploadRoutes);
 app.use('/notes', noteRoutes);
 app.use('/challenges', challengeRoutes);
+app.use('/challenge-submissions', challengeSubmissionRoutes);
 
 export { app };

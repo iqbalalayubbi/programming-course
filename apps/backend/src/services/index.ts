@@ -15,6 +15,7 @@ import { MulterService } from './MulterService';
 import { directoryName } from '@/enums';
 import { NoteService } from './noteService';
 import { ChallengeService } from './challengeService';
+import { ChallengeSubmissionService } from './challengeSubmission';
 
 const prismaClient = new PrismaClient();
 const jwtService = new JwtService();
@@ -42,6 +43,9 @@ const authService = new AuthService({
 });
 const noteService = new NoteService({ prismaClient });
 const challengeService = new ChallengeService({ prismaClient });
+const challengeSubmissionService = new ChallengeSubmissionService({
+  prismaClient,
+});
 
 export {
   authService,
@@ -57,5 +61,6 @@ export {
   multerVideoService,
   noteService,
   challengeService,
+  challengeSubmissionService,
 };
 export * from './types';
