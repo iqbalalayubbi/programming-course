@@ -14,6 +14,7 @@ import { DashboardService } from './dashboardService';
 import { MulterService } from './MulterService';
 import { directoryName } from '@/enums';
 import { NoteService } from './noteService';
+import { ChallengeService } from './challengeService';
 
 const prismaClient = new PrismaClient();
 const jwtService = new JwtService();
@@ -40,6 +41,7 @@ const authService = new AuthService({
   otpService,
 });
 const noteService = new NoteService({ prismaClient });
+const challengeService = new ChallengeService({ prismaClient });
 
 export {
   authService,
@@ -54,5 +56,6 @@ export {
   multerPhotoService,
   multerVideoService,
   noteService,
+  challengeService,
 };
 export * from './types';

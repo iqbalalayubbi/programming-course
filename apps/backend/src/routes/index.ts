@@ -8,3 +8,4 @@ export { router as profileRoutes } from './profileRoutes';
 export { router as dashboardRoutes } from './dashboardRoutes';
 export { router as uploadRoutes } from './uploadRoutes';
 export { router as noteRoutes } from './noteRoutes';
+export { router as challengeRoutes } from './challengeRoutes';

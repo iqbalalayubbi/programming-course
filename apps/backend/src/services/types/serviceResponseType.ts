@@ -6,6 +6,7 @@ import {
   CourseContentModel,
   StudentCourseModel,
   NoteModel,
+  ChallengeModel,
 } from '@/models';
 
 type FieldType =
@@ -21,7 +22,8 @@ type FieldType =
   | 'skill'
   | 'course'
   | 'content'
-  | 'note';
+  | 'note'
+  | 'challenge';
 
 type ServiceResponse = {
   isSuccess: boolean;
@@ -41,6 +43,8 @@ type ServiceResponse = {
     studentCourses?: StudentCourseModel[];
     note?: NoteModel;
     notes?: NoteModel[];
+    challenge?: ChallengeModel;
+    challenges?: ChallengeModel[];
     token?: string;
   };
 };

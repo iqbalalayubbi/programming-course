@@ -2,6 +2,7 @@ import '@/config';
 import express, { Application } from 'express';
 import {
   authRoutes,
+  challengeRoutes,
   courseContentRoutes,
   courseRoutes,
   dashboardRoutes,
@@ -56,5 +57,6 @@ app.use('/profile', profileRoutes);
 app.use('/dashboard', dashboardRoutes);
 app.use('/upload', uploadRoutes);
 app.use('/notes', noteRoutes);
+app.use('/challenges', challengeRoutes);
 
 export { app };

@@ -6,3 +6,5 @@ export { Course as CourseModel } from './course';
 export { CourseContent as CourseContentModel } from './courseContent';
 export { StudentCourse as StudentCourseModel } from './studentCourse';
 export { Note as NoteModel } from './note';
+export { Challenge as ChallengeModel } from './challenge';
+export { ChallengeSubmission as ChallengeSubmissionModel } from './challengeSubmission';
