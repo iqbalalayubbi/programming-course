@@ -87,6 +87,32 @@ class NoteService {
       };
     }
   }
+
+  async updateNote(id: number, data: NoteModel): Promise<ServiceResponse> {
+    try {
+      const updatedNote = await this.noteModel.update({
+        where: { id },
+        data,
+      });
+
+      if (!updatedNote) {
+        return {
+          isSuccess: false,
+          error: { field: 'note', message: 'Note not found' },
+        };
+      }
+
+      return {
+        isSuccess: true,
+        data: { note: updatedNote },
+      };
+    } catch {
+      return {
+        isSuccess: false,
+        error: { field: 'note', message: 'Failed to update note' },
+      };
+    }
+  }
 }
 
 export { NoteService };
