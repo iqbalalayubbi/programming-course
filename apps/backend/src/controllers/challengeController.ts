@@ -15,6 +15,7 @@ class ChallengeController {
 
     this.createChallenge = this.createChallenge.bind(this);
     this.getAllChallenges = this.getAllChallenges.bind(this);
+    this.getChallengeById = this.getChallengeById.bind(this);
   }
 
   async createChallenge(req: Request, res: Response) {
@@ -71,6 +72,38 @@ class ChallengeController {
       res,
       statusCode: statusCode.NOT_FOUND,
       message: 'Failed to retrieve challenges',
+    });
+  }
+
+  async getChallengeById(req: Request, res: Response) {
+    const { id } = req.params;
+    console.log('challenge retrieved');
+
+    const { isSuccess, data, error } = await this.challengeService.getById(
+      parseInt(id),
+    );
+
+    if (isSuccess && data) {
+      return formatResponse({
+        res,
+        statusCode: statusCode.OK,
+        message: 'Challenge retrieved successfully',
+        data,
+      });
+    }
+
+    if (error) {
+      return formatResponse({
+        res,
+        statusCode: statusCode.NOT_FOUND,
+        message: error.message,
+      });
+    }
+
+    return formatResponse({
+      res,
+      statusCode: statusCode.INTERNAL_SERVER_ERROR,
+      message: 'Failed to get challenges',
     });
   }
 }

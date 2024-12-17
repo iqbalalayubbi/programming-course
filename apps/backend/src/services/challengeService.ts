@@ -42,6 +42,27 @@ class ChallengeService {
       };
     }
   }
+
+  async getById(id: number): Promise<ServiceResponse> {
+    try {
+      const challenge = await this.challenge.findUnique({ where: { id } });
+      if (!challenge) {
+        return {
+          isSuccess: false,
+          error: { field: 'challenge', message: 'Challenge not found' },
+        };
+      }
+      return {
+        isSuccess: true,
+        data: { challenge },
+      };
+    } catch {
+      return {
+        isSuccess: false,
+        error: { field: 'challenge', message: 'Failed to get challenge' },
+      };
+    }
+  }
 }
 
 export { ChallengeService };
