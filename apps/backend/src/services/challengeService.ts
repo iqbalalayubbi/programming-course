@@ -27,6 +27,21 @@ class ChallengeService {
       };
     }
   }
+
+  async getAll(): Promise<ServiceResponse> {
+    try {
+      const challenges = await this.challenge.findMany();
+      return {
+        isSuccess: true,
+        data: { challenges },
+      };
+    } catch {
+      return {
+        isSuccess: false,
+        error: { field: 'challenge', message: 'Failed to retrieve challenges' },
+      };
+    }
+  }
 }
 
 export { ChallengeService };
