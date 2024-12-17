@@ -17,6 +17,7 @@ class NoteController {
     this.getDetailNote = this.getDetailNote.bind(this);
     this.getNotesByUsername = this.getNotesByUsername.bind(this);
     this.deleteNote = this.deleteNote.bind(this);
+    this.updateNote = this.updateNote.bind(this);
   }
 
   async createNote(req: Request, res: Response) {
@@ -136,6 +137,39 @@ class NoteController {
       res,
       statusCode: statusCode.INTERNAL_SERVER_ERROR,
       message: 'Failed to delete note',
+    });
+  }
+
+  async updateNote(req: Request, res: Response) {
+    const { noteId } = req.params;
+    const newData = req.body;
+
+    const { isSuccess, data, error } = await this.noteService.updateNote(
+      parseInt(noteId),
+      newData,
+    );
+
+    if (isSuccess && data) {
+      return formatResponse({
+        res,
+        statusCode: statusCode.OK,
+        message: 'Note updated successfully',
+        data,
+      });
+    }
+    if (error) {
+      return formatResponse({
+        res,
+        statusCode: statusCode.NOT_FOUND,
+        message: error.message,
+        errors: [{ field: error.field, message: error.message }],
+      });
+    }
+
+    return formatResponse({
+      res,
+      statusCode: statusCode.INTERNAL_SERVER_ERROR,
+      message: 'Failed to updated note',
     });
   }
 }
