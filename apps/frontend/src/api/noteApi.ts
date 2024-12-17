@@ -40,6 +40,17 @@ class NoteApi extends ApiService {
       throw error as AxiosError;
     }
   }
+
+  public async deleteNoteById(
+    noteId: number,
+  ): Promise<FormatResponseType | AxiosError> {
+    try {
+      const response = await this.delete(`${apiPath.NOTES}/${noteId}`);
+      return formatResponse(response as AxiosResponse);
+    } catch (error) {
+      throw error as AxiosError;
+    }
+  }
 }
 
 export { NoteApi };
