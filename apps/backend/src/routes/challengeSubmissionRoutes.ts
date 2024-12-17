@@ -4,6 +4,10 @@ import express from 'express';
 const router = express.Router();
 
 router.post('/', challengeSubmissionController.createChallengeSubmission);
-router.get('/', challengeSubmissionController.getAllChallenges);
+router.get(
+  '/',
+  challengeSubmissionController.getByUsername,
+  challengeSubmissionController.getAllChallenges,
+);
 
 export { router };

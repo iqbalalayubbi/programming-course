@@ -47,6 +47,26 @@ class ChallengeSubmissionService {
       };
     }
   }
+
+  async getByUsername(username: string): Promise<ServiceResponse> {
+    try {
+      const challengeSubmissions = await this.challengeSubmission.findMany({
+        where: { user_username: username },
+      });
+      return {
+        isSuccess: true,
+        data: { challengeSubmissions },
+      };
+    } catch {
+      return {
+        isSuccess: false,
+        error: {
+          field: 'challenge',
+          message: 'Failed to get challenge submissions by user',
+        },
+      };
+    }
+  }
 }
 
 export { ChallengeSubmissionService };

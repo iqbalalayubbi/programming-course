@@ -1,7 +1,7 @@
 import { ChallengeSubmissionServiceType } from '@/services';
 import { formatResponse } from '@/utils';
 import { statusCode } from 'common';
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 type Constructor = {
   challengeSubmissionService: ChallengeSubmissionServiceType;
@@ -15,6 +15,7 @@ class ChallengeSubmissionController {
 
     this.createChallengeSubmission = this.createChallengeSubmission.bind(this);
     this.getAllChallenges = this.getAllChallenges.bind(this);
+    this.getByUsername = this.getByUsername.bind(this);
   }
 
   async createChallengeSubmission(req: Request, res: Response) {
@@ -74,6 +75,41 @@ class ChallengeSubmissionController {
       res,
       statusCode: statusCode.INTERNAL_SERVER_ERROR,
       message: 'Failed to get all challenges',
+    });
+  }
+
+  async getByUsername(req: Request, res: Response, next: NextFunction) {
+    const { username } = req.query;
+
+    if (!username) {
+      return next();
+    }
+
+    const { isSuccess, data, error } =
+      await this.challengeSubmissionService.getByUsername(username as string);
+
+    if (isSuccess && data) {
+      return formatResponse({
+        res,
+        statusCode: statusCode.OK,
+        message: 'Challenges retrieved successfully for user',
+        data,
+      });
+    }
+
+    if (error) {
+      return formatResponse({
+        res,
+        statusCode: statusCode.NOT_FOUND,
+        message: error.message,
+        errors: [{ field: error.field, message: error.message }],
+      });
+    }
+
+    return formatResponse({
+      res,
+      statusCode: statusCode.INTERNAL_SERVER_ERROR,
+      message: 'Failed to get challenges for user',
     });
   }
 }
