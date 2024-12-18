@@ -1,9 +1,7 @@
-import { useCallback, useEffect, useQuery } from '@/hooks';
+import { useEffect, useQuery } from '@/hooks';
 import { courseContentApi } from '@/api';
-import { AxiosError, AxiosResponse } from 'axios';
-import { FormatResponseType } from '@/types';
-import { ResponseApiType } from 'common';
-import { CourseContent, useCourseContent } from '@/stores';
+import { useCourseContent } from '@/stores';
+import { getResponseData } from '@/utils';
 
 const useCourseContentData = (courseId: number, page: number) => {
   const {
@@ -14,7 +12,7 @@ const useCourseContentData = (courseId: number, page: number) => {
 
   // get by page
   const {
-    data: courseContenByPageResponse,
+    data: courseContentByPage,
     refetch: refetchCourseContent,
     ...queryCourseContentStates
   } = useQuery({
@@ -26,26 +24,19 @@ const useCourseContentData = (courseId: number, page: number) => {
       );
       return response;
     },
-  });
-
-  const getCourseContentByPage = useCallback(
-    (result: FormatResponseType | AxiosError) => {
-      if (result instanceof AxiosError) {
-        return null;
+    select(result) {
+      const response = getResponseData(result);
+      if (response?.data) {
+        const courseContent = response.data.courseContent;
+        return courseContent;
       }
-
-      const response = result as unknown as AxiosResponse;
-      const responseData = response.data as ResponseApiType;
-      const courseContent = responseData.data
-        ?.courseContent as unknown as CourseContent;
-      setCourseContentData(courseContent);
+      return null;
     },
-    [setCourseContentData],
-  );
+  });
 
   // get all contents
   const {
-    data: courseContentsResponse,
+    data: courseContents,
     refetch: refetchCourseContents,
     ...queryCourseContentsStates
   } = useQuery({
@@ -54,34 +45,27 @@ const useCourseContentData = (courseId: number, page: number) => {
       const response = await courseContentApi.getAllCourseContents(courseId);
       return response;
     },
+    select(result) {
+      const response = getResponseData(result);
+      if (response?.data) {
+        const courseContents = response.data.courseContents;
+        return courseContents;
+      }
+      return null;
+    },
   });
 
-  const getAllCourseContents = useCallback(
-    (result: FormatResponseType | AxiosError) => {
-      if (result instanceof AxiosError) {
-        return null;
-      }
+  useEffect(() => {
+    if (courseContentByPage) {
+      setCourseContentData(courseContentByPage);
+    }
+  }, [courseContentByPage, setCourseContentData]);
 
-      const response = result as unknown as AxiosResponse;
-      const responseData = response.data as ResponseApiType;
-      const courseContents = responseData.data
-        ?.courseContents as unknown as CourseContent[];
+  useEffect(() => {
+    if (courseContents) {
       setCoursesContentsData(courseContents);
-    },
-    [setCoursesContentsData],
-  );
-
-  useEffect(() => {
-    if (courseContenByPageResponse) {
-      getCourseContentByPage(courseContenByPageResponse);
     }
-  }, [courseContenByPageResponse, getCourseContentByPage]);
-
-  useEffect(() => {
-    if (courseContentsResponse) {
-      getAllCourseContents(courseContentsResponse);
-    }
-  }, [courseContentsResponse, getAllCourseContents]);
+  }, [courseContents, setCoursesContentsData]);
 
   return {
     ...courseContentStore,

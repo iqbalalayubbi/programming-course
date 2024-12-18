@@ -1,13 +1,9 @@
 import { Iconify } from '@/components';
+import { useCourseContent } from '@/stores';
 import { Button, Divider, Flex, List } from 'antd';
 
 const AsideContent = () => {
-  const data = [
-    { isActive: true, text: 'Basic HTML' },
-    { isActive: false, text: 'Basic CSS' },
-    { isActive: false, text: 'Basic Javascript' },
-    { isActive: false, text: 'Basic CSS' },
-  ];
+  const { courseContents } = useCourseContent();
 
   return (
     <Flex className="w-full px-5" vertical>
@@ -15,13 +11,13 @@ const AsideContent = () => {
       <List
         className="w-full"
         bordered={false}
-        dataSource={data}
-        renderItem={(item) => (
+        dataSource={courseContents}
+        renderItem={(item, i) => (
           <List.Item className="group hover:cursor-pointer hover:bg-primary hover:text-light-text">
             <h3
-              className={`${item.isActive ? 'text-primary font-semibold group-hover:text-light-text' : ''} font-medium text-xl indent-3 block w-full transition-all duration-300`}
+              className={`${i === 0 ? 'text-primary font-semibold group-hover:text-light-text' : ''} font-medium text-xl indent-3 block w-full transition-all duration-300`}
             >
-              {item.text}
+              {item.title}
             </h3>
           </List.Item>
         )}

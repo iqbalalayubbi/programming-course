@@ -1,7 +1,7 @@
 import { thumbnailCourse } from '@/assets';
-import { useUser } from '@/stores';
+import { useCourse, useCourseContent, useUser } from '@/stores';
 import { type TabsProps } from '@/types';
-import { useEffect } from '@/hooks';
+import { useCourseContentData, useEffect } from '@/hooks';
 import {
   toast,
   ToastContainer,
@@ -9,16 +9,26 @@ import {
   Flex,
   Tabs,
   ArrowLeftOutlined,
+  Link,
 } from '@/components';
+import { appRoute } from '@/enums';
+import { useParams } from 'react-router';
 
 const MainContent = () => {
   const userStore = useUser();
+  const { course } = useCourse();
+  const { id } = useParams();
+  const { courseContent } = useCourseContent();
+
+  useCourseContentData(Number(id), 1);
 
   const items: TabsProps['items'] = [
     {
       key: '1',
       label: 'Contents',
-      children: 'Content of Tab Pane 1',
+      children: (
+        <p dangerouslySetInnerHTML={{ __html: courseContent.content }} />
+      ),
     },
     {
       key: '2',
@@ -42,8 +52,10 @@ const MainContent = () => {
     <Flex gap={8} vertical>
       <ToastContainer position="top-center" />
       <Flex align="center" gap={16}>
-        <Button type="text" icon={<ArrowLeftOutlined />} />
-        <h1 className="font-bold text-4xl my-5">Basic HTML</h1>
+        <Link to={appRoute.COURSE_DETAIL.replace(':id', String(course.id))}>
+          <Button type="text" icon={<ArrowLeftOutlined />} />
+        </Link>
+        <h1 className="font-bold text-4xl my-5">{course.title}</h1>
       </Flex>
       <img src={thumbnailCourse} alt="" className="w-full" />
       <Tabs defaultActiveKey="1" items={items} className="my-5" />
