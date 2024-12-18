@@ -1,39 +1,32 @@
-import { useCallback, useEffect, useQuery } from '@/hooks';
-import { CourseStore, useCourse } from '@/stores';
+import { useEffect, useQuery } from '@/hooks';
+import { useCourse } from '@/stores';
 import { courseApi } from '@/api';
-import { AxiosError, FormatResponseType } from '@/types';
-import { AxiosResponse } from 'axios';
+import { getResponseData } from '@/utils';
 
 const useDetailCourseData = (courseId: number) => {
   const { setCourseData, ...courseStore } = useCourse();
 
-  const getCourseData = useCallback(
-    (result: FormatResponseType | AxiosError | null) => {
-      if (result instanceof AxiosError || null) {
-        return null;
-      }
-
-      const response = result?.data as unknown as AxiosResponse;
-      const responseData = response.data;
-      const course = responseData.course as CourseStore;
-      setCourseData(course);
-    },
-    [setCourseData],
-  );
-
-  const { data: detailCourseResponse, ...queryStates } = useQuery({
+  const { data: detailCourse, ...queryStates } = useQuery({
     queryKey: ['detail-course'],
     queryFn: async () => {
       const response = await courseApi.getCourseDetail(courseId);
       return response;
     },
+    select(result) {
+      const response = getResponseData(result);
+      if (response?.data) {
+        const course = response.data.course;
+        return course;
+      }
+      return null;
+    },
   });
 
   useEffect(() => {
-    if (detailCourseResponse) {
-      getCourseData(detailCourseResponse);
+    if (detailCourse) {
+      setCourseData(detailCourse);
     }
-  }, [detailCourseResponse, getCourseData]);
+  }, [detailCourse, setCourseData]);
 
   return {
     ...queryStates,

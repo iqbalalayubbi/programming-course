@@ -1,4 +1,3 @@
-import { thumbnailExample } from '@/assets';
 import { Link, SkillLabel } from '@/components';
 import { appRoute } from '@/enums';
 import { useCourse } from '@/stores';
@@ -50,7 +49,7 @@ const MainContent = () => {
         <h1 className="text-3xl font-bold my-5">{course.title}</h1>
       </Flex>
       <img
-        src={thumbnailExample}
+        src={course.thumbnail_url}
         alt="detail course thumbnail image"
         className="w-full rounded-lg mb-5 h-96"
       />

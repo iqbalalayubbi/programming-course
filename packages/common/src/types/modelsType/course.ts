@@ -1,6 +1,6 @@
 type Course = {
   id: number;
-  mentor_id: number;
+  mentor_username: string;
   title: string;
   description: string;
   star_total: number;
