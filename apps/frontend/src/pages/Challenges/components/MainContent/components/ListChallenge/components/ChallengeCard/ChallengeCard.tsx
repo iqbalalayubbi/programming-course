@@ -5,9 +5,10 @@ import { Link } from 'react-router';
 type Properties = {
   id: number;
   title: string;
+  isSubmitted: boolean;
 };
 
-const ChallengeCard = ({ id, title }: Properties) => {
+const ChallengeCard = ({ id, title, isSubmitted }: Properties) => {
   return (
     <Flex
       justify="space-between"
@@ -15,7 +16,9 @@ const ChallengeCard = ({ id, title }: Properties) => {
     >
       <h1 className="text-lg sm:text-2xl font-semibold">{title}</h1>
       <Link to={`${appRoute.CHALLENGES}/${id}`}>
-        <Button type="primary">Solve This</Button>
+        <Button type="primary" disabled={isSubmitted}>
+          Solve This
+        </Button>
       </Link>
     </Flex>
   );
