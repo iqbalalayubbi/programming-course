@@ -77,7 +77,6 @@ class ChallengeController {
 
   async getChallengeById(req: Request, res: Response) {
     const { id } = req.params;
-    console.log('challenge retrieved');
 
     const { isSuccess, data, error } = await this.challengeService.getById(
       parseInt(id),

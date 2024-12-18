@@ -1,4 +1,3 @@
-import { courseContentApi } from '@/api';
 import {
   Button,
   Input,
@@ -17,21 +16,17 @@ import {
 } from '@/stores';
 import {
   useCourseContentData,
+  useCreateCourseContent,
   useEffect,
-  useMutation,
   useNavigate,
   useSearchParams,
   useState,
 } from '@/hooks';
-import { AxiosResponse } from 'axios';
-import { ResponseApiType } from 'common';
 import { useLocation } from 'react-router';
 
 const ListCourseContents = () => {
-  const { newCourseData, setNewCourseData, isCreateCourse, setIsCreateCourse } =
-    useMentorManagement();
-  const { setCourseContentData, setCoursesContentsData, courseContents } =
-    useCourseContent();
+  const { isCreateCourse, setIsCreateCourse } = useMentorManagement();
+  const { courseContents, courseContent } = useCourseContent();
   const { setValue } = useQuill();
 
   const navigate = useNavigate();
@@ -40,35 +35,6 @@ const ListCourseContents = () => {
   const [isShowModal, setIsShowModal] = useState(false);
   const [queryParameters] = useSearchParams();
   const [pageName, setPageName] = useState('');
-
-  const addCourseMutation = useMutation({
-    mutationKey: ['addCourseContent'],
-    mutationFn: async (payload: { course_id: number; data: CourseContent }) => {
-      const response = await courseContentApi.createCourseContent(
-        payload.course_id,
-        payload.data,
-      );
-      return response;
-    },
-    onSuccess: (result) => {
-      const response = result as unknown as AxiosResponse;
-      const responseData = response.data as ResponseApiType;
-      const newCourseContent = responseData.data
-        ?.courseContent as unknown as CourseContent;
-
-      setCourseContentData(newCourseContent);
-      setCoursesContentsData([newCourseContent]);
-      setIsShowModal(false);
-      setIsCreateCourse(false);
-
-      toast.success('Your first content has been added');
-    },
-    onError: () => {
-      toast.error('Failed to add course content');
-      navigate(appRoute.MENTOR_MANAGEMENT);
-    },
-  });
-
   const pageNumber = Number(queryParameters.get('page'));
   const courseId = Number(queryParameters.get('course'));
 
@@ -77,57 +43,67 @@ const ListCourseContents = () => {
     pageNumber,
   );
 
+  const onCreatedCourseContent = (
+    isSuccess: boolean,
+    isFirstContent?: boolean,
+    newCourseContent?: CourseContent,
+  ) => {
+    if (!isSuccess) {
+      toast.error('Failed to add course content');
+      navigate(appRoute.MENTOR_MANAGEMENT);
+      return;
+    }
+
+    setPageName('');
+    setIsShowModal(false);
+
+    if (isFirstContent) {
+      setIsCreateCourse(false);
+      toast.success('Your first content has been added');
+      return;
+    }
+
+    toast.success('Your content has been added');
+    navigate(
+      `${appRoute.MENTOR_COURSES}?page=${newCourseContent?.page}&course=${courseId}`,
+    );
+  };
+
+  const { mutate: createCourse } = useCreateCourseContent({
+    callback: onCreatedCourseContent,
+  });
+
   const handleAddCourseContent = () => {
-    const newCourseId = Number(newCourseData.id);
+    const newCourseContent = {
+      ...courseContent,
+      title: pageName,
+      course_id: courseId,
+    };
+    delete newCourseContent.id;
+    setValue('');
 
-    if (newCourseId) {
-      const newCourseContent = {
-        ...newCourseData,
-        course_id: newCourseId,
-        title: pageName,
-        page: Number(pageNumber),
-      };
+    if (courseContents.length === 0) {
+      // create first content
+      newCourseContent.page = Number(pageNumber);
+      createCourse({
+        course_id: courseId,
+        data: newCourseContent,
+      });
+      return;
+    } else {
+      // create others content
+      newCourseContent.page = pageNumber + 1;
 
-      setNewCourseData(newCourseContent);
-
-      addCourseMutation.mutate({
-        course_id: newCourseId,
-        data: {
-          title: pageName,
-          page: Number(pageNumber),
-          course_id: newCourseId,
-          content: '',
-          video_url: '',
-        },
+      createCourse({
+        course_id: courseId,
+        data: { ...newCourseContent },
       });
     }
 
-    if (courseId) {
-      const newCourseContent = {
-        ...newCourseData,
-        course_id: courseId,
-        title: pageName,
-        page: Number(pageNumber),
-      };
-
-      setNewCourseData(newCourseContent);
-      setValue('');
-      const newPage = courseContents.length + 1;
-
-      addCourseMutation.mutate({
-        course_id: courseId,
-        data: {
-          title: pageName,
-          page: newPage,
-          course_id: courseId,
-          content: '',
-          video_url: '',
-        },
-      });
-
-      refetchCourseContent();
-      navigate(`${appRoute.MENTOR_COURSES}?page=${newPage}&course=${courseId}`);
-    }
+    refetchCourseContent();
+    navigate(
+      `${appRoute.MENTOR_COURSES}?page=${newCourseContent.page}&course=${courseId}`,
+    );
   };
 
   const renderCreateForm = () => {

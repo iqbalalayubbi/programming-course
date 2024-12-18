@@ -4,8 +4,7 @@ type NewCourseData = {
   id?: number;
   title: string;
   description: string;
-  videoUrl: string;
-  selectedImage: File | null;
+  selectedImage?: File | null;
   imageUrl?: string;
 };
 
@@ -24,12 +23,8 @@ const useMentorManagement = create<StoreState>((set) => ({
   isShowCreateModal: false,
   newCourseName: '',
   newCourseData: {
-    id: undefined,
     title: '',
     description: '',
-    selectedImage: null,
-    videoUrl: '',
-    imageUrl: undefined,
   },
   isCreateCourse: false,
   setIsCreateCourse: (status: boolean) => set({ isCreateCourse: status }),
