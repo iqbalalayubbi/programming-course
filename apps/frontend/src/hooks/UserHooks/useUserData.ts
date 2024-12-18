@@ -1,41 +1,33 @@
 import { UserStore, useUser } from '@/stores';
-import { AxiosError, AxiosResponse } from 'axios';
-import { FormatResponseType } from '@/types';
-import { ResponseApiType } from 'common';
 import { useQuery } from '@tanstack/react-query';
 import { profileApi } from '@/api';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
+import { getResponseData } from '@/utils';
 
 const useUserData = () => {
   const { setUserData, ...userStore } = useUser();
 
-  const getUserData = useCallback(
-    (result: FormatResponseType | AxiosError) => {
-      if (result instanceof AxiosError) {
-        return null;
-      }
-
-      const response = result as unknown as AxiosResponse;
-      const responseData = response.data as ResponseApiType;
-      const user = responseData.data?.user as UserStore;
-      setUserData(user);
-    },
-    [setUserData],
-  );
-
-  const { data: profileResponse, ...queryStates } = useQuery({
+  const { data: userProfile, ...queryStates } = useQuery({
     queryKey: ['profile'],
     queryFn: async () => {
       const response = await profileApi.getUser();
       return response;
     },
+    select(result) {
+      const response = getResponseData(result);
+      if (response?.data) {
+        const user = response.data.user as UserStore;
+        return user;
+      }
+      return null;
+    },
   });
 
   useEffect(() => {
-    if (profileResponse) {
-      getUserData(profileResponse);
+    if (userProfile) {
+      setUserData(userProfile);
     }
-  }, [profileResponse, getUserData]);
+  }, [userProfile, setUserData]);
 
   return {
     ...userStore,
