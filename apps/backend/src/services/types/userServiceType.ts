@@ -15,6 +15,8 @@ type UserServiceType = {
   update(id: number, data: UserWithoutSkills): Promise<ServiceResponse>;
   updateUserProfile(username: string, url: string): Promise<ServiceResponse>;
   delete(id: number): Promise<ServiceResponse>;
+  findUserInCourse(courseId: number): Promise<ServiceResponse>;
+  orderUsersByPoint(): Promise<ServiceResponse>;
 };
 
 export { type UserServiceType };

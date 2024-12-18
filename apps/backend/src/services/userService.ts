@@ -246,6 +246,26 @@ class UserService {
       };
     }
   }
+
+  async orderUsersByPoint(): Promise<ServiceResponse> {
+    try {
+      const orderUsers = await this.userModel.findMany({
+        orderBy: { total_point: 'desc' },
+      });
+      return {
+        isSuccess: true,
+        data: { users: orderUsers },
+      };
+    } catch {
+      return {
+        isSuccess: false,
+        error: {
+          field: 'user',
+          message: 'Error fetching users by points',
+        },
+      };
+    }
+  }
 }
 
 export { UserService };

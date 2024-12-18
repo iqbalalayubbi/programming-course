@@ -20,6 +20,7 @@ import { UploadController } from './uploadController';
 import { NoteController } from './noteController';
 import { ChallengeController } from './challengeController';
 import { ChallengeSubmissionController } from './challengeSubmissionController';
+import { UserController } from './userController';
 
 const skillController = new SkillController();
 const userSkillController = new UserSkillController();
@@ -41,6 +42,7 @@ const challengeController = new ChallengeController({ challengeService });
 const challengeSubmissionController = new ChallengeSubmissionController({
   challengeSubmissionService,
 });
+const userController = new UserController({ userService });
 
 export {
   authController,
@@ -55,4 +57,5 @@ export {
   noteController,
   challengeController,
   challengeSubmissionController,
+  userController,
 };

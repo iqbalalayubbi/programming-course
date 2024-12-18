@@ -12,6 +12,7 @@ import {
   skillRoutes,
   studentCourseRoutes,
   uploadRoutes,
+  userRoutes,
   userSkillRoutes,
 } from '@/routes';
 import session from 'express-session';
@@ -60,5 +61,6 @@ app.use('/upload', uploadRoutes);
 app.use('/notes', noteRoutes);
 app.use('/challenges', challengeRoutes);
 app.use('/challenge-submissions', challengeSubmissionRoutes);
+app.use('/users', userRoutes);
 
 export { app };
