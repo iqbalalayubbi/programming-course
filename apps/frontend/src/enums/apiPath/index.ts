@@ -11,6 +11,7 @@ const apiPath = {
   NOTES: '/notes',
   CHALLENGES: '/challenges',
   CHALLENGE_SUBMISSIONS: '/challenge-submissions',
+  USERS: '/users',
 };
 
 export { apiPath, authPath };

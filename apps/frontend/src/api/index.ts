@@ -8,6 +8,7 @@ import { PistonApi } from './pistonApi';
 import { NoteApi } from './noteApi';
 import { ChallengeApi } from './challengeApi';
 import { ChallengeSubmissionApi } from './challengeSubmissionApi';
+import { UserApi } from './userApi';
 
 const authApi = new AuthApi();
 const profileApi = new ProfileApi();
@@ -19,6 +20,7 @@ const pistonApi = new PistonApi();
 const noteApi = new NoteApi();
 const challengeApi = new ChallengeApi();
 const challengeSubmissionApi = new ChallengeSubmissionApi();
+const userApi = new UserApi();
 
 export {
   authApi,
@@ -31,4 +33,5 @@ export {
   noteApi,
   challengeApi,
   challengeSubmissionApi,
+  userApi,
 };

@@ -7,7 +7,7 @@ type UserStore = {
   country?: string;
   image_url?: string;
   phone_number?: string;
-  total_points?: number;
+  total_point?: number;
   description?: string;
 };
 
