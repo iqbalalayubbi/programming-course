@@ -1,16 +1,17 @@
 import { Button, Flex, Progress } from '@/components';
-import { thumbnailCourse } from '@/assets';
 import { colorPalette } from '@/enums';
+import { Image } from 'antd';
 
 type Properties = {
   id: number;
   title: string;
+  imageUrl: string;
 };
 
-const CourseCard = ({ id, title }: Properties) => {
+const CourseCard = ({ id, title, imageUrl }: Properties) => {
   return (
     <Flex gap={32} align="center" className="bg-light-bg p-5 w-full rounded-md">
-      <img src={thumbnailCourse} alt="thumbnail course" />
+      <Image src={imageUrl} alt="thumbnail course" width={200} />
       <Flex
         align="end"
         // justify="space-between"

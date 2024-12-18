@@ -16,7 +16,12 @@ const MainContent = () => {
         {courses.map((course) => {
           return (
             <Link to={`${appRoute.COURSES}/${course.id}`}>
-              <CourseCard id={course.id} title={course.title} key={course.id} />
+              <CourseCard
+                key={course.id}
+                id={course.id}
+                title={course.title}
+                imageUrl={course.thumbnail_url}
+              />
             </Link>
           );
         })}
