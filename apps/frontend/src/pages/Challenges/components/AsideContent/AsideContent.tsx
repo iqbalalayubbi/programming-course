@@ -1,10 +1,9 @@
-import { Avatar, Button, Flex, Iconify } from '@/components';
-import { OutputCode } from './components';
+import { Button, Flex } from '@/components';
+import { OutputCode, UserCard } from './components';
 import { useParams, useQuery, useEffect } from '@/hooks';
 import { userApi } from '@/api';
 import { getResponseData } from '@/utils';
 import { UserStore, useUser } from '@/stores';
-import { colorPalette } from '@/enums';
 
 const AsideContent = () => {
   const { challengeId } = useParams();
@@ -53,28 +52,13 @@ const AsideContent = () => {
           Current Leaderboards
         </h1>
         {users.map((user) => {
-          // return <span>{user.username}</span>;
           return (
-            <Flex
-              className="border rounded-lg px-3 py-3 w-full bg-light-bg shadow-sm"
-              justify="space-between"
-              align="center"
-            >
-              <Flex align="center">
-                <Avatar src={user.image_url} shape="circle" />
-                <span className="ml-3 text-gray-third">@{user.username}</span>
-              </Flex>
-              <Flex gap={8} align="center">
-                <span className="font-bold ml-3 text-xl text-secondary">
-                  {user.total_point}
-                </span>
-                <Iconify
-                  icon="material-symbols:stars-rounded"
-                  color={colorPalette.SECONDARY}
-                  fontSize={30}
-                />
-              </Flex>
-            </Flex>
+            <UserCard
+              key={user.username}
+              username={user.username}
+              image_url={user.image_url as string}
+              total_point={user.total_point as number}
+            />
           );
         })}
       </Flex>

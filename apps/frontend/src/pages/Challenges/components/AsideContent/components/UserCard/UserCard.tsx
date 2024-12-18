@@ -1,28 +1,42 @@
-import { sidebarAvatar } from '@/assets';
 import { Iconify } from '@/components';
 import { colorPalette } from '@/enums';
+import { getUsername } from '@/utils';
 import { Avatar, Flex } from 'antd';
 
-const UserCard = () => {
+type Properties = {
+  username: string;
+  image_url: string;
+  total_point: number;
+};
+
+const UserCard = ({ username, image_url, total_point }: Properties) => {
+  const myUsername = getUsername();
+
   return (
     <Flex
+      className={`border rounded-lg px-3 py-3 w-full shadow-sm ${myUsername === username ? 'bg-slate-100' : 'bg-light-bg '}`}
       justify="space-between"
       align="center"
-      gap={16}
-      className="border-b p-5 shadow-md w-full"
     >
-      <Flex gap={16} align="center">
-        <Avatar src={sidebarAvatar} />
-        <Flex vertical>
-          <h3 className="text-2xl text-primary font-bold">800</h3>
-          <h5 className="text-gray-third font-bold italic">@steve</h5>
-        </Flex>
+      <Flex align="center">
+        <Avatar src={image_url} shape="circle" />
+        <span className="ml-3 text-gray-third">
+          @{username}{' '}
+          {myUsername === username && (
+            <span className="font-semibold text-primary">(You)</span>
+          )}{' '}
+        </span>
       </Flex>
-      <Iconify
-        icon="tabler:star-filled"
-        color={colorPalette.SECONDARY}
-        fontSize={24}
-      />
+      <Flex gap={8} align="center">
+        <span className="font-bold ml-3 text-xl text-secondary">
+          {total_point}
+        </span>
+        <Iconify
+          icon="material-symbols:stars-rounded"
+          color={colorPalette.SECONDARY}
+          fontSize={30}
+        />
+      </Flex>
     </Flex>
   );
 };
