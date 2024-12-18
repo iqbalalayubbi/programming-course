@@ -73,11 +73,12 @@ class CourseContentService {
           data: { courseContent },
         };
       }
+
       return {
         isSuccess: false,
         error: {
           field: 'course',
-          message: 'Course not found',
+          message: 'Course content not found',
         },
       };
     } catch {

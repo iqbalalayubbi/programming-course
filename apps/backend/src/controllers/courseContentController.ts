@@ -113,14 +113,14 @@ class CourseContentController {
     if (error) {
       return formatResponse({
         res,
-        statusCode: statusCode.INTERNAL_SERVER_ERROR,
+        statusCode: statusCode.NOT_FOUND,
         message: 'Failed to retrieve course contents',
       });
     }
 
     return formatResponse({
       res,
-      statusCode: statusCode.NOT_FOUND,
+      statusCode: statusCode.INTERNAL_SERVER_ERROR,
       message: 'Course not found',
     });
   }

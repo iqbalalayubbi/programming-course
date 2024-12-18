@@ -14,6 +14,7 @@ const useCourseContentData = (courseId: number, page: number) => {
   const {
     data: courseContentByPage,
     refetch: refetchCourseContent,
+    isError,
     ...queryCourseContentStates
   } = useQuery({
     queryKey: ['get-course-contents'],
@@ -66,6 +67,18 @@ const useCourseContentData = (courseId: number, page: number) => {
       setCoursesContentsData(courseContents);
     }
   }, [courseContents, setCoursesContentsData]);
+
+  useEffect(() => {
+    if (isError) {
+      setCourseContentData({
+        content: '',
+        page,
+        course_id: courseId,
+        title: '',
+        video_url: '',
+      });
+    }
+  }, [isError, setCourseContentData, courseId, page]);
 
   return {
     ...courseContentStore,

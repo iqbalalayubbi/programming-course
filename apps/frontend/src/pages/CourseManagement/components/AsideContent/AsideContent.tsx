@@ -16,7 +16,7 @@ const AsideContent = () => {
   const { setUsersInCourse, usersInCourse } = useStudentCourse();
 
   const { data } = useQuery({
-    queryKey: ['studentCourses'],
+    queryKey: ['student-courses'],
     queryFn: async () => {
       const response = await studentCourseApi.getStudentCourseByCourseId(
         Number(courseId),
@@ -59,7 +59,6 @@ const AsideContent = () => {
             />
           );
         })}
-        {/* <StudentCard children /> */}
       </Flex>
       <Button
         type="primary"

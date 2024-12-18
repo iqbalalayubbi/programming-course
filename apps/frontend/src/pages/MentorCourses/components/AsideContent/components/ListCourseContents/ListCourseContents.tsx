@@ -8,12 +8,7 @@ import {
   toast,
 } from '@/components';
 import { appRoute } from '@/enums';
-import {
-  CourseContent,
-  useMentorManagement,
-  useCourseContent,
-  useQuill,
-} from '@/stores';
+import { CourseContent, useMentorManagement, useCourseContent } from '@/stores';
 import {
   useCourseContentData,
   useCreateCourseContent,
@@ -27,7 +22,6 @@ import { useLocation } from 'react-router';
 const ListCourseContents = () => {
   const { isCreateCourse, setIsCreateCourse } = useMentorManagement();
   const { courseContents, courseContent } = useCourseContent();
-  const { setValue } = useQuill();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -80,7 +74,7 @@ const ListCourseContents = () => {
       course_id: courseId,
     };
     delete newCourseContent.id;
-    setValue('');
+    newCourseContent.content = '';
 
     if (courseContents.length === 0) {
       // create first content
@@ -92,7 +86,7 @@ const ListCourseContents = () => {
       return;
     } else {
       // create others content
-      newCourseContent.page = pageNumber + 1;
+      newCourseContent.page = courseContents.length + 1;
 
       createCourse({
         course_id: courseId,
@@ -139,13 +133,15 @@ const ListCourseContents = () => {
         className="w-full h-40 overflow-auto border-t border-b shadow-sm"
         bordered={false}
         dataSource={courseContents}
-        renderItem={(item) => (
+        renderItem={(item, i) => (
           <Link
             to={`${appRoute.MENTOR_COURSES}?course=${item.course_id}&page=${item.page}`}
           >
-            <List.Item className="group hover:cursor-pointer hover:bg-primary hover:text-light-text">
+            <List.Item
+              className={`${pageNumber === i + 1 ? 'bg-primary' : ''} group hover:cursor-pointer hover:bg-primary hover:text-light-text`}
+            >
               <h3
-                className={`font-medium text-xl indent-3 block w-full transition-all duration-300`}
+                className={`${pageNumber === i + 1 ? 'text-light-text font-semibold group-hover:text-white' : ''} font-medium text-xl indent-3 block w-full transition-all duration-300`}
               >
                 {item.title}
               </h3>
