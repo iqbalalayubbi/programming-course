@@ -11,7 +11,7 @@ const { Dragger } = Upload;
 const UploadVideo = () => {
   const [isSuccessUpload, setIsSuccessUpload] = useState(false);
   const [newFilename, setNewFilename] = useState('');
-  const { courseContent } = useCourseContent();
+  const { courseContent, setCourseContentData } = useCourseContent();
 
   const props: UploadProps = {
     name: 'video',
@@ -19,21 +19,25 @@ const UploadVideo = () => {
     onChange(info) {
       const { status, response } = info.file;
 
-      if (status !== 'uploading') {
-        console.log(info.file, info.fileList);
-      }
+      // if (status !== 'uploading') {
+      //   console.log(info.file, info.fileList);
+      // }
       if (status === 'done') {
         const filename = response.data.filename;
         setNewFilename(filename);
         setIsSuccessUpload(true);
+        setCourseContentData({
+          ...courseContent,
+          video_url: import.meta.env.VITE_BASE_UPLOADS_URL + filename,
+        });
         message.success(`${info.file.name} file uploaded successfully.`);
       } else if (status === 'error') {
         message.error(`${info.file.name} file upload failed.`);
       }
     },
-    onDrop(e) {
-      console.log('Dropped files', e.dataTransfer.files);
-    },
+    // onDrop(e) {
+    //   console.log('Dropped files', e.dataTransfer.files);
+    // },
   };
 
   if (isSuccessUpload) {
