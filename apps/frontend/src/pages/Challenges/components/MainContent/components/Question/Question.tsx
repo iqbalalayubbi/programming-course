@@ -1,6 +1,6 @@
 import { Button, Collapse, CollapseProps, Flex } from 'antd';
 
-import { pistonApi } from '@/api';
+import { challengeSubmissionApi, pistonApi } from '@/api';
 import { CustomMonaco } from './components';
 import { AxiosResponse } from 'axios';
 import { useChallenge, useMonaco } from '@/stores';
@@ -13,7 +13,13 @@ import {
 } from '@/components';
 import { Link, useParams } from 'react-router';
 import { appRoute } from '@/enums';
-import { useChallengeByIdData } from '@/hooks';
+import { useChallengeByIdData, useMutation } from '@/hooks';
+import { getUsername } from '@/utils';
+
+type Payload = {
+  challenge_id: number;
+  user_username: string;
+};
 
 const Question = () => {
   const { value, setOutput } = useMonaco();
@@ -37,6 +43,25 @@ const Question = () => {
     },
   ];
 
+  const { mutate } = useMutation({
+    mutationKey: ['submit-challenge'],
+    mutationFn: async ({ challenge_id, user_username }: Payload) => {
+      await challengeSubmissionApi.submitChallenge({
+        challenge_id,
+        user_username,
+        is_submitted: true,
+      });
+    },
+    onSuccess: () => {
+      toast.success(
+        'Congratulations you have successfully passed the challenge',
+      );
+    },
+    onError: () => {
+      toast.error('Failed to pass the challenge');
+    },
+  });
+
   const executeCode = async () => {
     setIsLoading(true);
     const response = (await pistonApi.executeCode({
@@ -53,12 +78,13 @@ const Question = () => {
 
     if (formatOutput === challenge.output_answers) {
       // add point and add challenge submission
-      return toast.success(
-        'Congratulations you have successfully passed the challenge',
-      );
+      const username = getUsername();
+
+      mutate({ challenge_id: Number(challengeId), user_username: username });
+      return;
     }
 
-    toast.error('Failed to pass the challenge');
+    toast.error('Try another way');
   };
 
   return (
