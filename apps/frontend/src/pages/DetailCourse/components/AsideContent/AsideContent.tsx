@@ -28,7 +28,7 @@ const AsideContent = () => {
     };
 
     if (!isJoindedCourse) {
-      Modal.info({
+      return Modal.info({
         title: 'Join Course',
         content: (
           <span>
@@ -40,10 +40,11 @@ const AsideContent = () => {
         onOk: () => mutate(studentData),
         cancelText: 'Cancel',
         okCancel: true,
-        onCancel: () => console.log('cancel join course'),
         centered: true,
       });
     }
+
+    navigate(`${appRoute.STUDY_ROOM.replace(':id', String(course.id))}`);
   };
 
   const checkUserJoinCourse = useCallback(
