@@ -9,12 +9,9 @@ import {
   toast,
   ToastContainer,
 } from '@/components';
-import { useMutation, useNavigate } from '@/hooks';
+import { useCreateCourse, useNavigate } from '@/hooks';
 import { UploadThumbnail } from './components';
-import { courseApi } from '@/api';
 import { getUsername } from '@/utils';
-import { AxiosResponse } from 'axios';
-import { ResponseApiType } from 'common';
 
 const CreateCourseModal = () => {
   const navigate = useNavigate();
@@ -25,28 +22,22 @@ const CreateCourseModal = () => {
     newCourseData,
     setIsShowCreateModal,
     isShowCreateModal,
-    setIsCreateCourse,
   } = useMentorManagement();
 
-  const createCourseMutation = useMutation({
-    mutationKey: ['createCourse'],
-    mutationFn: async (data: FormData) => {
-      const result = await courseApi.createCourse(data);
-      return result;
-    },
-    onSuccess: (result) => {
-      const response = result as unknown as AxiosResponse;
-      const responseData = response.data as ResponseApiType;
-      const course = responseData.data?.course as unknown as CourseStore;
-      setNewCourseData({ ...newCourseData, id: course.id });
-      setIsCreateCourse(true);
-      setIsShowCreateModal(false);
-      navigate(`${appRoute.MENTOR_COURSES}?page=0&course=${course.id}`);
-    },
-    onError: () => {
-      toast.error('error creating course');
-    },
-  });
+  const onCreatedCourse = (isSuccess: boolean, course?: CourseStore) => {
+    setIsShowCreateModal(false);
+    if (!isSuccess) {
+      toast.error('Failed to create course');
+      return;
+    }
+
+    if (course) {
+      navigate(`${appRoute.MENTOR_COURSES}?page=1&course=${course.id}`);
+      return;
+    }
+  };
+
+  const { mutate } = useCreateCourse(onCreatedCourse);
 
   const handleCreateCourse = () => {
     const values = form.getFieldsValue();
@@ -64,7 +55,7 @@ const CreateCourseModal = () => {
     formData.append('photo', newCourseData.selectedImage as Blob);
 
     setNewCourseData(newCourse);
-    createCourseMutation.mutate(formData);
+    mutate(formData);
   };
 
   const onCreateCourse = () => {
