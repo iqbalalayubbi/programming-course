@@ -50,10 +50,10 @@ class NoteController {
   }
 
   async getNotesByUsername(req: Request, res: Response) {
-    const { username } = req.query;
+    const { user_username } = req.query;
 
     const { isSuccess, data, error } =
-      await this.noteService.getNotesByUsername(username as string);
+      await this.noteService.getNotesByUsername(user_username as string);
 
     if (isSuccess && data) {
       return formatResponse({
