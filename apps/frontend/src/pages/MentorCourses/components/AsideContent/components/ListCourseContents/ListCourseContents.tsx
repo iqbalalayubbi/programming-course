@@ -72,9 +72,10 @@ const ListCourseContents = () => {
       ...courseContent,
       title: pageName,
       course_id: courseId,
+      content: '',
+      video_url: '',
     };
     delete newCourseContent.id;
-    newCourseContent.content = '';
 
     if (courseContents.length === 0) {
       // create first content

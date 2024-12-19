@@ -1,15 +1,14 @@
 import { Flex } from '@/components';
-import { appRoute } from '@/enums';
 import { uploadPath } from '@/enums/apiPath/uploadPath';
 import { useCourseContent } from '@/stores';
 import { InboxOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
 import { message, Upload } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 const { Dragger } = Upload;
 
 const UploadVideo = () => {
-  const [isSuccessUpload, setIsSuccessUpload] = useState(false);
+  const [, setIsSuccessUpload] = useState(false);
   const [newFilename, setNewFilename] = useState('');
   const { courseContent, setCourseContentData } = useCourseContent();
 
@@ -24,11 +23,12 @@ const UploadVideo = () => {
       // }
       if (status === 'done') {
         const filename = response.data.filename;
-        setNewFilename(filename);
+        const newVideoUrl = import.meta.env.VITE_BASE_UPLOADS_URL + filename;
+        setNewFilename(newVideoUrl);
         setIsSuccessUpload(true);
         setCourseContentData({
           ...courseContent,
-          video_url: import.meta.env.VITE_BASE_UPLOADS_URL + filename,
+          video_url: newVideoUrl,
         });
         message.success(`${info.file.name} file uploaded successfully.`);
       } else if (status === 'error') {
@@ -40,41 +40,36 @@ const UploadVideo = () => {
     // },
   };
 
-  if (isSuccessUpload) {
-    return (
-      <Flex justify="center">
-        <video width="600" controls>
-          <source
-            src={`${import.meta.env.VITE_BASE_API}${appRoute.UPLOADS}/${newFilename}`}
-            type="video/mp4"
-          />
-          Your browser does not support the video tag.
-        </video>
-      </Flex>
-    );
-  }
-
-  if (courseContent.video_url) {
-    return (
-      <Flex justify="center">
-        <video width="600" controls>
-          <source src={courseContent.video_url} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      </Flex>
-    );
-  }
+  useEffect(() => {
+    if (courseContent.video_url) {
+      setNewFilename(courseContent.video_url);
+      setIsSuccessUpload(true);
+    } else {
+      setNewFilename('');
+    }
+  }, [courseContent]);
 
   return (
-    <Dragger {...props} className="h-1/3">
-      <p className="ant-upload-drag-icon">
-        <InboxOutlined />
-      </p>
-      <p className="ant-upload-text">
-        Click or drag file to this area to upload
-      </p>
-      <p className="ant-upload-hint">only support for .mp4 format</p>
-    </Dragger>
+    <>
+      {newFilename ? (
+        <Flex justify="center" vertical>
+          <video key={courseContent.video_url} width="600" controls>
+            <source src={courseContent.video_url} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </Flex>
+      ) : (
+        <Dragger {...props} className="h-1/3">
+          <p className="ant-upload-drag-icon">
+            <InboxOutlined />
+          </p>
+          <p className="ant-upload-text">
+            Click or drag file to this area to upload
+          </p>
+          <p className="ant-upload-hint">only support for .mp4 format</p>
+        </Dragger>
+      )}
+    </>
   );
 };
 
