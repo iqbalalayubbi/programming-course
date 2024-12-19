@@ -1,11 +1,11 @@
-import { Iconify } from '@/components';
 import { appRoute } from '@/enums';
 import { useCourseContent } from '@/stores';
-import { Button, Divider, Flex, List } from 'antd';
-import { Link, useSearchParams } from 'react-router';
+import { Divider, Flex, List, Link } from '@/components';
+import { useSearchParams } from 'react-router';
+import { ControlButtons } from './components';
 
 const AsideContent = () => {
-  const { courseContents } = useCourseContent();
+  const { courseContents, courseContent } = useCourseContent();
   const [queryParameters] = useSearchParams();
   const page = queryParameters.get('page');
 
@@ -40,30 +40,10 @@ const AsideContent = () => {
       <Flex justify="center" align="center" className="h-60">
         <p className="text-center text-gray-third">Editor JS HERE</p>
       </Flex>
-      <Flex gap={60} justify="center" className="my-5 gap-4">
-        <Flex gap={24} align="center" vertical className="group">
-          <Button
-            type="link"
-            shape="circle"
-            icon={<Iconify icon="grommet-icons:previous" />}
-            className="text-6xl group-hover:text-secondary"
-          />
-          <span className="group-hover:text-secondary font-semibold text-gray-third">
-            Prev
-          </span>
-        </Flex>
-        <Flex gap={24} align="center" vertical className="group">
-          <Button
-            type="link"
-            shape="circle"
-            icon={<Iconify icon="grommet-icons:next" />}
-            className="text-6xl group-hover:text-secondary"
-          />
-          <span className="group-hover:text-secondary font-semibold text-gray-third">
-            Next
-          </span>
-        </Flex>
-      </Flex>
+      <ControlButtons
+        page={courseContent.page}
+        courseId={courseContent.course_id}
+      />
     </Flex>
   );
 };
