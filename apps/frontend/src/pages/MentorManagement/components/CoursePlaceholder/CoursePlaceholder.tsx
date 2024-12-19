@@ -6,7 +6,7 @@ const CoursePlaceholder = () => {
 
   return (
     <Card
-      className="shadow-lg w-[24%] group flex flex-col items-center justify-center bg-light-bg group:"
+      className="shadow-lg w-full h-full group flex flex-col items-center justify-center bg-light-bg group"
       hoverable
       onClick={() => setIsShowCreateModal(true)}
     >

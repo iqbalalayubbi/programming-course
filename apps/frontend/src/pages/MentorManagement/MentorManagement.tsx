@@ -8,6 +8,7 @@ import {
 import { appRoute } from '@/enums';
 import { useCallback, useCourseData, useEffect, useState } from '@/hooks';
 import { getUsername } from '@/utils';
+import { Col, Row } from 'antd';
 
 const MentorManagement = () => {
   const { courses } = useCourseData();
@@ -62,7 +63,25 @@ const MentorManagement = () => {
           />
         </Flex>
       </Flex>
-      <Flex
+      <Row gutter={[16, 16]}>
+        {mentorCourses.map((course) => {
+          return (
+            <Col key={course.id} xs={24} sm={12} md={8} lg={6}>
+              <CourseCard
+                key={course.id}
+                id={course.id}
+                title={course.title}
+                description={course.description}
+                imageUrl={course.thumbnail_url}
+              />
+            </Col>
+          );
+        })}
+        <Col xs={24} sm={12} md={8} lg={6}>
+          <CoursePlaceholder />
+        </Col>
+      </Row>
+      {/* <Flex
         gap={16}
         className="flex-col sm:flex-row sm:flex-wrap"
         align="stretch"
@@ -80,7 +99,7 @@ const MentorManagement = () => {
           );
         })}
         <CoursePlaceholder />
-      </Flex>
+      </Flex> */}
     </Flex>
   );
 };
