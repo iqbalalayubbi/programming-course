@@ -4,6 +4,7 @@ import { useCallback, useCourseData, useEffect, useState } from '@/hooks';
 import { appRoute, role } from '@/enums';
 import { getRole, getUsername } from '@/utils';
 import { CourseStore } from '@/stores';
+import { Col, Row } from 'antd';
 
 const Courses = () => {
   const { courses, search, defaultCourses, setCoursesData } = useCourseData();
@@ -69,21 +70,23 @@ const Courses = () => {
           </Link>
         )}
       </Flex>
-      <Flex gap={16} className="flex-col sm:flex-row sm:flex-wrap">
+      <Row gutter={[16, 16]}>
         {searchCourses.map((course) => {
           if (course.mentor_username !== getUsername()) {
             return (
-              <CourseCard
-                key={course.id}
-                id={course.id}
-                title={course.title}
-                description={course.description}
-                imageUrl={course.thumbnail_url}
-              />
+              <Col key={course.id} xs={24} sm={12} md={8} lg={6}>
+                <CourseCard
+                  key={course.id}
+                  id={course.id}
+                  title={course.title}
+                  description={course.description}
+                  imageUrl={course.thumbnail_url}
+                />
+              </Col>
             );
           }
         })}
-      </Flex>
+      </Row>
       {searchCourses.length === 0 && (
         <span className="text-gray-third font-semibold italic text-center mt-20">
           Not Found Content
