@@ -1,4 +1,3 @@
-import { thumbnailCourse } from '@/assets';
 import { useCourse, useCourseContent, useUser } from '@/stores';
 import { type TabsProps } from '@/types';
 import { useCourseContentData, useEffect } from '@/hooks';
@@ -12,15 +11,21 @@ import {
   Link,
 } from '@/components';
 import { appRoute } from '@/enums';
-import { useParams } from 'react-router';
+import { useLocation, useParams, useSearchParams } from 'react-router';
 
 const MainContent = () => {
   const userStore = useUser();
   const { course } = useCourse();
   const { id } = useParams();
   const { courseContent } = useCourseContent();
+  const [queryParameters] = useSearchParams();
+  const page = queryParameters.get('page');
+  const location = useLocation();
 
-  useCourseContentData(Number(id), 1);
+  const { refetchCourseContent } = useCourseContentData(
+    Number(id),
+    Number(page),
+  );
 
   const items: TabsProps['items'] = [
     {
@@ -48,6 +53,10 @@ const MainContent = () => {
     }
   }, [userStore]);
 
+  useEffect(() => {
+    refetchCourseContent();
+  }, [location.search, refetchCourseContent]);
+
   return (
     <Flex gap={8} vertical>
       <ToastContainer position="top-center" />
@@ -57,7 +66,12 @@ const MainContent = () => {
         </Link>
         <h1 className="font-bold text-4xl my-5">{course.title}</h1>
       </Flex>
-      <img src={thumbnailCourse} alt="" className="w-full" />
+      <Flex justify="center" vertical>
+        <video key={courseContent.video_url} width="600" controls>
+          <source src={courseContent.video_url} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </Flex>
       <Tabs defaultActiveKey="1" items={items} className="my-5" />
     </Flex>
   );

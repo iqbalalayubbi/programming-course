@@ -44,7 +44,9 @@ const AsideContent = () => {
       });
     }
 
-    navigate(`${appRoute.STUDY_ROOM.replace(':id', String(course.id))}`);
+    navigate(
+      `${appRoute.STUDY_ROOM_QUERY.replace(':id', String(course.id)).replace(':page', '1')}`,
+    );
   };
 
   const checkUserJoinCourse = useCallback(

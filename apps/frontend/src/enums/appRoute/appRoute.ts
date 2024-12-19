@@ -10,6 +10,7 @@ const appRoute = {
   COURSES: '/courses',
   COURSE_DETAIL: '/courses/:id',
   STUDY_ROOM: '/courses/:id/study',
+  STUDY_ROOM_QUERY: '/courses/:id/study?page=:page',
   PROFILE: '/profile',
   MENTOR_MANAGEMENT: '/mentor-management',
   MENTOR_COURSES: '/mentor-courses',
